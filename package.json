@@ -36,7 +36,7 @@
 		"eslint-plugin-react": "^7.33.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.3",
-		"vite": "^4.4.8"
+		"vite": "^7.3.1"
 	},
 	"babel": {
 		"presets": [
@@ -54,7 +54,8 @@
 		]
 	},
 	"dependencies": {
-		"@react-three/drei": "^8.20.2",
+		"@madzadev/audio-player": "^2.1.14",
+		"@react-three/drei": "^10.7.7",
 		"@react-three/fiber": "^8.18.0",
 		"html2canvas": "^1.4.1",
 		"prop-types": "^15.8.1",

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
+import Player from "../../Components/Player";
+
 
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
     const [mode, setMode] = useState(null);
@@ -186,9 +188,17 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
 
                 <div className="footer-buttons-container">
                     <button>About us</button>
-                    <button onClick={() => setMuted(!muted)}>
-                        {muted ? "Unmute 🔊" : "Mute 🔇"}
-                    </button>
+
+                    <div className="player-container">
+                        <div className="player-hover">
+                            <button className="music-button"> 🎶 </button>
+                            <div className="player">
+                                <div className="player-inner">
+                                    <Player />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,3 +206,5 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
 };
 
 export default LoginScreen;
+
+
