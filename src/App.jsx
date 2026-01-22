@@ -2,6 +2,7 @@
 /* import { useState } from "react";
 import LoginScreen from "./scenes/LoginScreen/LoginScreen";
 import CustomCursor from "./CustomCursor";
+import ChatBot from "./components/ChatBot/ChatBot";
 import "./App.css";
 import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
 
@@ -31,6 +32,7 @@ function App() {
     return (
         <>
             <CustomCursor />
+            <ChatBot />
 
             {!inGame && (
                 <LoginScreen
