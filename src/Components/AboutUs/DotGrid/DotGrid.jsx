@@ -8,7 +8,8 @@ function DotGrid({ color = "#000000", visible = true, opacity = 0.08, animation 
       className={`dot-grid ${animation}`}
       style={{
         "--dot-color": color,
-        opacity: 1
+        opacity: opacity,
+        filter: "blur(0.5px)"
       }}
     />
   );

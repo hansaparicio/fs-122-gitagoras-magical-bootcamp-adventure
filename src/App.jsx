@@ -1,58 +1,39 @@
+// import { useState } from "react";
+// import LoginScreen from "./scenes/LoginScreen/LoginScreen";
+// import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
+// import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
+// import CustomCursor from "./CustomCursor";
 
-import { useState } from "react";
-import LoginScreen from "./scenes/LoginScreen/LoginScreen";
-import CustomCursor from "./CustomCursor";
-import "./App.css";
-import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
+// function App() {
+//   const [loggedIn, setLoggedIn] = useState(false);
+//   const [inGame, setInGame] = useState(false);
+//   const [showAbout, setShowAbout] = useState(false);
 
+//   return (
+//     <>
+//       <CustomCursor />
 
+//       {!inGame && !showAbout && (
+//         <LoginScreen
+//           loggedIn={loggedIn}
+//           onStartGame={() => setInGame(true)}
+//           onLogout={() => setLoggedIn(false)}
+//           onAbout={() => setShowAbout(true)}
+//         />
+//       )}
 
-function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [inGame, setInGame] = useState(false);
-    const [username, setUsername] = useState("");
+//       {showAbout && !inGame && (
+//         <TeamShowcase onBack={() => setShowAbout(false)} />
+//       )}
 
-    const handleLogin = (user) => {
-        setLoggedIn(true);
-        setUsername(user);
-    };
+//       {inGame && <BeginningChapter />}
+//     </>
+//   );
+// }
 
-    const handleStartGame = () => {
-        setInGame(true);
-    };
+// export default App;
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        setLoggedIn(false);
-        setInGame(false);
-        setUsername("");
-    };
-
-    return (
-        <>
-            <CustomCursor />
-
-            {!inGame && (
-                <LoginScreen
-
-                    onLogin={handleLogin}
-                    loggedIn={loggedIn}
-                    onStartGame={handleStartGame}
-                    onLogout={handleLogout}
-                />
-
-            )}
-            {inGame && <BeginningChapter />}
-
-        </>
-    );
-}
-
-export default App;
-
-
-
-/*import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import LibraryZone from "./scenes/LibraryZone/LibraryZone";
 import AppShell from "./layout/AppShell/AppShell";
 import LoaderOverlay from "./components/Loader/LoaderOverlay";
@@ -82,6 +63,4 @@ function App() {
     );
 }
 
-export default App; */
-
-
+export default App;

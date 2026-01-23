@@ -2,9 +2,11 @@ import { useState } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Player from "../../components/mp3Player/mp3Player";
-import TeamShowcase from "../../components/TeamShowcase/TeamShowcase";
 
-const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
+
+
+
+const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
     const [mode, setMode] = useState(null);
     const [muted, setMuted] = useState(false);
     const [formData, setFormData] = useState({
@@ -183,8 +185,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
                 )}
 
                 <div className="footer-buttons-container">
-                    <button>About us</button>
-                    <TeamShowcase />
+                    <button onClick={onAbout}>About us</button>
 
                     <div className="player-container">
                         <div className="player-hover">

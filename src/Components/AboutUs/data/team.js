@@ -1,16 +1,16 @@
-import elfIdle from "../assets/avatars/Eva_idle-removebg-preview.png";
-import elfActive from "../assets/avatars/Eva_active-removebg-preview.png";
-import sorcererIdle from "../assets/avatars/Kilian_idle-removebg-preview.png";
-import sorcererActive from "../assets/avatars/Kilian_active-removebg-preview.png";
-import wizardIdle from "../assets/avatars/Sorin_idle-removebg-preview.png";
-import wizardActive from "../assets/avatars/Sorin_active-removebg-preview.png";
-import paladinIdle from "../assets/avatars/Gustavo_idle-removebg-preview.png";
-import paladinActive from "../assets/avatars/Gustavo_active-removebg-preview.png";
+import elfIdle from "../../../assets/avatars/Eva_idle-removebg-preview.png";
+import elfActive from "../../../assets/avatars/Eva_active-removebg-preview.png";
+import sorcererIdle from "../../../assets/avatars/Kilian_idle-removebg-preview.png";
+import sorcererActive from "../../../assets/avatars/Kilian_active-removebg-preview.png";
+import wizardIdle from "../../../assets/avatars/Sorin_idle-removebg-preview.png";
+import wizardActive from "../../../assets/avatars/Sorin_active-removebg-preview.png";
+import paladinIdle from "../../../assets/avatars/Gustavo_idle-removebg-preview.png";
+import paladinActive from "../../../assets/avatars/Gustavo_active-removebg-preview.png";
 
-import elfBg from "../assets/backgrounds/elf_bg.png";
-import sorcererBg from "../assets/backgrounds/sorcerer_bg.png";
-import wizardBg from "../assets/backgrounds/wizard_bg.png";
-import paladinBg from "../assets/backgrounds/paladin_bg.png";
+import elfBg from "../../../assets/backgrounds/elf_bg.png";
+import sorcererBg from "../../../assets/backgrounds/sorcerer_bg.png";
+import wizardBg from "../../../assets/backgrounds/wizard_bg.png";
+import paladinBg from "../../../assets/backgrounds/paladin_bg.png";
 
 const team = [
   {

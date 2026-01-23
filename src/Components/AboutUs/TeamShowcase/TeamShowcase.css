@@ -85,16 +85,16 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.6s ease;
 }
 
 @keyframes drift {
   from { background-position: 0 0; }
-  to { background-position: 40px 40px; }
+  to { background-position: 50px 50px; }
 }
 
 .dot-grid.drift {
-  animation: drift 20s linear infinite;
+  animation: drift 10s linear infinite;
 }
 
 .team-showcase > h2,
@@ -107,8 +107,40 @@
   font-family: "Press Start 2P", system-ui;
   margin-bottom: 4rem;
   font-size: 2.6rem;
+  color: #ffffff;
+  text-shadow: 6px 6px 0 #000000;
 }
 
 .avatar-card p {
   font-family: "Press Start 2P", system-ui;
+}
+
+.back-button {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 50;
+  padding: 12px 20px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background-color: #5458a3;
+  color: #ffffff;
+  border: 2px solid #FFD700;
+  outline: 2px solid #FFD700;
+  outline-offset: -6px;
+  box-shadow: 4px 4px 0 #000000;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.back-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.back-button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 #000000;
 }
