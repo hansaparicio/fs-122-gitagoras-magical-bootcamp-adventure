@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Player from "../../components/mp3Player/mp3Player";
@@ -183,6 +183,69 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         </button>
                     </div>
                 )}
+                {/* y de aqui */}
+                <div
+                    className="user-badge"
+                    onClick={() => setShowUserPanel(true)}
+                >
+                    {savedAvatar ? (
+                        <div className="user-avatar">
+                            <Avatar {...savedAvatar} />
+                        </div>
+                    ) : (
+                        <div className="user-avatar placeholder" />
+                    )}
+
+                    <span className="username">
+                        {fakeUsername}
+                    </span>
+                </div>
+                {showUserPanel && (
+                    <div className="user-panel-overlay">
+                        <div className="user-panel">
+                            <button
+                                className="close-user-panel"
+                                onClick={() => setShowUserPanel(false)}
+                            >
+                                ✕
+                            </button>
+
+                            <h2>Mi usuario</h2>
+
+                            <div className="user-panel-avatar">
+                                {savedAvatar ? (
+                                    <Avatar {...savedAvatar} />
+                                ) : (
+                                    <div className="user-avatar placeholder" />
+                                )}
+                            </div>
+
+                            <p className="user-panel-name">{fakeUsername}</p>
+
+                            <button
+                                className="edit-avatar-btn"
+                                onClick={() => setShowAvatarCreator(true)}
+                            >
+                                Editar avatar
+                            </button>
+
+                            {showAvatarCreator && (
+                                <div className="modal-overlay">
+                                    <div className="modal-content">
+                                        <button onClick={() => setShowAvatarCreator(false)}>x</button>
+                                        <AvatarCreator
+                                            onClose={() => setShowAvatarCreator(false)}
+                                            onSave={(avatar) => {
+                                                setSavedAvatar(avatar);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+                {/*  aqui */}
 
                 <div className="footer-buttons-container">
                     <button onClick={onAbout}>About us</button>
@@ -198,8 +261,9 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+        </div >
     );
 };
 

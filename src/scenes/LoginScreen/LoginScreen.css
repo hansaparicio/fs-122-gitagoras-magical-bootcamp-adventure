@@ -172,3 +172,111 @@
 .audio-player {
   font-family: "Press Start 2P", monospace;
 }
+
+/* todo provisinal */
+
+.avatar-display {
+  margin-bottom: "30px";
+}
+
+.user-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 2px solid #ffd700;
+  z-index: 1000;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar.placeholder {
+  background: #444;
+}
+
+.user-avatar .avatar {
+  transform: scale(0.35);
+  transform-origin: center;
+}
+
+.username {
+  color: #ffd700;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.user-badge:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* provisional */
+.user-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 2px solid #ffd700;
+  z-index: 10;
+}
+
+.user-panel {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #ffd700;
+  border-radius: 12px;
+  padding: 16px;
+  width: 220px;
+  z-index: 20;
+  text-align: center;
+}
+
+.user-panel h2 {
+  color: #ffd700;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.user-panel-name {
+  color: #fff;
+  margin: 8px 0;
+}
+
+.edit-avatar-btn {
+  background: #2c2c54;
+  color: #fff;
+  border: 2px solid #ffd700;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.close-user-panel {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
