@@ -184,7 +184,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                     </div>
                 )}
                 {/* y de aqui */}
-                <div
+                {/* <div
                     className="user-badge"
                     onClick={() => setShowUserPanel(true)}
                 >
@@ -245,7 +245,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         </div>
                     </div>
                 )}
-                {/*  aqui */}
+                 aqui */}
 
                 <div className="footer-buttons-container">
                     <button onClick={onAbout}>About us</button>
