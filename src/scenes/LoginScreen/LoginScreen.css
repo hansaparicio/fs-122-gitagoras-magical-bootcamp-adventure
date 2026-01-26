@@ -36,8 +36,12 @@
   gap: 40px;
   margin-bottom: 60px;
   font-family: "Press Start 2P", monospace;
+  
 }
 
+button{
+  margin-top: 10px;
+}
 .main-buttons button {
   background: #2c2c54;
   color: #fff;
@@ -62,6 +66,7 @@
   flex-direction: column;
   margin-top: 20px;
   font-family: "Press Start 2P", monospace !important;
+  color: #fff;
 }
 
 .panel h2 {
@@ -73,7 +78,7 @@
 
 .panel input {
   margin-bottom: 10px;
-  padding: 8px;
+  padding: 12px 16px;
   font-family: "Press Start 2P", monospace;
 }
 
@@ -91,12 +96,13 @@
   background:  #ff5c5c;
   color:black;
   border: none;
-  font-size: 20px;
+  font-size: 15px;
   cursor: pointer;
+  padding: 2px 5px;
 }
 
 .close-btn:hover {
-  color: #ff0000;
+  background: darkred;
 }
 
 .footer-buttons-container {
