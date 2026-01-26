@@ -1,13 +1,15 @@
 .team-showcase {
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   transition: background-color 0.5s ease;
-  padding: 8rem 2rem 3rem;
+  padding: 6rem 2rem 3rem;
+  width: 100vw;
+  max-width: 100vw;
 }
 
 .avatar-container {
@@ -20,7 +22,7 @@
   max-width: 100%;
   width: fit-content;
   padding: 1rem 0.6rem;
-  margin-top: 8rem;
+  margin-top: 10rem;
   box-sizing: border-box;
   background-color: #ffffff;
   border: 4px solid #000000;
@@ -75,7 +77,7 @@
   font-weight: bold;
   font-size: 0.7rem;
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1rem;
   border-radius: 8px;
   transition: background-color 0.2s;
   font-family: "Press Start 2P", system-ui;
@@ -104,12 +106,6 @@
 
 .dot-grid.drift {
   animation: drift 10s linear infinite;
-}
-
-.team-showcase > h2,
-.avatar-container {
-  position: relative;
-  z-index: 1;
 }
 
 .team-showcase h2 {
@@ -154,4 +150,16 @@
 .back-button:active {
   transform: translate(4px, 4px);
   box-shadow: 0 0 0 #000000;
+}
+
+.team-title {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 4rem;
+  font-family: "Press Start 2P", system-ui;
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.team-title.glitch {
+  font-size: clamp(1rem, 5vw, 2.5rem);
 }

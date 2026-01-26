@@ -4,6 +4,7 @@ import team from "../data/team";
 import AvatarCard from "../AvatarCard/AvatarCard";
 import defaultBackground from "../../../assets/backgrounds/backgroundAboutUs.png";
 import "./TeamShowcase.css";
+import GlitchText from "../components/GlitchText/GlitchText";
 
 function TeamShowcase() {
   const [activeAvatarId, setActiveAvatarId] = useState(null);
@@ -13,14 +14,14 @@ function TeamShowcase() {
   const mainBackgroundStyle = activeAvatar
     ? {
       backgroundImage: `url(${activeAvatar.background})`,
-      backgroundSize: "contain",
+      backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundColor: "#000000",
     }
     : {
       backgroundImage: `url(${defaultBackground})`,
-      backgroundSize: "contain",
+      backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       backgroundColor: "#000000",
@@ -46,7 +47,14 @@ function TeamShowcase() {
         opacity={activeAvatar ? 0.12 : 0.3}
       />
 
-      <h2>Our Team</h2>
+      <GlitchText
+        speed={1}
+        enableShadows
+        enableOnHover={false}
+        className="team-title"
+      >
+        Our Team
+      </GlitchText>
 
       <div className="avatar-container">
         {team.map((member) => (
