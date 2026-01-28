@@ -1,0 +1,48 @@
+{
+  "kk": {
+    "password": "pbkdf2:sha256:1000000$yipucgpUQyc4A3jN$6a55ee3838ff86c88fdd0c1bb0ffbb4ad7172e5564653fb4fc0142152a5c86d7",
+    "email": "kk@kk.com",
+    "avatar": null
+  },
+  "pepito": {
+    "password": "pbkdf2:sha256:1000000$qrWqv9GZwwHmqPEO$a0a9c5c78fb156d0d741ed7564ac54892cff7c758a29a6e2f36625f451ba1039",
+    "email": "pepito@grillo.com",
+    "avatar": null
+  },
+  "pepito1": {
+    "password": "pbkdf2:sha256:1000000$eUByDo4xkZAkJLTo$186cdca198ccc3fa49f698c5cfd6bf09028c6c487f6fdbeeea6f0a8ae4daf2f9",
+    "email": "1@mail.com",
+    "avatar": null
+  },
+  "pepitos": {
+    "password": "pbkdf2:sha256:1000000$bchCsf9aSN2Pz3uL$119d27c00d625c1d7cb7094a791a45bd0611786162df7ffc6c15a4303ba0f1e9",
+    "email": "1212@mail.com",
+    "avatar": null
+  },
+  "kkk": {
+    "password": "pbkdf2:sha256:1000000$piXogqhSIOuC0BW9$3cb9576c100fa8946e5cbd9d1455003befe0c273c51be292143c3dd90ca66bc7",
+    "email": "aa@hotmail.com",
+    "avatar": {
+      "muneco": "/src/assets/images/Avatar/Avatar/Muneco.png",
+      "ojos": "/src/assets/images/Avatar/Ojos/Ojos-4.png",
+      "pelo": null,
+      "ropa": "/src/assets/images/Avatar/Ropa/Ropa-8.png",
+      "accesorio": "/src/assets/images/Avatar/Accesorios/Accesorio-8.png",
+      "gorro": "/src/assets/images/Avatar/Gorros/Gorro-3.png",
+      "fondo": "/src/assets/images/Avatar/Fondos/fondo-3.png"
+    }
+  },
+  "eva11": {
+    "password": "pbkdf2:sha256:1000000$BavblIxgrBswc68C$43808239a06874c489adf49560c3b115db313b5607ade51c4b1b05550fabe12e",
+    "email": "eva@hotmail.com",
+    "avatar": {
+      "muneco": "/src/assets/images/Avatar/Avatar/Muneco.png",
+      "ojos": "/src/assets/images/Avatar/Ojos/Ojos-6.png",
+      "pelo": "/src/assets/images/Avatar/Pelo/Pelo-8.png",
+      "ropa": "/src/assets/images/Avatar/Ropa/Ropa-4.png",
+      "accesorio": "/src/assets/images/Avatar/Accesorios/Accesorio-6.png",
+      "gorro": "/src/assets/images/Avatar/Gorros/Gorro-2.png",
+      "fondo": "/src/assets/images/Avatar/Fondos/fondo-2.png"
+    }
+  }
+}

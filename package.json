@@ -55,7 +55,7 @@
 	},
 	"dependencies": {
 		"@madzadev/audio-player": "^2.1.14",
-		"@react-three/drei": "^10.7.7",
+		"@react-three/drei": "^9.0.0",
 		"@react-three/fiber": "^8.18.0",
 		"html2canvas": "^1.4.1",
 		"prop-types": "^15.8.1",

@@ -1,57 +1,53 @@
 /* 
+
 import { useState } from "react";
 import LoginScreen from "./scenes/LoginScreen/LoginScreen";
-import CustomCursor from "./CustomCursor";
-import "./App.css";
 import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
+import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
+import CustomCursor from "./CustomCursor";
+
+
+
 
 
 
 function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [inGame, setInGame] = useState(false);
-    const [username, setUsername] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [inGame, setInGame] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [username, setUsername] = useState(null);
 
-    const handleLogin = (user) => {
-        setLoggedIn(true);
-        setUsername(user);
-    };
+  return (
+    <>
+      <CustomCursor />
 
-    const handleStartGame = () => {
-        setInGame(true);
-    };
+      {!inGame && !showAbout && (
+        <LoginScreen
+          loggedIn={loggedIn}
+          onStartGame={() => setInGame(true)}
+          onLogout={() => setLoggedIn(false)}
+          onAbout={() => setShowAbout(true)}
+          onLogin={() => setLoggedIn(true)}
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        setLoggedIn(false);
-        setInGame(false);
-        setUsername("");
-    };
+        />
+      )}
 
-    return (
-        <>
-            <CustomCursor />
+      {showAbout && !inGame && (
+        <TeamShowcase onBack={() => setShowAbout(false)} />
+      )}
 
-            {!inGame && (
-                <LoginScreen
-
-                    onLogin={handleLogin}
-                    loggedIn={loggedIn}
-                    onStartGame={handleStartGame}
-                    onLogout={handleLogout}
-                />
-
-            )}
-            {inGame && <BeginningChapter />}
-
-        </>
-    );
+      {inGame && <BeginningChapter />}
+    </>
+  );
 }
 
 export default App; */
 
 // ----------------------------------------------------------------------------
+export default App;
 
+
+/*
 import { useState, useEffect } from "react";
 import LibraryZone from "./scenes/LibraryZone/LibraryZone";
 import AppShell from "./layout/AppShell/AppShell";
@@ -60,15 +56,14 @@ import { TimeProvider } from "./context/TimeContext";
 import { GameOverProvider } from "./context/GameOverContext";
 import GameOverModal from "./components//GameOverModal/GameOverModal";
 
-function App() {
-    const [loading, setLoading] = useState(true);
+// import { useState, useEffect } from "react";
+// import LibraryZone from "./scenes/LibraryZone/LibraryZone";
+// import AppShell from "./layout/AppShell/AppShell";
+// import LoaderOverlay from "./components/Loader/LoaderOverlay";
+// import { TimeProvider } from "./context/TimeContext";
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-        return () => clearTimeout(timer);
-    }, []);
+// function App() {
+//   const [loading, setLoading] = useState(true);
 
     return (
         <GameOverProvider>
@@ -84,7 +79,17 @@ function App() {
 }
 
 export default App;
+//   useEffect(() => {
+//     const timer = setTimeout(() => {
+//       setLoading(false);
+//     }, 2000);
+//     return () => clearTimeout(timer);
+//   }, []);
 
+//   return (
+//     <TimeProvider>
+
+//       <LoaderOverlay visible={loading} />
 
 
 
@@ -234,3 +239,13 @@ export default function App() {
     );
 } 
  */
+export default App;*/
+//       <AppShell>
+
+//         {!loading && <LibraryZone />}
+//       </AppShell>
+//     </TimeProvider>
+//   );
+// }
+
+// export default App;

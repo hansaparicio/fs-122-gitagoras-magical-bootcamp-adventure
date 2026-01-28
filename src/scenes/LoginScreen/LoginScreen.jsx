@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
-import Player from "../../components/mp3Player/mp3Player";
-import ChatBot from "../../components/ChatBot/ChatBot";
+import Avatar from "../../Components/Avatar";
+import AvatarCreator from "../../Components/AvatarCreator";
+import Player from "../../components/mp3Player/mp3Player"; // minúsculas
+import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
+import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 
-const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
+
+const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
+
     const [mode, setMode] = useState(null);
+    const [showUserPanel, setShowUserPanel] = useState(false);
+    const [showAvatarCreator, setShowAvatarCreator] = useState(false);
+
+
+    const [user, setUser] = useState(null);
+    const [avatar, setAvatar] = useState(null);
 
     const [formData, setFormData] = useState({
         username: "",
@@ -13,6 +24,47 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
         repeatPassword: "",
         email: "",
     });
+
+    useEffect(() => {
+        const fetchMe = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/me", {
+
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (!res.ok) return;
+
+                const data = await res.json();
+                setAvatar({
+                    muneco,
+                    fondo: fondo1,
+                    ...data.avatar
+                });
+                setUser(data);
+                onLogin?.(me.username);
+
+            } catch (err) {
+                console.error("error cargando usuario", err);
+            }
+        }
+
+        fetchMe();
+    }, []);
+
+    useEffect(() => {
+        if (!loggedIn) {
+            setUser(null);
+            setAvatar(null);
+            setShowUserPanel(false)
+            setShowAvatarCreator(false);
+            setMode(null)
+        }
+    }, [loggedIn])
+
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,7 +79,7 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
         }
 
         try {
-            const res = await fetch("http://localhost:5000/api/register", {
+            const res = await fetch("http://127.0.0.1:5000/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -38,13 +90,21 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
             });
 
             const data = await res.json();
-            if (!res.ok) throw new Error(data.msg);
+            if (!res.ok) throw new Error(data.msg || "Error al registrar");
 
             localStorage.setItem("token", data.access_token);
-            localStorage.removeItem("scrollSigned");
 
+
+            const meRes = await fetch("http://127.0.0.1:5000/api/me", {
+                headers: {
+                    Authorization: `Bearer ${data.access_token}`,
+                }
+            });
+            const me = await meRes.json();
+            setUser(me);
+            setAvatar(me.avatar);
+            onLogin?.(me.username);
             setMode(null);
-            onLogin();
         } catch (err) {
             alert(err.message);
         }
@@ -54,9 +114,9 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://localhost:5000/api/login", {
+            const res = await fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
                     username: formData.username,
                     password: formData.password,
@@ -67,19 +127,26 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
             if (!res.ok) throw new Error(data.msg);
 
             localStorage.setItem("token", data.access_token);
+            // onLogin(formData.username);
 
+            const meRes = await fetch("http://127.0.0.1:5000/api/me", {
+                headers: {
+                    Authorization: `Bearer ${data.access_token}`,
+                },
+            })
+            const me = await meRes.json();
+            setAvatar(me.avatar)
+            setUser(me);
+            onLogin?.(me.username);
             setMode(null);
-            onLogin();
+
         } catch (err) {
             alert(err.message);
         }
     };
 
     return (
-        <div
-            className="login-screen"
-            style={{ backgroundImage: `url(${LoginBackground})` }}
-        >
+        <div className="login-screen" style={{ backgroundImage: `url(${LoginBackground})` }}>
             <div className="overlay">
                 <h1 className="title">Magic Coding Adventure</h1>
 
@@ -92,13 +159,7 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
 
                         {mode === "register" && (
                             <form className="panel" onSubmit={handleRegister}>
-                                <button
-                                    type="button"
-                                    className="close-btn"
-                                    onClick={() => setMode(null)}
-                                >
-                                    ✕
-                                </button>
+                                <button type="button" className="close-btn" onClick={() => setMode(null)}>✕</button>
                                 <h2>Crear usuario</h2>
                                 <input
                                     name="username"
@@ -175,12 +236,53 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
                         </button>
                     </div>
                 )}
+                <div
+                    className="user-badge" onClick={() => user && setShowUserPanel(true)}>
+                    {avatar ? <Avatar {...avatar} /> : <div className="user-avatar placeholder" />}
+                    <span>{user?.username}</span>
+                </div>
+
+                {showUserPanel && (
+                    <div className="user-panel-overlay">
+                        <div className="user-panel">
+                            <button className="boton-mu" onClick={() => setShowUserPanel(false)}>X</button>
+                            {avatar ? <Avatar {...avatar} /> : <div className="user-avatar-placeholder" />}
+                            <p>{user.username}</p>
+                            <button onClick={() => {
+                                setShowUserPanel(false);
+                                setShowAvatarCreator(true);
+                            }}
+                            >Editar Avatar</button>
+                        </div>
+                    </div>
+                )}
+                {showAvatarCreator && (
+                    <div className="avatar-editor-overlay">
+                        <div className="avatar-creator-modal">
+                            <AvatarCreator
+                                initialAvatar={avatar}
+                                onSave={async (newAvatar) => {
+                                    setAvatar({
+                                        muneco,
+                                        fondo: fondo1,
+                                        ...newAvatar,
+                                    });
+
+
+                                    setShowAvatarCreator(false);
+                                }}
+                                onClose={() => setShowAvatarCreator(false)}
+                            />
+                        </div>
+                    </div>
+                )}
 
                 <div className="footer-buttons-container">
-                    <button>About us</button>
+                    <button onClick={onAbout}>About us</button>
+
                     <div className="player-container">
                         <div className="player-hover">
-                            <button className="music-button"> AUDIO </button>
+                            <button className="music-button"> 🎵 </button>
                             <div className="player">
                                 <Player />
                             </div>
@@ -190,7 +292,12 @@ const LoginScreen = ({ loggedIn, onLogin, onStartGame, onLogout }) => {
                 </div>
             </div>
         </div>
+
     );
 };
 
+
 export default LoginScreen;
+
+
+
