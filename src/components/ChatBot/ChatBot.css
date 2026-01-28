@@ -4,22 +4,20 @@
   height: fit-content;
   font-family: inherit;
   z-index: 999;
+  
 }
 
 .chatbot-fab {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 115px;
+  height: 115px;
+  padding: 0;
   background: transparent;
-  border: none;
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: none;
-  transition: all 0.3s ease;
-  overflow: visible;
-  position: relative;
+  overflow: hidden;
 }
 
 .chatbot-fab:hover {
@@ -40,6 +38,7 @@
   border: 5px, solid, rgb(29, 133, 219);
   border-radius: 50%;
   background-color: rgb(241, 213, 149);
+
   
 }
 
