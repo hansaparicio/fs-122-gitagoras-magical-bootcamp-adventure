@@ -1,0 +1,28 @@
+.dot-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image:
+    radial-gradient(var(--dot-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+.team-showcase {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-showcase h2 {
+  position: relative;
+  z-index: 1;
+}
+
+.dot-grid {
+  transition: opacity 0.4s ease, background-image 0.6s ease;
+}
+

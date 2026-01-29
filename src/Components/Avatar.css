@@ -1,0 +1,270 @@
+root {
+  --bg-dark: #1c2233; /* azul noche */
+  --bg-panel: #ffffff; /* panel claro */
+  --accent-yellow: #f5e642; /* amarillo pixel */
+  --accent-pink: #ff6fb1; /* rosa mágico */
+  --border-dark: #2d344a;
+  --text-dark: #1c2233;
+  --text-muted: #7a7a7a;
+}
+
+/*avatar*/
+.avatar {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  overflow: hidden;
+  background: transparent;
+  border: 2px dashed #f5d547;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.avatar-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-layer:not(.avatar-fondo) {
+  z-index: 1;
+  object-fit: contain;
+}
+.avatar-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*modal*/
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-panel);
+  width: 90%;
+  max-width: 900px;
+  height: 80vh;
+  border-radius: 18px;
+  display: flex;
+  overflow: hidden;
+  border: 3px solid var(--accent-yellow);
+}
+
+.close-modal {
+  border: 2px solid yellow !important;
+  color: yellow !important;
+}
+
+.close-modal:hover {
+  background: #f5d547;
+  color: #1e2233;
+}
+
+/*editor*/
+
+.avatar-editor-layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-preview {
+  width: 40%;
+  background: transparent;
+  padding: 0;
+  color: var(--accent-yellow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-options {
+  width: 60%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/*tablas*/
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  padding: 6px 14px;
+  font-size: 14px;
+  border-radius: 20px;
+  border: 2px solid var(--accent-yellow);
+  background: #f0f0f0;
+  cursor: pointer;
+  white-space: nowrap;
+  color: black;
+  font-weight: bold;
+}
+
+.tab.active {
+  background: var(--accent-yellow);
+  color: white;
+  border-color: var(--accent-yellow);
+}
+
+/*opciones*/
+
+.options-content {
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.options-section {
+  max-width: 100%;
+}
+
+.options-section h2 {
+  margin-bottom: 16px;
+  text-align: center;
+  color: var(--accent-yellow);
+  font-size: 16px;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.options-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+}
+
+/*botones*/
+
+.option-button {
+  width: 90px;
+  height: 90px;
+  border: 2px solid var(--border-dark);
+  background: #ffffff;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 10px;
+  transition:
+    transform 0.15s,
+    border-color 0.15s;
+}
+
+.option-button:hover {
+  transform: scale(1.05);
+}
+
+.option-button.active {
+  border-color: var(--accent-yellow);
+}
+
+.option-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.option-button.empty {
+  border-style: dashed;
+  background: #fafafa;
+  color: darkgrey;
+  font-size: 18px;
+}
+
+.option-button.empty.active {
+  border-color: var(--accent-pink);
+  color: var(--accent-pink);
+}
+
+.guardar {
+  margin-top: 32px;
+  align-self: center;
+  padding: 12px 28px;
+  font-size: 16px;
+  background: var(--accent-yellow);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.guardar:hover {
+  opacity: 0.9;
+}
+
+/*fondo*/
+.avatar-fondo {
+  z-index: 0;
+  object-fit: cover;
+  transform: scale(1.25);
+  transform-origin: center;
+}
+
+/*user avatar*/
+
+.user-avatar .mi-usuario {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #f6d32d;
+  background: #1b1f2e7b;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-avatar .avatar {
+  transform: scale(1.2);
+  transform-origin: center;
+}
+
+.user-panel-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-panel-avatar .avatar {
+  transform: scale(1.5);
+  transform-origin: center;
+}
+
+.user-avatar avatar {
+  width: 100px;
+  border: none;
+}

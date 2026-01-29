@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useTime } from "../../context/TimeContext";
 import "./LibraryZone.css";
 import LibraryBackground from "../../assets/images/LibraryBackground.png";
 import CardGame from "./CardMatchingGame";
-import SandTimer from "./SandTimer";
 
 const INTRO_DIALOGS = [
     "Bienvenido a la biblioteca, joven aprendiz. Siéntete libre de venir y estudiar para mejorar tu magia y ampliar tus conocimientos.",
@@ -12,24 +12,27 @@ const INTRO_DIALOGS = [
 ];
 
 const END_DIALOGS = [
-    "¡Excelente trabajo joven aprendiz!. Ahora este conocimiento también forma parte de tí. Se que lograrás grandes cosas. Si no te importa, cuando puedas vuelve a mi despacho. Debo hablar algo contigo",
-]
+    "¡Excelente trabajo joven aprendiz!. Ahora este conocimiento también forma parte de tí. Se que lograrás grandes cosas. Si no te importa, cuando puedas vuelve a mi despacho. Debo hablar algo contigo.",
+    "Por cierto, me enorgullece otorgarte este Grimorio de conocimiento. Creo que te será útil. Y no, no hace falta que lo devuelvas a la biblioteca. Considéralo un regalo por tu gran hazaña."
+];
 
 export default function LibraryZone() {
+    const { startTimer, stopTimer, timeLeft } = useTime();
+
     const [phase, setPhase] = useState("intro");
     const [dialogIndex, setDialogIndex] = useState(0);
     const [typedDialog, setTypedDialog] = useState("");
     const [charIndex, setCharIndex] = useState(0);
     const [gameKey, setGameKey] = useState(0);
 
-
     useEffect(() => {
         let interval;
-        let text = phase === "intro"
-            ? INTRO_DIALOGS[dialogIndex]
-            : phase === "end"
-                ? END_DIALOGS[dialogIndex]
-                : "";
+        let text =
+            phase === "intro"
+                ? INTRO_DIALOGS[dialogIndex]
+                : phase === "end"
+                    ? END_DIALOGS[dialogIndex]
+                    : "";
 
         if (text) {
             setTypedDialog("");
@@ -47,41 +50,60 @@ export default function LibraryZone() {
         return () => clearInterval(interval);
     }, [phase, dialogIndex]);
 
+    useEffect(() => {
+        if (phase === "game") {
+            startTimer(180);
+        }
+
+        if (phase === "end" || phase === "finished") {
+            stopTimer();
+        }
+    }, [phase]);
+
+    useEffect(() => {
+        if (phase === "game" && timeLeft === 0) {
+            alert("⏳ Se acabó el tiempo. Inténtalo de nuevo.");
+            setGameKey(k => k + 1);
+            startTimer(50);
+        }
+    }, [timeLeft]);
+
     const nextDialog = () => {
         const currentDialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
+
         if (dialogIndex < currentDialogs.length - 1) {
             setDialogIndex(d => d + 1);
         } else if (phase === "intro") {
             setPhase("game");
         } else {
-            setPhase("finished"); a
+            setPhase("finished");
         }
     };
 
     const handleGameWin = () => {
+        stopTimer();
         setPhase("end");
         setDialogIndex(0);
     };
 
-    const handleTimeUp = () => {
-        alert("⏳ Se acabó el tiempo. Inténtalo de nuevo.");
-        setGameKey(k => k + 1);
-    };
-
     return (
-        <div className="library-root" style={{ backgroundImage: `url(${LibraryBackground})` }}>
+        <div
+            className="library-root"
+            style={{ backgroundImage: `url(${LibraryBackground})` }}
+        >
             {phase === "intro" && (
                 <div className="dialog-box">
                     <p>{typedDialog}</p>
                     {typedDialog.length === INTRO_DIALOGS[dialogIndex].length && (
-                        <button onClick={nextDialog} className="dialog-btn">Continuar</button>
+                        <button onClick={nextDialog} className="dialog-btn">
+                            Continuar
+                        </button>
                     )}
                 </div>
             )}
 
             {phase === "game" && (
                 <div className="game-container">
-                    <SandTimer seconds={180} onTimeUp={handleTimeUp} />
                     <CardGame key={gameKey} onComplete={handleGameWin} />
                 </div>
             )}
@@ -90,7 +112,9 @@ export default function LibraryZone() {
                 <div className="dialog-box">
                     <p>{typedDialog}</p>
                     {typedDialog.length === END_DIALOGS[dialogIndex].length && (
-                        <button onClick={nextDialog} className="dialog-btn">Continuar</button>
+                        <button onClick={nextDialog} className="dialog-btn">
+                            Continuar
+                        </button>
                     )}
                 </div>
             )}

@@ -1,0 +1,19 @@
+.sand-timer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  color: white;
+}
+
+.sand-timer img {
+  width: 40px;
+}
+
+.sand-timer.warning {
+  filter: drop-shadow(0 0 10px gold);
+}
+
+.sand-timer.danger {
+  filter: drop-shadow(0 0 12px red);
+}

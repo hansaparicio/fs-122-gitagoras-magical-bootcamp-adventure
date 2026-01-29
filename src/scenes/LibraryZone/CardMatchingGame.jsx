@@ -149,10 +149,13 @@ export default function CardGame({ onComplete }) {
                 />
                 <span className="card-text">{card.text}</span>
               </div>
+
+              {card.flipped && <div className="sparkles"></div>}
             </div>
           </div>
         ))}
       </div>
+
       {result === "error" && (
         <div className="dialog-box">
           <p>¡No puedes escoger dos cartas del mismo tipo!</p>

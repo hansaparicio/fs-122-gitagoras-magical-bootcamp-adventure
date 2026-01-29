@@ -1,5 +1,6 @@
 {
 	"name": "react-hello-webapp",
+	"type": "module",
 	"engines": {
 		"node": ">=20.0.0"
 	},
@@ -32,10 +33,13 @@
 		"@types/react": "^18.2.18",
 		"@types/react-dom": "^18.2.7",
 		"@vitejs/plugin-react": "^4.0.4",
+		"autoprefixer": "^10.4.20",
 		"eslint": "^8.46.0",
 		"eslint-plugin-react": "^7.33.1",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.3",
+		"postcss": "^8.4.49",
+		"tailwindcss": "^3.4.14",
 		"vite": "^7.3.1"
 	},
 	"babel": {
@@ -55,9 +59,10 @@
 	},
 	"dependencies": {
 		"@madzadev/audio-player": "^2.1.14",
-		"@react-three/drei": "^10.7.7",
+		"@react-three/drei": "^9.0.0",
 		"@react-three/fiber": "^8.18.0",
 		"html2canvas": "^1.4.1",
+		"lucide-react": "^0.563.0",
 		"prop-types": "^15.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

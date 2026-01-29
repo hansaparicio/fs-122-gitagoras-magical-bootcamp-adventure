@@ -1,0 +1,30 @@
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+.loader-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader-gif {
+  width: 120px;
+  height: auto;
+}
+
+.loader-text {
+  margin-top: 16px;
+  color: white;
+  font-family: 'Press Start 2P';
+  font-size: 14px;
+}

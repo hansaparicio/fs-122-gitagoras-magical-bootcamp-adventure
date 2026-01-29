@@ -50,7 +50,7 @@ const QUESTIONS = [
     }
 ];
 
-const BeginningChapter = () => {
+const BeginningChapter = ({ onComplete }) => {
     const [phase, setPhase] = useState("blackIn");
     const [dialogIndex, setDialogIndex] = useState(0);
     const [typedText, setTypedText] = useState("");
@@ -180,6 +180,10 @@ const BeginningChapter = () => {
             link.download = `${playerName}_MagicScroll.png`;
             link.href = canvas.toDataURL("image/png");
             link.click();
+            // Trigger completion after download
+            setTimeout(() => {
+                if (onComplete) onComplete();
+            }, 1000);
         });
     };
 

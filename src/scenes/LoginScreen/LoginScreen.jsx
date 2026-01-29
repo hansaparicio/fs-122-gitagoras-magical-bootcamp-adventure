@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
-import Player from "../../Components/Player";
+import Avatar from "../../components/Avatar";
+import AvatarCreator from "../../components/AvatarCreator";
+import Player from "../../components/mp3Player/mp3Player";
 
 
-const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
+
+
+const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout, onQuizz }) => {
     const [mode, setMode] = useState(null);
     const [muted, setMuted] = useState(false);
     const [formData, setFormData] = useState({
@@ -25,7 +29,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
             return;
         }
         try {
-            const res = await fetch("http://localhost:5000/api/register", {
+            const res = await fetch("http://127.0.0.1:3001/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -46,7 +50,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch("http://localhost:5000/api/login", {
+            const res = await fetch("http://127.0.0.1:3001/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -74,12 +78,9 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
                 {!loggedIn && (
                     <>
                         <div className="main-buttons">
-                            <button onClick={() => setMode("register")}>
-                                Crear usuario
-                            </button>
-                            <button onClick={() => setMode("login")}>
-                                Iniciar sesión
-                            </button>
+                            <button onClick={() => setMode("register")}>Crear usuario</button>
+                            <button onClick={() => setMode("login")}>Iniciar sesión</button>
+                            <button onClick={onQuizz} style={{ background: "#9333ea" }}>Jugar Quiz (Demo)</button>
                         </div>
 
                         {mode === "register" && (
@@ -165,11 +166,23 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
                         }}
                     >
                         <h2>Bienvenido a la aventura</h2>
-                        <p>
-                            Pulsa "Entrar al mundo" si quieres iniciar el juego.
-                        </p>
-                        <button type="button" onClick={onStartGame} style={{ background: "#5458a3" }}>
+                        <p>Pulsa "Entrar al mundo" si quieres iniciar el juego.</p>
+                        <button
+                            type="button"
+                            onClick={onStartGame}
+                            style={{ background: "#5458a3" }}
+                        >
                             Entrar al mundo
+                        </button>
+                        <button
+                            type="button"
+                            onClick={onQuizz}
+                            style={{
+                                marginTop: "20px",
+                                background: "#9333ea",
+                            }}
+                        >
+                            Jugar Quiz
                         </button>
                         <button
                             type="button"
@@ -183,13 +196,80 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
                         </button>
                     </div>
                 )}
+                {/* y de aqui */}
+                {/* <div
+                    className="user-badge"
+                    onClick={() => {
+                        if (!user) return;
+                        setShowUserPanel(true);
+                    }}
+                >
+                    {savedAvatar ? (
+                        <div className="user-avatar">
+                            <Avatar {...savedAvatar} />
+                        </div>
+                    ) : (
+                        <div className="user-avatar placeholder" />
+                    )}
+
+                    <span className="username">
+                        {user ? user.username : ""}
+                    </span>
+
+                </div>
+                {showUserPanel && user && (
+                    <div className="user-panel-overlay">
+                        <div className="user-panel">
+                            <button
+                                className="close-user-panel"
+                                onClick={() => setShowUserPanel(false)}
+                            >
+                                ✕
+                            </button>
+
+                            <h2>Mi usuario</h2>
+
+                            <div className="user-panel-avatar">
+                                {savedAvatar ? (
+                                    <Avatar {...savedAvatar} />
+                                ) : (
+                                    <div className="user-avatar placeholder" />
+                                )}
+                            </div>
+
+                            <p className="user-panel-name">{user?.username}</p>
+
+                            <button
+                                className="edit-avatar-btn"
+                                onClick={() => setShowAvatarCreator(true)}
+                            >
+                                Editar avatar
+                            </button>
+
+                            {showAvatarCreator && (
+                                <div className="modal-overlay">
+                                    <div className="modal-content">
+                                        <button onClick={() => setShowAvatarCreator(false)}>x</button>
+                                        <AvatarCreator
+                                            onClose={() => setShowAvatarCreator(false)}
+                                            onSave={(avatar) => {
+                                                setSavedAvatar(avatar);
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+                 aqui */}
 
                 <div className="footer-buttons-container">
-                    <button>About us</button>
+                    <button onClick={onAbout}>About us</button>
 
                     <div className="player-container">
                         <div className="player-hover">
-                            <button className="music-button"> 🎶 </button>
+                            <button className="music-button"> AUDIO </button>
                             <div className="player">
                                 <div className="player-inner">
                                     <Player />
@@ -198,11 +278,10 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout }) => {
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+        </div >
     );
 };
 
 export default LoginScreen;
-
-
