@@ -5,6 +5,7 @@ import LoginScreen from "./scenes/LoginScreen/LoginScreen";
 import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
 import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
 import CustomCursor from "./CustomCursor";
+import { IdleProvider } from "./context/IdleContext";
 
 
 
@@ -12,33 +13,35 @@ import CustomCursor from "./CustomCursor";
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [inGame, setInGame] = useState(false);
-  const [showAbout, setShowAbout] = useState(false);
-  const [username, setUsername] = useState(null);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [inGame, setInGame] = useState(false);
+    const [showAbout, setShowAbout] = useState(false);
+    const [username, setUsername] = useState(null);
 
-  return (
-    <>
-      <CustomCursor />
+    return (
 
-      {!inGame && !showAbout && (
-        <LoginScreen
-          loggedIn={loggedIn}
-          onStartGame={() => setInGame(true)}
-          onLogout={() => setLoggedIn(false)}
-          onAbout={() => setShowAbout(true)}
-          onLogin={() => setLoggedIn(true)}
+        <IdleProvider>
+            <CustomCursor />
 
-        />
-      )}
+            {!inGame && !showAbout && (
+                <LoginScreen
+                    loggedIn={loggedIn}
+                    onStartGame={() => setInGame(true)}
+                    onLogout={() => setLoggedIn(false)}
+                    onAbout={() => setShowAbout(true)}
+                    onLogin={() => setLoggedIn(true)}
 
-      {showAbout && !inGame && (
-        <TeamShowcase onBack={() => setShowAbout(false)} />
-      )}
+                />
+            )}
 
-      {inGame && <BeginningChapter />}
-    </>
-  );
+            {showAbout && !inGame && (
+                <TeamShowcase onBack={() => setShowAbout(false)} />
+            )}
+
+            {inGame && <BeginningChapter />}
+        </IdleProvider>
+
+    );
 }
 
 export default App; */

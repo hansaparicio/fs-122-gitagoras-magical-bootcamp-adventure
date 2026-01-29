@@ -6,7 +6,7 @@ import AvatarCreator from "../../Components/AvatarCreator";
 import Player from "../../components/mp3Player/mp3Player"; // minúsculas
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
-
+import { useIdle } from "../../context/IdleContext";
 
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
@@ -18,12 +18,20 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
     const [user, setUser] = useState(null);
     const [avatar, setAvatar] = useState(null);
 
+
     const [formData, setFormData] = useState({
         username: "",
         password: "",
         repeatPassword: "",
         email: "",
     });
+    const { isIdle } = useIdle();
+    useEffect(() => {
+        if (isIdle) {
+            alert("usuario idle");
+        }
+    }, [isIdle]);
+
 
     useEffect(() => {
         const fetchMe = async () => {

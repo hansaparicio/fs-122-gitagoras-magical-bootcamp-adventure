@@ -78,9 +78,6 @@
   cursor: pointer;
 }
 
-/* =========================
-   AVATAR CREATOR – OVERLAY
-========================= */
 .avatar-editor-layout .avatar-preview {
   width: 40%;
   display: flex;
@@ -124,19 +121,11 @@
   overflow: hidden;
 }
 
-/* =========================
-   LAYOUT INTERNO
-========================= */
-
 .avatar-editor-layout {
   width: 100%;
   height: 100%;
   display: flex;
 }
-
-/* =========================
-   PREVIEW (izquierda)
-========================= */
 
 .avatar-preview {
   width: 40%;
@@ -160,10 +149,6 @@
   transform-origin: center;
 }
 
-/* =========================
-   OPCIONES (derecha)
-========================= */
-
 .avatar-options {
   width: 60%;
   padding-left: 30px;
@@ -173,10 +158,6 @@
   flex-direction: column;
   justify-content: flex-start;
 }
-
-/* =========================
-   TABS
-========================= */
 
 .tabs {
   display: flex;
@@ -202,9 +183,6 @@
   color: #1c2233;
 }
 
-/* =========================
-   GRID DE OPCIONES
-========================= */
 .options-content {
   margin-top: 10px;
 }
@@ -230,9 +208,6 @@
   object-fit: contain;
 }
 
-/* =========================
-   BOTÓN GUARDAR
-========================= */
 .user-badge .avatar,
 .user-panel .avatar {
   position: relative;
@@ -243,7 +218,6 @@
   justify-content: center;
 }
 
-/* avatar interno */
 .user-badge .avatar .avatar,
 .user-panel .avatar .avatar {
   width: 100%;
@@ -251,7 +225,6 @@
   position: relative;
 }
 
-/* capas del avatar */
 .user-badge .avatar img,
 .user-panel .avatar img {
   position: absolute;
