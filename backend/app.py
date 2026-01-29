@@ -1,35 +1,11 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager
-from flask_sqlalchemy import SQLAlchemy
-from api.models import db
-from api.routes import api
-
-app = Flask(_name_)
-CORS(app)
-
-app.config["JWT_SECRET_KEY"] = "supersecretkey"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-db.init_app(app)
-jwt = JWTManager(app)
-
-app.register_blueprint(api, url_prefix="/api")
-
-with app.app_context():
-    db.create_all()
-
-if _name_ == "_main_":
-    app.run(port=5000, debug=True, use_reloader=False)
-from flask_jwt_extended import (JWTManager, create_access_token, jwt_required, get_jwt_identity)
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import os
- 
 
-
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 
 
@@ -158,5 +134,5 @@ def protected():
 
 
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     app.run(debug=True, port=5000)
