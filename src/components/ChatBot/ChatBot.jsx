@@ -7,6 +7,7 @@ import carolIcon from "../../assets/images/Chatbox/carol.png";
 import carolWorried from "../../assets/images/Chatbox/carol_worried.png";
 import carolMoreWorried from "../../assets/images/Chatbox/carol_more_worried.png";
 
+
 const ChatBot = ({ insideShell }) => {
   const { timeLeft } = useTime();
 

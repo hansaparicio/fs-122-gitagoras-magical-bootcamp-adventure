@@ -17,10 +17,10 @@ const STACKS = [
     { id: "react", title: "El castillo cambiante", image: ReactStack, unlocked: false }
 ];
 
-export default function StackScreen({ onBackToMenu }) {
+export default function StackScreen({ onBackToMenu, onStart }) {
     const handleStart = (stackId) => {
         if (stackId === "html") {
-            console.log("Ir al mapa de HTML");
+            onStart();
         }
     };
 
