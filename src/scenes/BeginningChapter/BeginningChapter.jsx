@@ -16,7 +16,7 @@ encontrarse un poco mareado. ¡Bienvenido, joven aprendiz, a la academia del có
     `A lo largo de tu estancia aquí aprenderás los conceptos básicos de la magia de la programación.
 Lenguajes, símbolos y elementos que dan vida a la web.`,
     `Por cierto… qué malos modales los míos.
-Me presento, soy el gran mago Gitágoras, director de esta academia. Mi mayor orgullo es compartir mi sabiduría con futuros magos del código como tú`,
+Me presento, soy el gran mago Gitágoras, director de esta academia. Mi mayor orgullo es compartir mi sabiduría con futuros magos del código como tú.`,
     `Pero dejemos las charlas pesadas para más tarde.
 Cuéntame algo sobre ti.`
 ];
@@ -45,23 +45,21 @@ const QUESTIONS = [
     },
     {
         type: "options",
-        text: "Debo advertirte que esta magia conlleva un aprendizaje denso. ¿Estarás dispuesto a no juzgarte cuando te equivoques?",
+        text: "Debo advertirte que dominar esta magia conlleva esfuerzo y, muchas veces, incertidumbre. ¿Estarás dispuesto a no juzgarte cuando te equivoques?",
         options: ["Sí, seré paciente", "Sí, aunque a veces me cueste", "No estoy seguro, pero lo intentaré"]
     }
 ];
 
-const BeginningChapter = () => {
+const BeginningChapter = ({ onFinish }) => {
     const [phase, setPhase] = useState("blackIn");
     const [dialogIndex, setDialogIndex] = useState(0);
     const [typedText, setTypedText] = useState("");
-    const [charIndex, setCharIndex] = useState(0);
     const [isTyping, setIsTyping] = useState(false);
 
     const [showQuestions, setShowQuestions] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
     const [typedQuestion, setTypedQuestion] = useState("");
     const [typedOptions, setTypedOptions] = useState([]);
-    const [answers, setAnswers] = useState([]);
     const [playerName, setPlayerName] = useState("");
     const [optionsVisible, setOptionsVisible] = useState(false);
 
@@ -82,38 +80,44 @@ const BeginningChapter = () => {
     useEffect(() => {
         if (phase !== "showScene" || showQuestions) return;
         setTypedText("");
-        setCharIndex(0);
         setIsTyping(true);
+        let i = 0;
         const interval = setInterval(() => {
-            setCharIndex(prev => {
-                const next = prev + 1;
-                setTypedText(DIALOGUES[dialogIndex].slice(0, next));
-                if (next >= DIALOGUES[dialogIndex].length) {
-                    clearInterval(interval);
-                    setIsTyping(false);
-                }
-                return next;
-            });
+            i++;
+            setTypedText(DIALOGUES[dialogIndex].slice(0, i));
+            if (i >= DIALOGUES[dialogIndex].length) {
+                clearInterval(interval);
+                setIsTyping(false);
+            }
         }, 30);
         return () => clearInterval(interval);
     }, [dialogIndex, phase, showQuestions]);
+
+    const handleContinueDialog = () => {
+        if (dialogIndex < DIALOGUES.length - 1) {
+            setDialogIndex(d => d + 1);
+        } else {
+            setQuestionIndex(0);
+            setShowQuestions(true);
+        }
+    };
 
     useEffect(() => {
         if (!showQuestions || finalDialog) return;
         setTypedQuestion("");
         setTypedOptions([]);
         setOptionsVisible(false);
+
         let q = QUESTIONS[questionIndex];
-        let charIdx = 0;
-        const questionInterval = setInterval(() => {
-            charIdx++;
-            setTypedQuestion(q.text.slice(0, charIdx));
-            if (charIdx >= q.text.length) {
-                clearInterval(questionInterval);
+        let i = 0;
+        const interval = setInterval(() => {
+            i++;
+            setTypedQuestion(q.text.slice(0, i));
+            if (i >= q.text.length) {
+                clearInterval(interval);
                 setOptionsVisible(true);
                 if (q.type === "options") {
-                    const emptyOptions = Array(q.options.length).fill("");
-                    setTypedOptions(emptyOptions);
+                    setTypedOptions(q.options.map(() => ""));
                     q.options.forEach((opt, idx) => {
                         let c = 0;
                         const optInterval = setInterval(() => {
@@ -129,20 +133,29 @@ const BeginningChapter = () => {
                 }
             }
         }, 30);
-        if (q.type === "text") setOptionsVisible(true);
     }, [questionIndex, showQuestions, finalDialog]);
 
-    const handleContinueDialog = () => {
-        if (dialogIndex < DIALOGUES.length - 1) setDialogIndex(dialogIndex + 1);
-        else setShowQuestions(true);
+    const handleAnswer = (answer) => {
+        if (QUESTIONS[questionIndex].type === "text") setPlayerName(answer);
+        if (questionIndex < QUESTIONS.length - 1) {
+            setQuestionIndex(i => i + 1);
+        } else {
+            setFinalDialog(true);
+        }
     };
 
-    const handleAnswer = (option) => {
-        if (QUESTIONS[questionIndex].type === "text") setPlayerName(option);
-        setAnswers([...answers, option]);
-        if (questionIndex < QUESTIONS.length - 1) setQuestionIndex(questionIndex + 1);
-        else setFinalDialog(true);
-    };
+    useEffect(() => {
+        if (!finalDialog) return;
+        setTypedFinalDialog("");
+        let i = 0;
+        const text = "Perfecto, entonces firma este pergamino y serás oficialmente un nuevo alumno de nuestra prestigiosa academia.";
+        const interval = setInterval(() => {
+            i++;
+            setTypedFinalDialog(text.slice(0, i));
+            if (i >= text.length) clearInterval(interval);
+        }, 30);
+        return () => clearInterval(interval);
+    }, [finalDialog]);
 
     const handleSignScroll = () => {
         setFinalDialog(false);
@@ -151,26 +164,9 @@ const BeginningChapter = () => {
     };
 
     useEffect(() => {
-        if (finalDialog) {
-            setTypedFinalDialog("");
-            let text = "Perfecto, entonces firma este pergamino y serás oficialmente un nuevo alumno de nuestra prestigiosa academia";
-            let i = 0;
-            const interval = setInterval(() => {
-                i++;
-                setTypedFinalDialog(text.slice(0, i));
-                if (i >= text.length) clearInterval(interval);
-            }, 30);
-        }
-    }, [finalDialog]);
-
-    useEffect(() => {
-        if (phase === "pergamino") {
-            setScrollTextVisible(false);
-            setScrollVisible(false);
-            const t1 = setTimeout(() => setScrollVisible(true), 50);
-            const t2 = setTimeout(() => setScrollTextVisible(true), 500);
-            return () => { clearTimeout(t1); clearTimeout(t2); };
-        }
+        if (phase !== "pergamino") return;
+        setScrollVisible(true);
+        setTimeout(() => setScrollTextVisible(true), 500);
     }, [phase]);
 
     const handleDownload = () => {
@@ -192,7 +188,11 @@ const BeginningChapter = () => {
             {phase === "showScene" && !showQuestions && (
                 <div className="dialog-box">
                     <p className="dialog-text">{typedText}</p>
-                    {!isTyping && <button className="dialog-btn" onClick={handleContinueDialog}>Continuar</button>}
+                    {!isTyping && (
+                        <button className="dialog-btn" onClick={handleContinueDialog}>
+                            Continuar
+                        </button>
+                    )}
                 </div>
             )}
 
@@ -202,37 +202,61 @@ const BeginningChapter = () => {
 
                     {QUESTIONS[questionIndex].type === "text" && optionsVisible && (
                         <>
-                            <input type="text" className="dialog-input" value={playerName} onChange={e => setPlayerName(e.target.value)} placeholder="Escribe tu nombre" />
-                            <button className="dialog-btn" onClick={() => { if (playerName.trim() !== "") handleAnswer(playerName); }}>Continuar</button>
+                            <input
+                                className="dialog-input"
+                                value={playerName}
+                                onChange={e => setPlayerName(e.target.value)}
+                            />
+                            <button className="dialog-btn" onClick={() => handleAnswer(playerName)}>
+                                Continuar
+                            </button>
                         </>
                     )}
 
-                    {QUESTIONS[questionIndex].type === "options" && optionsVisible && (
+                    {QUESTIONS[questionIndex].type === "options" && optionsVisible &&
                         typedOptions.map((opt, idx) => (
-                            <button key={idx} className="dialog-btn dialog-option" onClick={() => handleAnswer(QUESTIONS[questionIndex].options[idx])}>{opt}</button>
+                            <button
+                                key={idx}
+                                className="dialog-btn dialog-option"
+                                onClick={() => handleAnswer(QUESTIONS[questionIndex].options[idx])}
+                            >
+                                {opt}
+                            </button>
                         ))
-                    )}
+                    }
                 </div>
             )}
 
             {finalDialog && (
                 <div className="dialog-box">
                     <p className="dialog-text">{typedFinalDialog}</p>
-                    {typedFinalDialog.length === "Perfecto, entonces firma este pergamino y serás oficialmente un nuevo alumno de nuestra prestigiosa academia".length && (
-                        <button className="dialog-btn" onClick={handleSignScroll}>Firmar</button>
-                    )}
+                    <button className="dialog-btn" onClick={handleSignScroll}>
+                        Firmar
+                    </button>
                 </div>
             )}
 
             {phase === "pergamino" && (
                 <div className={`pergamino-container ${scrollVisible ? "visible" : ""}`} id="pergamino">
-                    <img src={MagicScroll} alt="Pergamino mágico" className="pergamino-img" />
+                    <img src={MagicScroll} className="pergamino-img" />
                     <div className={`pergamino-text ${scrollTextVisible ? "visible" : ""}`}>
                         {playerName}
                     </div>
-                    <button className="dialog-btn download-btn" onClick={handleDownload}>
-                        Descargar
-                    </button>
+
+                    <div style={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                        <button className="dialog-btn" onClick={handleDownload}>
+                            Descargar
+                        </button>
+                        <button
+                            className="dialog-btn"
+                            onClick={() => {
+                                localStorage.setItem("scrollSigned", "true");
+                                onFinish();
+                            }}
+                        >
+                            Continuar
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

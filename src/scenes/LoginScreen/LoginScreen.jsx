@@ -3,7 +3,6 @@ import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Avatar from "../../Components/Avatar";
 import AvatarCreator from "../../Components/AvatarCreator";
-
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";
@@ -93,10 +92,12 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
         if (formData.password !== formData.repeatPassword) {
             alert("Las contraseñas no coinciden");
             return;
         }
+
         try {
             const res = await fetch("http://127.0.0.1:5000/api/register", {
                 method: "POST",
@@ -107,6 +108,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                     email: formData.email,
                 }),
             });
+
             const data = await res.json();
             if (!res.ok) throw new Error(data.msg || "Error al registrar");
 
@@ -130,6 +132,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
         try {
             const res = await fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
@@ -139,8 +142,10 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                     password: formData.password,
                 }),
             });
+
             const data = await res.json();
-            if (!res.ok) throw new Error(data.msg || "Error al loguear");
+            if (!res.ok) throw new Error(data.msg);
+
             localStorage.setItem("token", data.access_token);
             // onLogin(formData.username);
 
@@ -177,32 +182,26 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                                 <button type="button" className="close-btn" onClick={() => setMode(null)}>✕</button>
                                 <h2>Crear usuario</h2>
                                 <input
-                                    type="text"
                                     name="username"
                                     placeholder="Nombre de usuario"
-                                    maxLength={15}
-                                    value={formData.username}
                                     onChange={handleChange}
                                 />
                                 <input
-                                    type="password"
                                     name="password"
-                                    placeholder="Contraseña"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                />
-                                <input
                                     type="password"
-                                    name="repeatPassword"
-                                    placeholder="Repetir contraseña"
-                                    value={formData.repeatPassword}
+                                    placeholder="Contraseña"
                                     onChange={handleChange}
                                 />
                                 <input
-                                    type="email"
+                                    name="repeatPassword"
+                                    type="password"
+                                    placeholder="Repetir contraseña"
+                                    onChange={handleChange}
+                                />
+                                <input
                                     name="email"
+                                    type="email"
                                     placeholder="Correo electrónico"
-                                    value={formData.email}
                                     onChange={handleChange}
                                 />
                                 <button type="submit">Registrar</button>
@@ -220,20 +219,17 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                                 </button>
                                 <h2>Iniciar sesión</h2>
                                 <input
-                                    type="text"
                                     name="username"
                                     placeholder="Nombre de usuario"
-                                    value={formData.username}
                                     onChange={handleChange}
                                 />
                                 <input
-                                    type="password"
                                     name="password"
+                                    type="password"
                                     placeholder="Contraseña"
-                                    value={formData.password}
                                     onChange={handleChange}
                                 />
-                                <button type="submit">Entrar al juego</button>
+                                <button type="submit">Iniciar sesión</button>
                             </form>
                         )}
                     </>
@@ -242,28 +238,19 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                 {loggedIn && (
                     <div
                         className="panel"
-                        style={{
-                            marginTop: "50px",
-                            width: "500px",
-                            textAlign: "center",
-                        }}
+                        style={{ marginTop: "50px", width: "500px", textAlign: "center" }}
                     >
                         <h2>Bienvenido a la aventura</h2>
                         <p>Pulsa "Entrar al mundo" si quieres iniciar el juego.</p>
                         <button
-                            type="button"
                             onClick={onStartGame}
                             style={{ background: "#5458a3" }}
                         >
                             Entrar al mundo
                         </button>
                         <button
-                            type="button"
                             onClick={onLogout}
-                            style={{
-                                marginTop: "20px",
-                                background: "#ff5c5c",
-                            }}
+                            style={{ marginTop: "20px", background: "#ff5c5c" }}
                         >
                             Cerrar sesión
                         </button>

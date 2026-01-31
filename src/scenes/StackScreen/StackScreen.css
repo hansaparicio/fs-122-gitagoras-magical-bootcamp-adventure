@@ -1,0 +1,116 @@
+.stack-screen {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Press Start 2P';
+  color: black;
+}
+
+.stack-title {
+  margin-top: 20px;
+  font-size: 24px;
+  text-align: center;
+  background: rgba(245, 177, 140, 0.95);
+  border: 4px solid #000;
+  border-radius: 12px;
+  padding: 14px 17px;
+}
+
+.stack-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  width: 85%;
+  max-width: 1100px;
+}
+
+.stack-card {
+  background: rgba(245, 216, 140, 0.9);
+  border: 4px solid #000;
+  border-radius: 14px;
+  padding: 5px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stack-card img {
+  width: 100%;
+  max-width: 140px;
+  margin-bottom: 14px;
+  transition: opacity 0.2s ease;
+  border: solid 4px black;
+  border-radius: 15px;
+}
+
+.stack-card h3 {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.stack-card button {
+  font-family: 'Press Start 2P';
+  font-size: 14px;
+  padding: 4px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 5px solid black;
+  background: #4aa3ff;
+}
+
+.stack-card button:hover{
+  background-color: #1668c0;
+}
+
+.stack-card.locked img {
+  opacity: 0.6;
+}
+
+.stack-card.locked button {
+  background: #000000;
+  cursor: not-allowed;
+  border: solid 5px #4aa3ff;
+  font-size: 20px;
+}
+
+.stack-card:hover:not(.locked) {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 0 #000;
+}
+
+.stack-footer {
+  margin-bottom: 24px;
+  font-size: 12px;
+  opacity: 0.9;
+  text-align: center;
+  background: rgba(245, 177, 140, 0.95);
+  border: 4px solid #000;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-top: 13px;
+  font-style: italic;
+}
+.BackToMenuButton {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  font-family: "Press Start 2P", cursive;
+  padding: 10px 14px;
+  background-color: #4aa3ff;
+  border: 4px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.BackToMenuButton:hover {
+  background-color: #1668c0;
+}
+
+.BackToMenuButton:active {
+  transform: translateY(2px);
+}
