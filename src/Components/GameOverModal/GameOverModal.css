@@ -20,9 +20,9 @@
 
 .gameover-buttons {
   display: flex;
-  justify-content: space-between;
-  gap: 60px;
-  margin-top: 30px;
+  justify-content: center;
+  gap: 80px;
+  margin-top: 20px;
 }
 
 @keyframes popIn {
@@ -34,4 +34,24 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.dialog-btn-Retry, .dialog-btn-Exit{
+    background-color: #4aa3ff;
+  color: black;
+  border: solid 2px #000000;
+  padding: 6px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 25px;
+  font-family: "Press Start 2P";
+  border-radius: 10px;
+}
+
+.dialog-btn-Retry:hover {
+    background-color: #125eab;
+ 
+}
+.dialog-btn-Exit:hover{
+   background-color: #125eab;
 }

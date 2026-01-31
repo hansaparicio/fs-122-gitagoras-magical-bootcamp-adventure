@@ -12,6 +12,9 @@ import bgImageSrc from "./assets/bg_world.png";
 import studentMageSprite from "./assets/student_mage.png";
 import navMaskSrc from "./assets/nav_mask.png";
 
+import gitagorasImage from "../../assets/backgrounds/Gitagoras.jpeg";
+
+
 import zoneEnterSoundSrc from "./assets/sounds/zone-enter.mp3";
 import interactSoundSrc from "./assets/sounds/interact.mp3";
 
@@ -20,10 +23,77 @@ const BASE_HEIGHT = 982;
 const PARTICLE_COUNT = 60;
 const SPARK_COUNT = 24;
 
+
+
+const GITAGORAS_FALLBACK = [
+  "¡Saludos, aprendiz! Soy Gitágoras. Ahora mismo estoy MUY ocupado.",
+  "Estoy 'alineando los astros del código'... o sea, depurando errores otra vez.",
+  "Si ves humo azul en la torre, es normal: es mi café encantado.",
+  "Vuelve luego, aprendiz. Mientras tanto, no toques nada que brille... salvo tu curiosidad."
+];
+
+
 export default function WorldScene({ stackId, onBack, onEnterZone }) {
   const canvasRef = useRef(null);
   const [scale, setScale] = useState(1);
   const [fontReady, setFontReady] = useState(false);
+
+  const [showGitagoras, setShowGitagoras] = useState(false);
+  const [gitagorasDialogues, setGitagorasDialogues] = useState(GITAGORAS_FALLBACK);
+  const [gitagorasIndex, setGitagorasIndex] = useState(0);
+  const [gitagorasTyped, setGitagorasTyped] = useState("");
+  const [gitagorasTyping, setGitagorasTyping] = useState(false);
+
+  const getRandomDialogues = (source, count = 4) =>
+    [...source]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, count);
+
+  const generateGitagorasDialogues = async () => {
+    try {
+      const apiKey = import.meta.env.VITE_MISTRAL_API_KEY;
+      if (!apiKey) throw new Error("Missing API key");
+
+      const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: "mistral-tiny-latest",
+          messages: [
+            {
+              role: "system",
+              content:
+                "Eres Gitágoras, un mago ocupado. Genera 4 frases cortas y graciosas en español para decirle al aprendiz que estás ocupado. Devuelve solo las frases, una por línea."
+            },
+            {
+              role: "user",
+              content: "Necesito 4 frases graciosas para el aprendiz."
+            }
+          ],
+          max_tokens: 120,
+          temperature: 0.9
+        })
+      });
+
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      const data = await response.json();
+      const content = data?.choices?.[0]?.message?.content || "";
+
+      const lines = content
+        .split(/\n+/)
+        .map(line => line.replace(/^[\-\d\.\)\s•]+/, "").trim())
+        .filter(Boolean);
+
+      const nextDialogues = lines.length ? lines.slice(0, 4) : getRandomDialogues(GITAGORAS_FALLBACK);
+      setGitagorasDialogues(nextDialogues);
+    } catch (error) {
+      setGitagorasDialogues(getRandomDialogues(GITAGORAS_FALLBACK));
+    }
+  };
+
 
   useEffect(() => {
     const updateScale = () => {
@@ -241,7 +311,18 @@ export default function WorldScene({ stackId, onBack, onEnterZone }) {
       if (inputState.interact && !wasInteractPressed && activeZone) {
         interactSound.currentTime = 0;
         interactSound.play();
+
         onEnterZone?.(activeZone.id);
+
+        if (activeZone.id === "zone_3") {
+          setGitagorasIndex(0);
+          setGitagorasDialogues(["Un momento..."]);
+          setShowGitagoras(true);
+          generateGitagorasDialogues();
+        } else {
+          onEnterZone?.(activeZone.id);
+        }
+
       }
 
       wasInteractPressed = inputState.interact;
@@ -265,6 +346,33 @@ export default function WorldScene({ stackId, onBack, onEnterZone }) {
 
   }, [fontReady, onEnterZone]);
 
+
+  useEffect(() => {
+    if (!showGitagoras) return;
+    setGitagorasTyped("");
+    setGitagorasTyping(true);
+    let i = 0;
+    const text = gitagorasDialogues[gitagorasIndex] || "";
+    const interval = setInterval(() => {
+      i += 1;
+      setGitagorasTyped(text.slice(0, i));
+      if (i >= text.length) {
+        clearInterval(interval);
+        setGitagorasTyping(false);
+      }
+    }, 30);
+    return () => clearInterval(interval);
+  }, [showGitagoras, gitagorasIndex, gitagorasDialogues]);
+
+  const handleGitagorasContinue = () => {
+    if (gitagorasIndex < gitagorasDialogues.length - 1) {
+      setGitagorasIndex(i => i + 1);
+    } else {
+      setShowGitagoras(false);
+    }
+  };
+
+
   return (
     <div className="worldscene-root">
       <div className="worldscene-scale" style={{ transform: `scale(${scale})` }}>
@@ -278,6 +386,29 @@ export default function WorldScene({ stackId, onBack, onEnterZone }) {
           <button onClick={onBack} className="worldscene-back">
             BACK
           </button>
+
+          {showGitagoras && (
+            <div className="worldscene-overlay">
+              <button
+                className="worldscene-back-to-map"
+                onClick={() => setShowGitagoras(false)}
+              >
+                VOLVER
+              </button>
+              <div className="worldscene-image-modal">
+                <img src={gitagorasImage} alt="Gitagoras" className="worldscene-gitagoras-image" />
+                <div className="worldscene-dialog-box">
+                  <p className="worldscene-dialog-text">{gitagorasTyped}</p>
+                  {!gitagorasTyping && (
+                    <button className="worldscene-dialog-btn" onClick={handleGitagorasContinue}>
+                      Continuar
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     </div>

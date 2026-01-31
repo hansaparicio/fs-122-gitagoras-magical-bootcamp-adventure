@@ -13,8 +13,9 @@ export default function RuneMatchGame({ onComplete }) {
     fetch("http://localhost:5000/api/html-runes-hf")
       .then(res => res.json())
       .then(data => {
-        setPairs(data.pairs);
-        setShuffledDefs([...data.pairs].sort(() => Math.random() - 0.5));
+        const pairs = data.pairs || []
+        setPairs(pairs);
+        setShuffledDefs([...pairs].sort(() => Math.random() - 0.5));
         setLoading(false);
       })
       .catch(err => {

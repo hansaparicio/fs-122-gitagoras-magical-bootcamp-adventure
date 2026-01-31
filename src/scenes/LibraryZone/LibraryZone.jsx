@@ -7,6 +7,7 @@ import RuneMatchGame from "./RuneMatchGame";
 import HtmlScroll from "../../assets/images/HtmlScroll.png";
 import TagScroll from "../../assets/images/TagScroll.png";
 import BodyScroll from "../../assets/images/BodyScroll.png";
+import GitagorasAvatar from "../../assets/images/GitagorasAvatar.png";
 
 const INTRO_DIALOGS = [
     "Bienvenido a la Biblioteca Arcana, joven aprendiz. Aquí no hallarás hechizos explosivos ni conjuros veloces. Este es un lugar de estudio, paciencia y comprensión profunda.",
@@ -66,11 +67,11 @@ export default function LibraryZone() {
 
     useEffect(() => {
         if (phase === "game") {
-            startTimer(180);
+            startTimer(60);
             registerGameOverActions({
                 onRetry: () => {
                     setGameKey(k => k + 1);
-                    startTimer(180);
+                    startTimer(60);
                 },
                 onExit: () => {
                     console.log("Volver al mapa (pendiente)");
@@ -114,14 +115,26 @@ export default function LibraryZone() {
                 />
             )}
 
-            {phase === "intro" && (
-                <div className="dialog-box">
-                    <p>{typedDialog}</p>
-                    {typedDialog.length === INTRO_DIALOGS[dialogIndex].length && (
-                        <button className="dialog-btn" onClick={nextDialog}>
-                            Continuar
-                        </button>
-                    )}
+            {(phase === "intro" || phase === "end") && (
+                <div className="dialog-container">
+                    <img
+                        src={GitagorasAvatar}
+                        alt="Gitágoras"
+                        className="dialog-avatar"
+                    />
+
+                    <div className="dialog-box">
+                        <p>{typedDialog}</p>
+                        {typedDialog.length ===
+                            (phase === "intro"
+                                ? INTRO_DIALOGS[dialogIndex]
+                                : END_DIALOGS[dialogIndex]
+                            ).length && (
+                                <button className="dialog-btn" onClick={nextDialog}>
+                                    Continuar
+                                </button>
+                            )}
+                    </div>
                 </div>
             )}
 
@@ -130,17 +143,6 @@ export default function LibraryZone() {
                     key={gameKey}
                     onComplete={handleGameWin}
                 />
-            )}
-
-            {phase === "end" && (
-                <div className="dialog-box">
-                    <p>{typedDialog}</p>
-                    {typedDialog.length === END_DIALOGS[dialogIndex].length && (
-                        <button className="dialog-btn" onClick={nextDialog}>
-                            Continuar
-                        </button>
-                    )}
-                </div>
             )}
         </div>
     );

@@ -1,0 +1,182 @@
+
+
+.crossword-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+}
+
+
+.clues {
+  position: relative;
+  margin-top: 50px;
+  width: 540px;
+  height: 510px;
+  font-family: "Press Start 2P";
+  font-size: 10px;
+  color: #1b1024;
+  padding: 22px;
+  border-radius: 18px;
+  line-height: 1.2;
+
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.25), transparent 60%),
+    radial-gradient(circle at bottom right, rgba(120,60,200,0.25), transparent 60%),
+    linear-gradient(145deg, #b08de3, #8a63c6);
+
+  border: 4px solid #1c0f2b;
+  box-shadow:
+    0 0 22px rgba(150, 100, 255, 0.9),
+    inset 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.clues::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 14px;
+  border: 2px dashed rgba(40, 10, 80, 0.4);
+  pointer-events: none;
+}
+
+.clues::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(180,120,255,0.35), transparent 70%);
+  z-index: -1;
+}
+
+.clues h3 {
+  text-align: center;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: #12071c;
+  text-shadow: 0 0 6px rgba(255, 220, 120, 0.8);
+}
+
+.clue-line {
+  margin-bottom: 12px;
+  padding-left: 8px;
+  position: relative;
+}
+
+.clue-line::before {
+  content: "✦";
+  position: absolute;
+  left: -10px;
+  color: #3b0d5f;
+  text-shadow: 0 0 6px rgba(180, 120, 255, 0.8);
+}
+
+
+.crossword-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--size), 24px);
+  grid-template-rows: repeat(var(--size), 24px);
+  gap: 2px;
+  margin-top: 50px;
+
+  background: radial-gradient(circle, #1a1026, #000);
+  padding: 8px;
+  border-radius: 12px;
+
+  border: 5px solid #000;
+  box-shadow:
+    0 0 24px rgba(120, 80, 255, 0.8),
+    inset 0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+
+.cell {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 13px;
+  font-family: "Press Start 2P";
+  color: #2a1a00;
+  background:
+    radial-gradient(circle at top left, #ffe9a6, #e3c872);
+
+  border-radius: 6px;
+  border: 1px solid rgba(80, 40, 0, 0.5);
+  outline: none;
+  padding: 0;
+
+  box-shadow:
+    inset 0 0 6px rgba(255, 255, 255, 0.4),
+    inset 0 0 10px rgba(0, 0, 0, 0.25);
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.1s ease;
+}
+
+.cell.blocked {
+  background:
+    radial-gradient(circle, #555, #2f2f2f);
+  pointer-events: none;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+
+.cell:focus {
+  background:
+    radial-gradient(circle, #fff4c7, #ffd76a);
+  outline: none;
+  transform: scale(1.05);
+
+  box-shadow:
+    0 0 10px rgba(255, 230, 120, 0.9),
+    0 0 18px rgba(120, 80, 255, 0.7),
+    inset 0 0 10px rgba(255,255,255,0.6);
+}
+
+.crossword-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 40px;
+}
+
+.crossword-btn {
+  font-family: "Press Start 2P";
+  font-size: 15px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: 4px solid #000;
+  cursor: pointer;
+  line-height: 1.4;
+  background: #4aa3ff;
+  color: #12071c;
+
+  box-shadow:
+    0 0 16px rgba(120, 80, 255, 0.8),
+    inset 0 0 12px rgba(255,255,255,0.3);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.crossword-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  background-color: #2d7bc8;
+}
+
+.crossword-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: black;
+}
+.clue-line.completed {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  opacity: 0.5;
+  color: rgb(255, 255, 255)
+
+}

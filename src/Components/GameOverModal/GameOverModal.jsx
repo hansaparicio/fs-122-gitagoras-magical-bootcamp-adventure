@@ -13,7 +13,7 @@ export default function GameOverModal() {
 
                 <div className="gameover-buttons">
                     <button
-                        className="dialog-btn"
+                        className="dialog-btn-Retry"
                         onClick={() => {
                             hideGameOver();
                             onRetry?.();
@@ -23,7 +23,7 @@ export default function GameOverModal() {
                     </button>
 
                     <button
-                        className="dialog-btn"
+                        className="dialog-btn-Exit"
                         onClick={() => {
                             hideGameOver();
                             onExit?.();

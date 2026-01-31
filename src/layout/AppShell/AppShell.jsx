@@ -41,15 +41,20 @@ export default function AppShell({ children }) {
                                 top: "60px",
                                 right: "10px",
                                 zIndex: 800,
-
                                 padding: "0,8rem",
                                 borderRadius: "8px",
                                 boxShadow: "0 4px 10px rgba(255, 255, 255, 0.3)",
                                 fontFamily: "Press Start 2P, cursive",
+
+
+                                visibility: showAudio ? "visible" : "hidden",
+                                opacity: showAudio ? 1 : 0,
+                                pointerEvents: showAudio ? "auto" : "none",
                             }}
                         >
                             <Player />
                         </div>
+
                     )}
                 </div>
             </div>

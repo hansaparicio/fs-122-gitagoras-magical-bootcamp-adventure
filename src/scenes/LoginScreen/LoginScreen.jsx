@@ -3,6 +3,7 @@ import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Avatar from "../../Components/Avatar";
 import AvatarCreator from "../../Components/AvatarCreator";
+
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";
@@ -13,6 +14,7 @@ import { TimeProvider } from "../../context/TimeContext.jsx"
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const [mode, setMode] = useState(null);
+
     const [showUserPanel, setShowUserPanel] = useState(false);
     const [showAvatarCreator, setShowAvatarCreator] = useState(false);
 
@@ -22,6 +24,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const [user, setUser] = useState(null);
     const [avatar, setAvatar] = useState(null);
+
 
 
     const [formData, setFormData] = useState({
@@ -110,21 +113,13 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
             });
 
             const data = await res.json();
-            if (!res.ok) throw new Error(data.msg || "Error al registrar");
+            if (!res.ok) throw new Error(data.msg);
 
             localStorage.setItem("token", data.access_token);
+            localStorage.removeItem("scrollSigned");
 
-
-            const meRes = await fetch("http://127.0.0.1:5000/api/me", {
-                headers: {
-                    Authorization: `Bearer ${data.access_token}`,
-                }
-            });
-            const me = await meRes.json();
-            setUser(me);
-            setAvatar(me.avatar);
-            onLogin?.(me.username);
             setMode(null);
+            onLogin();
         } catch (err) {
             alert(err.message);
         }
@@ -147,19 +142,9 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
             if (!res.ok) throw new Error(data.msg);
 
             localStorage.setItem("token", data.access_token);
-            // onLogin(formData.username);
 
-            const meRes = await fetch("http://127.0.0.1:5000/api/me", {
-                headers: {
-                    Authorization: `Bearer ${data.access_token}`,
-                },
-            })
-            const me = await meRes.json();
-            setAvatar(me.avatar)
-            setUser(me);
-            onLogin?.(me.username);
             setMode(null);
-
+            onLogin();
         } catch (err) {
             alert(err.message);
         }

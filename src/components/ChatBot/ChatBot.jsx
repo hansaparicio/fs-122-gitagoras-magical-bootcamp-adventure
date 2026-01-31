@@ -11,6 +11,7 @@ import { useIdle } from "../../context/IdleContext";
 
 
 
+
 const ChatBot = ({ insideShell }) => {
   const { timeLeft } = useTime();
 

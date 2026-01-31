@@ -1,4 +1,4 @@
-.library-root {
+.alchemy-root {
   position: fixed;
   inset: 0;
   background-size: cover;
@@ -30,30 +30,50 @@
 }
 
 .dialog-box {
-  background: rgba(245,216,140,0.9);
-  padding: 10px;
+  background: rgba(245, 216, 140, 0.9);
+  padding: 15px;
+  padding-left: 20px;
   border-radius: 12px;
   color: #000;
   font-family: 'Press Start 2P', cursive;
   text-align: center;
   max-width: 900px;
-  font-size: 18px;
+  font-size: 17px;
   border: 6px solid black;
   outline: 6px solid #4aa3ff;
-  line-height: 1.2;
+  line-height: 1.3;
   margin-right: 95px;
-
+  margin-top: 5px;
+  text-align: justify;
+  
 }
 
 .dialog-btn {
   background-color: #4aa3ff;
   color: black;
-  border: solid 2px #000000;
+  border: solid 3px #000000;
   padding: 6px 12px;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
-  margin-top: 25px;
+  margin-top: 15px;
   font-family: "Press Start 2P";
+  border-radius: 5px;
+  display: flex;
+  justify-self: end;
+}
+
+.alchemy-cauldron {
+  margin-top: 120px;
+  width: 380px;
+  image-rendering: pixelated;
+}
+
+.alchemy-runes {
+  position: absolute;
+  bottom: 80px;
+  width: 420px;
+  opacity: 0.85;
+  pointer-events: none;
 }
 
 .library-scroll {
