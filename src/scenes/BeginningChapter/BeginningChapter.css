@@ -97,6 +97,17 @@ backdrop-filter: blur(10px);
   white-space: pre-line;
 }
 
+button {
+  font-family: 'Press Start 2P';
+  padding: 10px 14px;;
+  background-color:#4aa3ff;
+  border-radius: 8%;;
+}
+
+button:hover {
+  background-color:#2675c5;
+}
+
 .dialog-btn {
   background-color: #4aa3ff;
   color: black;
@@ -106,7 +117,10 @@ backdrop-filter: blur(10px);
   font-size: 16px;
   cursor: pointer;
   float: right;
+  font-family: 'Press Start 2P';
 }
+
+
 
 .dialog-input {
   width: 100%;
@@ -176,8 +190,8 @@ backdrop-filter: blur(10px);
 
 .pergamino-text {
   position: absolute;
-  top: 61%;
-  left: 48%;
+  top: 59%;
+  left: 46%;
   transform: translate(-50%, -50%);
   font-family: "Autograf", cursive;
   font-weight: bold;

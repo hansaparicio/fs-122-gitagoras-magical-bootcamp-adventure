@@ -1,8 +1,11 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useGameOver } from "./GameOverContext";
 
 const TimeContext = createContext();
 
 export function TimeProvider({ children }) {
+    const { showGameOver } = useGameOver();
+
     const [timeLeft, setTimeLeft] = useState(null);
     const intervalRef = useRef(null);
 
@@ -14,6 +17,7 @@ export function TimeProvider({ children }) {
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     clearInterval(intervalRef.current);
+                    showGameOver();
                     return 0;
                 }
                 return prev - 1;
