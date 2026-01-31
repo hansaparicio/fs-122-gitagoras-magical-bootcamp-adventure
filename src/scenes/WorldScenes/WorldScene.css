@@ -51,6 +51,9 @@
 
   cursor: pointer;
   user-select: none;
+
+  z-index: 200;
+
 }
 
 .worldscene-back:hover {
@@ -61,3 +64,156 @@
   transform: translate(2px, 2px);
   box-shadow: 1px 1px 0 #000;
 }
+
+
+.worldscene-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  animation: fadeIn 0.3s ease;
+}
+
+.worldscene-image-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.worldscene-gitagoras-image {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.worldscene-dialog-box {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 900px;
+  background: rgba(245, 216, 140, 0.75);
+  backdrop-filter: blur(10px);
+  border: 4px solid #4aa3ff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  font-family: "Press Start 2P", cursive;
+  font-weight: 700;
+  z-index: 120;
+}
+
+.worldscene-dialog-text {
+  color: #000000;
+  font-size: 18px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.worldscene-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.worldscene-dialog-btn {
+  background-color: #4aa3ff;
+  color: black;
+  border: solid 2px #000000;
+  padding: 8px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive;
+}
+
+.worldscene-dialog-btn:hover {
+  background-color: #2675c5;
+}
+
+.worldscene-dialog-secondary {
+  background-color: #e6c200;
+}
+
+.worldscene-dialog-secondary:hover {
+  background-color: #c9a800;
+}
+
+.worldscene-back-to-map {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 8px 16px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  border: 2px solid #000;
+  box-shadow: 3px 3px 0 #000;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s;
+  z-index: 101;
+  margin: 0;
+}
+
+.worldscene-back-to-map:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 4px 6px 0 #000;
+}
+
+.worldscene-back-to-map:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+.worldscene-close-btn {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 8px 16px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  border: 2px solid #000;
+  box-shadow: 3px 3px 0 #000;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s;
+  z-index: 101;
+  margin: 0;
+}
+
+.worldscene-close-btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 4px 6px 0 #000;
+}
+
+.worldscene-close-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

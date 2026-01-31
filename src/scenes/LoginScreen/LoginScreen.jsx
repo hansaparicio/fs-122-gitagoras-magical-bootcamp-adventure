@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Avatar from "../../components/Avatar";
@@ -8,16 +8,24 @@ import ChatBot from "../../components/ChatBot/ChatBot";
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";
+import idleSound from "../../assets/sounds/mensaje-carol.mp3"
+import ChatBot from "../../Components/ChatBot/ChatBot.jsx";
+import { TimeProvider } from "../../context/TimeContext.jsx"
 
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const [mode, setMode] = useState(null);
+
     const [showUserPanel, setShowUserPanel] = useState(false);
     const [showAvatarCreator, setShowAvatarCreator] = useState(false);
+
+    const IDLE_MENSAJES = ["¿Estas ahí o llevas capa de invisibilidad?", "¿Sigues ahí, pequeño mago?🪄", "El hechizo del ratón petrificado ha sido detectado🧙‍♂️", "Creo que la magia se quedó en pausa...", "¿Te has dormido o estás canalizando energía arcana?"]
+    const [idleMensaje, setIdleMensaje] = useState(null);
 
 
     const [user, setUser] = useState(null);
     const [avatar, setAvatar] = useState(null);
+
 
 
     const [formData, setFormData] = useState({
@@ -26,13 +34,26 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         repeatPassword: "",
         email: "",
     });
+
     const { isIdle } = useIdle();
+    const idleAudioRef = useRef(null);
+    useEffect(() => {
+        idleAudioRef.current = new Audio(idleSound);
+        idleAudioRef.current.volume = 0.5;
+    }, [])
+
     useEffect(() => {
         if (isIdle) {
-            alert("usuario idle");
+            const random = IDLE_MENSAJES[Math.floor(Math.random() * IDLE_MENSAJES.length)];
+            setIdleMensaje(random)
+            idleAudioRef.current?.play();
+        } else {
+            setIdleMensaje(null)
+            idleAudioRef.current?.pause();
+            idleAudioRef.current.currentTime = 0;
         }
-    }, [isIdle]);
 
+    }, [isIdle])
 
     useEffect(() => {
         const fetchMe = async () => {
@@ -99,21 +120,13 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
             });
 
             const data = await res.json();
-            if (!res.ok) throw new Error(data.msg || "Error al registrar");
+            if (!res.ok) throw new Error(data.msg);
 
             localStorage.setItem("token", data.access_token);
+            localStorage.removeItem("scrollSigned");
 
-
-            const meRes = await fetch("http://127.0.0.1:5000/api/me", {
-                headers: {
-                    Authorization: `Bearer ${data.access_token}`,
-                }
-            });
-            const me = await meRes.json();
-            setUser(me);
-            setAvatar(me.avatar);
-            onLogin?.(me.username);
             setMode(null);
+            onLogin();
         } catch (err) {
             alert(err.message);
         }
@@ -148,6 +161,8 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
             onLogin?.(me.username);
             setMode(null);
 
+            setMode(null);
+            onLogin();
         } catch (err) {
             alert(err.message);
         }
@@ -287,18 +302,14 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
                 <div className="footer-buttons-container">
                     <button onClick={onAbout}>About us</button>
-
-                    <div className="player-container">
-                        <div className="player-hover">
-                            <button className="music-button"> 🎵 </button>
-                            <div className="player">
-                                <Player />
-                            </div>
-                        </div>
-                    </div>
-                    <ChatBot />
                 </div>
+
+                <TimeProvider>
+                    <ChatBot insideShell={false} />
+                </TimeProvider>
+
             </div>
+
         </div>
 
     );

@@ -1,0 +1,86 @@
+.pixel-heart {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.heart-pixel-art {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.heart-row {
+    display: flex;
+    gap: 2px;
+}
+
+.pixel {
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444;
+    box-shadow: 
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.pixel.empty {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Estado activo */
+.pixel-heart.active .pixel:not(.empty) {
+    background-color: #ef4444;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    box-shadow: 
+        0 0 8px rgba(239, 68, 68, 0.6),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Estado perdido */
+.pixel-heart.lost .pixel:not(.empty) {
+    background-color: #4b5563;
+    opacity: 0.3;
+    box-shadow: 
+        inset -1px -1px 2px rgba(0, 0, 0, 0.5),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.1);
+    animation: none;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.05);
+        filter: brightness(1.2);
+    }
+}
+
+/* Efecto hover solo para corazones activos */
+.pixel-heart.active:hover .pixel:not(.empty) {
+    background-color: #dc2626;
+    transform: scale(1.1);
+    box-shadow: 
+        0 0 12px rgba(239, 68, 68, 0.9),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .pixel {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .heart-row {
+        gap: 1.5px;
+    }
+    
+    .heart-pixel-art {
+        gap: 1.5px;
+    }
+}

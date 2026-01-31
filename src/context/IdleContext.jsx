@@ -13,7 +13,7 @@ export function IdleProvider({ children }) {
             timerRef.current = setTimeout(() => {
                 setIsIdle(true)
             },
-                30000);
+                10000);
         };
         window.addEventListener("mousemove", reset);
         window.addEventListener("keydown", reset);
