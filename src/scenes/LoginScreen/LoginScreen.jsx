@@ -3,7 +3,8 @@ import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Avatar from "../../Components/Avatar";
 import AvatarCreator from "../../Components/AvatarCreator";
-import Player from "../../components/mp3Player/mp3Player"; // minúsculas
+import Player from "../../components/mp3Player/mp3Player";
+import ChatBot from "../../components/ChatBot/ChatBot";
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";

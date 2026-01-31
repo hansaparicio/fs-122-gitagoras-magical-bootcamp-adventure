@@ -1,0 +1,63 @@
+.worldscene-root {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.worldscene-container {
+  position: relative;
+  width: 1480px;
+  height: 982px;
+  background: #000;
+}
+
+.worldscene-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.worldscene-back {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+  padding: 8px 16px;
+  font-family: monospace;
+  font-size: 14px;
+  background: #ffffff;
+  border: 4px double #000;
+  cursor: pointer;
+}
+
+.worldscene-back {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+
+  padding: 10px 14px;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 #000;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.worldscene-back:hover {
+  background: #fff;
+}
+
+.worldscene-back:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
+}
