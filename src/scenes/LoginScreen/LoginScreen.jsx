@@ -7,12 +7,18 @@ import Player from "../../components/mp3Player/mp3Player"; // minúsculas
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";
+import idleSound from "../../assets/sounds/mensaje-carol.mp3"
+import ChatBot from "../../Components/ChatBot/ChatBot.jsx";
+import { TimeProvider } from "../../context/TimeContext.jsx"
 
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const [mode, setMode] = useState(null);
     const [showUserPanel, setShowUserPanel] = useState(false);
     const [showAvatarCreator, setShowAvatarCreator] = useState(false);
+
+    const IDLE_MENSAJES = ["¿Estas ahí o llevas capa de invisibilidad?", "¿Sigues ahí, pequeño mago?🪄", "El hechizo del ratón petrificado ha sido detectado🧙‍♂️", "Creo que la magia se quedó en pausa...", "¿Te has dormido o estás canalizando energía arcana?"]
+    const [idleMensaje, setIdleMensaje] = useState(null);
 
 
     const [user, setUser] = useState(null);
@@ -25,13 +31,20 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         repeatPassword: "",
         email: "",
     });
-    const { isIdle } = useIdle();
+
+    /*useEffect(() => {
+        idleAudioRef.current = new audio(idleSound);
+    }, [])
+
     useEffect(() => {
         if (isIdle) {
-            alert("usuario idle");
+            const random = IDLE_MENSAJES[Math.floor(Math.random() * IDLE_MENSAJES.length)];
+            setIdleMensaje(random)
+        } else {
+            setIdleMensaje(null)
         }
-    }, [isIdle]);
 
+    }, [isIdle])*/
 
     useEffect(() => {
         const fetchMe = async () => {
@@ -311,7 +324,12 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         </div>
                     </div>
                 </div>
+
+                <TimeProvider>
+                    <ChatBot insideShell={false} />
+                </TimeProvider>
             </div>
+
         </div>
 
     );
