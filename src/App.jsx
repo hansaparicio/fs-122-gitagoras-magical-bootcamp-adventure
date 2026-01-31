@@ -1,5 +1,5 @@
+// MINIJUEGO DE LIBRERÍA
 /*
-
 import { useState, useEffect } from "react";
 import LibraryZone from "./scenes/LibraryZone/LibraryZone";
 import AppShell from "./layout/AppShell/AppShell";
@@ -34,9 +34,12 @@ function App() {
     );
 }
 
-export default App; */
-//----------------------------------------------------------------------------
+export default App;  */
+//-----------------------------------------------------------------------------------------------------------------------------
 
+// MINIJUEGO DE CRUCIGRAMA
+
+/*
 import { useState, useEffect } from "react";
 import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
 import AppShell from "./layout/AppShell/AppShell";
@@ -71,4 +74,16 @@ function App() {
     );
 }
 
-export default App;
+export default App; */
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+import Iframe from "./scenes/StudyZone/Iframe";
+
+function App() {
+    return (
+        <Iframe />
+    );
+}
+
+export default App; 

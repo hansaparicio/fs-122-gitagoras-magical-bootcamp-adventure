@@ -1,0 +1,161 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.iframe-room {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.iframe-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.editor-panel.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.editor-block {
+  width: 400px;
+  background: #f5d88c;
+  border-radius: 16px;
+  padding: 18px;
+  border: 4px solid #1c0f2b;
+  box-shadow:
+    0 0 18px rgba(150, 100, 255, 0.8),
+    inset 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+.editor-block h3 {
+  text-align: center;
+  font-family: "Press Start 2P";
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #12071c;
+}
+
+.editor-block textarea {
+  width: 370px;
+  height: 200px;
+  resize: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: monospace;
+  font-size: 15px;
+  background: #1a1026;
+  color: #f5d88c;
+  border: 2px solid #000;
+  outline: none;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.8);
+}
+
+.editor-block textarea:focus {
+  box-shadow:
+    0 0 10px rgba(120, 80, 255, 0.8),
+    inset 0 0 14px rgba(0,0,0,0.9);
+}
+
+.preview-panel {
+  width: 860px; 
+  height: 615px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 5px solid #000;
+  background: #6732bc;
+  box-shadow:
+    0 0 24px rgba(120, 80, 255, 0.8),
+    inset 0 0 20px rgba(0,0,0,0.6);
+}
+
+.preview-panel iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 14px;
+  background: #1a1026;
+}
+
+.iframe-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.iframe-btn {
+  font-family: "Press Start 2P";
+  font-size: 14px;
+  padding: 16px 26px;
+  border-radius: 16px;
+  border: 4px solid #000000;
+  cursor: pointer;
+  background: #5391ed;
+  color: #12071c;
+}
+
+.iframe-btn:hover {
+  background-color: #0d5caf;
+}
+
+.iframe-btn-danger {
+  background: #e24b4b;
+  color: rgb(0, 0, 0);
+}
+
+.iframe-btn-danger:hover {
+  background: #b83232;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+
+.modal-box {
+  width: 420px;
+  background: #f5d88c;
+  border-radius: 16px;
+  padding: 20px;
+  border: 4px solid #1c0f2b;
+  font-family: "Press Start 2P";
+  font-size: 12px;
+  color: #12071c;
+  box-shadow:
+    0 0 20px rgba(150, 100, 255, 0.9),
+    inset 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+.modal-box h3 {
+  font-size: 13px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.modal-box p {
+  margin-bottom: 10px;
+}
+
+.no-errors {
+  text-align: center;
+  color: #2fa84f;
+}

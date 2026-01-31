@@ -68,11 +68,11 @@ export default function AlchemyZone() {
 
     useEffect(() => {
         if (phase === "game") {
-            startTimer(300);
+            startTimer(60);
             registerGameOverActions({
                 onRetry: () => {
                     setGameKey(k => k + 1);
-                    startTimer(300);
+                    startTimer(60);
                 },
                 onExit: () => {
                     console.log("Volver al mapa (pendiente)");

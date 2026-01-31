@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "./CrossWordGame.css";
+import solvedWordSound from "../../assets/sounds/SolvedWordSound.mp3";
+import pressKeySound from "../../assets/sounds/PressKeyGameSound.mp3";
+import bubblePopSound from "../../assets/sounds/BubblePopWord.mp3";
 
 const SIZE = 19;
 
@@ -33,6 +36,17 @@ export default function CrossWordGame({ onComplete }) {
     const [activeWord, setActiveWord] = useState(null);
 
     const inputRefs = useRef({});
+    const solvedAudio = useRef(null);
+    const keyAudio = useRef(null);
+    const bubbleAudio = useRef(null);
+    const playedWords = useRef(new Set());
+
+    useEffect(() => {
+        solvedAudio.current = new Audio(solvedWordSound);
+        keyAudio.current = new Audio(pressKeySound);
+        bubbleAudio.current = new Audio(bubblePopSound);
+    }, []);
+
     const validCells = new Set();
 
     WORDS.forEach(({ word, row, col, dir }) => {
@@ -58,34 +72,31 @@ export default function CrossWordGame({ onComplete }) {
 
         const { word, row, col, dir } = activeWord;
 
-        const indices = [...word].map((_, i) => i);
-        const startIndex = indices.findIndex(i => {
+        const index = [...word].findIndex((_, i) => {
             const rr = (dir === "h" ? row : row + i) - 1;
             const cc = (dir === "h" ? col + i : col) - 1;
             return rr === r && cc === c;
         });
 
-        if (startIndex === -1) return;
+        if (index === -1) return;
 
         const step = backwards ? -1 : 1;
 
-        for (
-            let i = startIndex + step;
-            i >= 0 && i < word.length;
-            i += step
-        ) {
+        for (let i = index + step; i >= 0 && i < word.length; i += step) {
             const nr = (dir === "h" ? row : row + i) - 1;
             const nc = (dir === "h" ? col + i : col) - 1;
-
-            if (!grid[nr][nc]) {
-                inputRefs.current[`${nr}-${nc}`]?.focus();
-                return;
-            }
+            inputRefs.current[`${nr}-${nc}`]?.focus();
+            return;
         }
     };
 
     const handleChange = (r, c, value) => {
         if (!/^[A-ZÑ]?$/.test(value.toUpperCase())) return;
+
+        if (value) {
+            keyAudio.current.currentTime = 0;
+            keyAudio.current.play();
+        }
 
         setGrid(g => {
             const copy = g.map(row => [...row]);
@@ -104,8 +115,35 @@ export default function CrossWordGame({ onComplete }) {
     };
 
     const handleKeyDown = (e, r, c) => {
-        if (e.key === "Backspace" && !grid[r][c]) {
+        if (e.key !== "Backspace") return;
+
+        e.preventDefault();
+
+        bubbleAudio.current.currentTime = 0;
+        bubbleAudio.current.play();
+
+        if (grid[r][c]) {
+            setGrid(g => {
+                const copy = g.map(row => [...row]);
+                copy[r][c] = "";
+                return copy;
+            });
+        } else {
             moveInActiveWord(r, c, true);
+
+            setTimeout(() => {
+                const refKey = Object.keys(inputRefs.current)
+                    .find(k => inputRefs.current[k] === document.activeElement);
+                if (!refKey) return;
+
+                const [pr, pc] = refKey.split("-").map(Number);
+
+                setGrid(g => {
+                    const copy = g.map(row => [...row]);
+                    copy[pr][pc] = "";
+                    return copy;
+                });
+            }, 0);
         }
     };
 
@@ -144,7 +182,14 @@ export default function CrossWordGame({ onComplete }) {
                 const c = (w.dir === "h" ? w.col + i : w.col) - 1;
                 return grid[r][c] === l;
             });
-            if (ok) completed.add(index);
+
+            if (ok) {
+                completed.add(index);
+                if (!playedWords.current.has(index)) {
+                    solvedAudio.current.play();
+                    playedWords.current.add(index);
+                }
+            }
         });
 
         setCompletedWords(completed);
@@ -204,7 +249,7 @@ export default function CrossWordGame({ onComplete }) {
                     onClick={revealRandomLetter}
                     disabled={helpUses === 0}
                 >
-                    {helpUses > 0 ? `AYUDA (${helpUses} intentos)` : "¡AYUDA AGOTADA!"}
+                    {helpUses > 0 ? `PISTA (${helpUses} intentos restantes)` : "¡AYUDA AGOTADA!"}
                 </button>
             </div>
         </div>
