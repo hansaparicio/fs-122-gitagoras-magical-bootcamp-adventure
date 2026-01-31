@@ -1,109 +1,19 @@
-
-import { useState } from "react";
-import LoginScreen from "./scenes/LoginScreen/LoginScreen";
-import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
-import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
-import CustomCursor from "./CustomCursor";
-import { IdleProvider } from "./context/IdleContext";
-import AppLayout from "./layout/AppLayout";
-import { GameOverProvider } from "./context/GameOverContext";
-
-
-
-
-
-
-
-function App() {
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [inGame, setInGame] = useState(false);
-    const [showAbout, setShowAbout] = useState(false);
-    const [username, setUsername] = useState(null);
-
-    return (
-        <GameOverProvider>
-            <IdleProvider>
-                <CustomCursor />
-                <AppLayout>
-
-                    {!inGame && !showAbout && (
-                        <LoginScreen
-                            loggedIn={loggedIn}
-                            onStartGame={() => setInGame(true)}
-                            onLogout={() => setLoggedIn(false)}
-                            onAbout={() => setShowAbout(true)}
-                            onLogin={() => setLoggedIn(true)}
-
-                        />
-                    )}
-
-                    {showAbout && !inGame && (
-                        <TeamShowcase onBack={() => setShowAbout(false)} />
-                    )}
-
-                    {inGame && <BeginningChapter />}
-                </AppLayout>
-            </IdleProvider>
-        </GameOverProvider>
-
-    );
-}
-
-export default App;
-
-
-/*
-import { useState, useEffect } from "react";
-import LibraryZone from "./scenes/LibraryZone/LibraryZone";
-import AppShell from "./layout/AppShell/AppShell";
-import LoaderOverlay from "./components/Loader/LoaderOverlay";
-import { TimeProvider } from "./context/TimeContext";
-
-// import { useState, useEffect } from "react";
-// import LibraryZone from "./scenes/LibraryZone/LibraryZone";
-// import AppShell from "./layout/AppShell/AppShell";
-// import LoaderOverlay from "./components/Loader/LoaderOverlay";
-// import { TimeProvider } from "./context/TimeContext";
-
-// function App() {
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setLoading(false);
-//     }, 2000);
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   return (
-//     <TimeProvider>
-
-//       <LoaderOverlay visible={loading} />
-
-
-                {!loading && <LibraryZone />}
-            </AppShell>
-        </TimeProvider>
-    );
-}
-
-export default App;*/
-//       <AppShell>
-
-//         {!loading && <LibraryZone />}
-//       </AppShell>
-//     </TimeProvider>
-//   );
-// }
-
-// export default App;
 import { useState } from "react";
 
 import StackScreen from "./scenes/StackScreen/StackScreen";
 import WorldScene from "./scenes/WorldScenes/WorldScene";
-import MinigameMock from "./scenes/MinigameMock/MinigameMock";
+
+import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
+import LibraryZone from "./scenes/LibraryZone/LibraryZone";
 import QuizGame from "./scenes/QuizGame/QuizGame";
+import Iframe from "./scenes/StudyZone/Iframe";
+
+import AppShell from "./layout/AppShell/AppShell";
 import LoaderOverlay from "./components/loader/LoaderOverlay";
+
+import { TimeProvider } from "./context/TimeContext";
+import { GameOverProvider } from "./context/GameOverContext";
+import { IdleProvider } from "./context/IdleContext";
 
 function App() {
     const [screen, setScreen] = useState("stack");
@@ -118,11 +28,11 @@ function App() {
         }, 800);
     };
 
-    const goToMinigame = (zoneId) => {
+    const goToZone = (zoneId) => {
         setActiveZone(zoneId);
         setLoading(true);
         setTimeout(() => {
-            setScreen("minigame");
+            setScreen("zone");
             setLoading(false);
         }, 800);
     };
@@ -131,36 +41,54 @@ function App() {
         setLoading(true);
         setTimeout(() => {
             setScreen("world");
+            setActiveZone(null);
             setLoading(false);
         }, 800);
     };
 
     return (
-        <>
-            {screen === "stack" && (
-                <StackScreen onStart={goToWorld} />
-            )}
+        <GameOverProvider>
+            <IdleProvider>
+                <TimeProvider>
 
-            {screen === "world" && (
-                <WorldScene
-                    onBack={() => setScreen("stack")}
-                    onEnterZone={goToMinigame}
-                />
-            )}
+                    {screen === "stack" && (
+                        <StackScreen onStart={goToWorld} />
+                    )}
 
-            {screen === "minigame" && activeZone === "zone_4" && (
-                <QuizGame onExit={backToWorld} />
-            )}
+                    {screen === "world" && (
+                        <WorldScene
+                            onBack={() => setScreen("stack")}
+                            onEnterZone={goToZone}
+                        />
+                    )}
 
-            {screen === "minigame" && activeZone !== "zone_4" && (
-                <MinigameMock
-                    zoneId={activeZone}
-                    onExit={backToWorld}
-                />
-            )}
+                    {screen === "zone" && activeZone === "Alchemy_Lab" && (
+                        <AppShell onExit={backToWorld}>
+                            <AlchemyZone />
+                        </AppShell>
+                    )}
 
-            <LoaderOverlay visible={loading} />
-        </>
+                    {screen === "zone" && activeZone === "Library" && (
+                        <AppShell onExit={backToWorld}>
+                            <LibraryZone />
+                        </AppShell>
+                    )}
+
+                    {screen === "zone" && activeZone === "Garden_Courtyard" && (
+                        <AppShell onExit={backToWorld}>
+                            <QuizGame />
+                        </AppShell>
+                    )}
+
+                    {screen === "zone" && activeZone === "Study_Room" && (
+                        <Iframe onExit={backToWorld} />
+                    )}
+
+                    <LoaderOverlay visible={loading} />
+
+                </TimeProvider>
+            </IdleProvider>
+        </GameOverProvider>
     );
 }
 

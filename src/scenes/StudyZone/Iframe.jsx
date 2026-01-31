@@ -62,7 +62,7 @@ function validateCSS(css) {
     return errors;
 }
 
-export default function Iframe() {
+export default function Iframe({ onExit }) {
     const [html, setHtml] = useState(
         `<h1>Gitágoras dice:</h1>
 <p>Bienvenido joven aprendiz. Esta es una zona de estudio con caos controlado. Siéntete libre de experimentar con cualquier magia que hayas desbloqueado. La pizarra mágica actualmente está encantada con HTML y CSS. ¡Te deseo un estudio enriquecedor!</p>`
@@ -154,7 +154,7 @@ p {
             </div>
 
             <div className="iframe-actions">
-                <button className="iframe-btn">
+                <button className="iframe-btn" onClick={onExit}>
                     VOLVER AL MAPA
                 </button>
 

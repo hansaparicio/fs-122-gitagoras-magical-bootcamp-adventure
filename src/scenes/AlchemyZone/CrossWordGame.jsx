@@ -67,6 +67,7 @@ export default function CrossWordGame({ onComplete }) {
     const getWordsAtCell = (r, c) =>
         WORDS.filter(w => cellBelongsToWord(r, c, w));
 
+
     const moveInActiveWord = (r, c, backwards = false) => {
         if (!activeWord) return;
 
@@ -85,10 +86,14 @@ export default function CrossWordGame({ onComplete }) {
         for (let i = index + step; i >= 0 && i < word.length; i += step) {
             const nr = (dir === "h" ? row : row + i) - 1;
             const nc = (dir === "h" ? col + i : col) - 1;
-            inputRefs.current[`${nr}-${nc}`]?.focus();
-            return;
+
+            if (backwards || !grid[nr][nc]) {
+                inputRefs.current[`${nr}-${nc}`]?.focus();
+                return;
+            }
         }
     };
+
 
     const handleChange = (r, c, value) => {
         if (!/^[A-ZÑ]?$/.test(value.toUpperCase())) return;

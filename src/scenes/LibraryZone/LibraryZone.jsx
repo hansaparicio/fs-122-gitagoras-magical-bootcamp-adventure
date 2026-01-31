@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTime } from "../../context/TimeContext";
 import { useGameOver } from "../../context/GameOverContext";
 import "./LibraryZone.css";
+
 import LibraryBackground from "../../assets/images/LibraryBackground.png";
 import RuneMatchGame from "./RuneMatchGame";
 import HtmlScroll from "../../assets/images/HtmlScroll.png";
@@ -23,12 +24,12 @@ const INTRO_DIALOGS = [
 ];
 
 const END_DIALOGS = [
-    "Excelente trabajo, joven aprendiz. Has demostrado comprensión, no solo memoria. Eso es lo que diferencia a un verdadero mago del código.",
-    "Como recompensa, te otorgo estos Grimorios de conocimiento. Consérvalo. Podrás consultarlo siempre que necesites repasar los fundamentos.",
+    "Excelente trabajo, joven aprendiz. Has demostrado comprensión, no solo memoria.",
+    "Como recompensa, te otorgo estos Grimorios de conocimiento.",
     "Recuerda: toda gran magia se construye sobre una base sólida. HTML es el inicio de tu viaje."
 ];
 
-export default function LibraryZone() {
+export default function LibraryZone({ onExit }) {
     const { startTimer, stopTimer } = useTime();
     const { registerGameOverActions } = useGameOver();
 
@@ -74,7 +75,8 @@ export default function LibraryZone() {
                     startTimer(60);
                 },
                 onExit: () => {
-                    console.log("Volver al mapa (pendiente)");
+                    stopTimer();
+                    onExit?.();
                 }
             });
         }
@@ -82,7 +84,7 @@ export default function LibraryZone() {
         if (phase === "end" || phase === "finished") {
             stopTimer();
         }
-    }, [phase]);
+    }, [phase, onExit, registerGameOverActions, startTimer, stopTimer]);
 
     const nextDialog = () => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
@@ -93,6 +95,7 @@ export default function LibraryZone() {
             setPhase("game");
         } else {
             setPhase("finished");
+            onExit?.();
         }
     };
 

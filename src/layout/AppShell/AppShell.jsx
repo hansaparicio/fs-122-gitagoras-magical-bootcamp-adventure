@@ -4,7 +4,7 @@ import Player from "../../components/mp3Player/mp3Player";
 import ChatBot from "../../components/ChatBot/ChatBot";
 import "./AppShell.css";
 
-export default function AppShell({ children }) {
+export default function AppShell({ children, onExit }) {
     const [showAudio, setShowAudio] = useState(false);
 
     const toggleAudio = () => setShowAudio((prev) => !prev);
@@ -62,7 +62,7 @@ export default function AppShell({ children }) {
             <div className="scene-content">{children}</div>
 
             <div className="shell-bottom">
-                <div className="shell-left">SALIR DE LA ZONA</div>
+                <div className="shell-left" onClick={onExit}>SALIR DE LA ZONA</div>
                 <div className="shell-right">
                     <ChatBot insideShell />
                 </div>
