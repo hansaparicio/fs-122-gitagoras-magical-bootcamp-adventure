@@ -1,10 +1,10 @@
 
 import Mp3Player from "../components/mp3Player/mp3Player";
-import "./AppLayout.css";
+import "./MusicLayout.css";
 
 
 
-export default function AppLayout({ children }) {
+export default function MusicLayout({ children }) {
 
 
     return (

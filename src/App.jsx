@@ -1,166 +1,99 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import LoginScreen from "./scenes/LoginScreen/LoginScreen";
 import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
-import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
-import CustomCursor from "./CustomCursor";
-import { IdleProvider } from "./context/IdleContext";
-import AppLayout from "./layout/AppLayout";
+import StackScreen from "./scenes/StackScreen/StackScreen";
+import LoaderOverlay from "./components/Loader/LoaderOverlay";
 import { GameOverProvider } from "./context/GameOverContext";
 
-
-
-
-
-
+import MusicLayout from "./layout/MusicLayout";
+import CustomCursor from "./CustomCursor";
+import { IdleProvider } from "./context/IdleContext";
 
 function App() {
+    const [screen, setScreen] = useState("login");
     const [loggedIn, setLoggedIn] = useState(false);
-    const [inGame, setInGame] = useState(false);
-    const [showAbout, setShowAbout] = useState(false);
-    const [username, setUsername] = useState(null);
+    const [scrollSigned, setScrollSigned] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const goWithLoader = (nextScreen) => {
+        setLoading(true);
+        setTimeout(() => {
+            setScreen(nextScreen);
+            setLoading(false);
+        }, 1200);
+    };
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        fetch("http://127.0.0.1:5000/api/me", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => (res.ok ? res.json() : null))
+            .then((data) => {
+                if (!data) return;
+                setLoggedIn(true);
+                setScrollSigned(data.scroll_signed);
+                setScreen("login");
+            });
+    }, []);
+
+    const handleStartGame = () => {
+        if (scrollSigned) {
+            goWithLoader("stack");
+        } else {
+            setScreen("beginning");
+        }
+    };
 
     return (
         <GameOverProvider>
             <IdleProvider>
-                <CustomCursor />
-                <AppLayout>
+                <MusicLayout>
+                    <CustomCursor />
+                    <LoaderOverlay visible={loading} />
 
-                    {!inGame && !showAbout && (
+                    {screen === "login" && (
                         <LoginScreen
                             loggedIn={loggedIn}
-                            onStartGame={() => setInGame(true)}
-                            onLogout={() => setLoggedIn(false)}
-                            onAbout={() => setShowAbout(true)}
                             onLogin={() => setLoggedIn(true)}
-
+                            onLogout={() => {
+                                localStorage.removeItem("token");
+                                setLoggedIn(false);
+                                setScrollSigned(false);
+                                setScreen("login");
+                            }}
+                            onStartGame={handleStartGame}
                         />
                     )}
 
-                    {showAbout && !inGame && (
-                        <TeamShowcase onBack={() => setShowAbout(false)} />
+                    {screen === "beginning" && (
+                        <BeginningChapter
+                            onFinish={() => {
+                                setScrollSigned(true);
+                                goWithLoader("stack");
+                            }}
+                        />
                     )}
 
-                    {inGame && <BeginningChapter />}
-                </AppLayout>
+                    {screen === "stack" && (
+                        <StackScreen
+                            onStart={() => {
+                                console.log("Aquí irá el mapa");
+                            }}
+                            onBackToMenu={() => {
+                                setScreen("login");
+                            }}
+                        />
+                    )}
+                </MusicLayout>
             </IdleProvider>
         </GameOverProvider>
-
-    );
-}
-
-export default App;
-
-
-/*
-import { useState, useEffect } from "react";
-import LibraryZone from "./scenes/LibraryZone/LibraryZone";
-import AppShell from "./layout/AppShell/AppShell";
-import LoaderOverlay from "./components/Loader/LoaderOverlay";
-import { TimeProvider } from "./context/TimeContext";
-
-// import { useState, useEffect } from "react";
-// import LibraryZone from "./scenes/LibraryZone/LibraryZone";
-// import AppShell from "./layout/AppShell/AppShell";
-// import LoaderOverlay from "./components/Loader/LoaderOverlay";
-// import { TimeProvider } from "./context/TimeContext";
-
-// function App() {
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setLoading(false);
-//     }, 2000);
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   return (
-//     <TimeProvider>
-
-//       <LoaderOverlay visible={loading} />
-
-
-                {!loading && <LibraryZone />}
-            </AppShell>
-        </TimeProvider>
-    );
-}
-
-export default App;*/
-//       <AppShell>
-
-//         {!loading && <LibraryZone />}
-//       </AppShell>
-//     </TimeProvider>
-//   );
-// }
-
-// export default App;
-import { useState } from "react";
-
-import StackScreen from "./scenes/StackScreen/StackScreen";
-import WorldScene from "./scenes/WorldScenes/WorldScene";
-import MinigameMock from "./scenes/MinigameMock/MinigameMock";
-import QuizGame from "./scenes/QuizGame/QuizGame";
-import LoaderOverlay from "./components/loader/LoaderOverlay";
-
-function App() {
-    const [screen, setScreen] = useState("stack");
-    const [loading, setLoading] = useState(false);
-    const [activeZone, setActiveZone] = useState(null);
-
-    const goToWorld = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setScreen("world");
-            setLoading(false);
-        }, 800);
-    };
-
-    const goToMinigame = (zoneId) => {
-        setActiveZone(zoneId);
-        setLoading(true);
-        setTimeout(() => {
-            setScreen("minigame");
-            setLoading(false);
-        }, 800);
-    };
-
-    const backToWorld = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setScreen("world");
-            setLoading(false);
-        }, 800);
-    };
-
-    return (
-        <>
-            {screen === "stack" && (
-                <StackScreen onStart={goToWorld} />
-            )}
-
-            {screen === "world" && (
-                <WorldScene
-                    onBack={() => setScreen("stack")}
-                    onEnterZone={goToMinigame}
-                />
-            )}
-
-            {screen === "minigame" && activeZone === "zone_4" && (
-                <QuizGame onExit={backToWorld} />
-            )}
-
-            {screen === "minigame" && activeZone !== "zone_4" && (
-                <MinigameMock
-                    zoneId={activeZone}
-                    onExit={backToWorld}
-                />
-            )}
-
-            <LoaderOverlay visible={loading} />
-        </>
     );
 }
 

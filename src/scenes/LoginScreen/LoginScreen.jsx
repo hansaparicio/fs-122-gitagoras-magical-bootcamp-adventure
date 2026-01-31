@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Avatar from "../../Components/Avatar";
@@ -34,19 +34,25 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         email: "",
     });
 
-    /*useEffect(() => {
-        idleAudioRef.current = new audio(idleSound);
+    const { isIdle } = useIdle();
+    const idleAudioRef = useRef(null);
+    useEffect(() => {
+        idleAudioRef.current = new Audio(idleSound);
+        idleAudioRef.current.volume = 0.5;
     }, [])
 
     useEffect(() => {
         if (isIdle) {
             const random = IDLE_MENSAJES[Math.floor(Math.random() * IDLE_MENSAJES.length)];
             setIdleMensaje(random)
+            idleAudioRef.current?.play();
         } else {
             setIdleMensaje(null)
+            idleAudioRef.current?.pause();
+            idleAudioRef.current.currentTime = 0;
         }
 
-    }, [isIdle])*/
+    }, [isIdle])
 
     useEffect(() => {
         const fetchMe = async () => {
@@ -289,6 +295,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                 <TimeProvider>
                     <ChatBot insideShell={false} />
                 </TimeProvider>
+
             </div>
 
         </div>
