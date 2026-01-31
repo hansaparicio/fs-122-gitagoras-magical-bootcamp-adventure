@@ -1,0 +1,59 @@
+.global-player {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 999999;
+}
+
+.music-button {
+  width: 100px;
+  background: #34346e;
+  color: #ffd700;
+  font-family: "Press Start 2P", monospace;
+  border: 3px solid #ffd700;
+  border-radius: 15px;
+  padding: 10px 14px;
+  font-size: 11px;
+  cursor: pointer;
+  text-shadow: #ffd700;
+}
+
+.player {
+  position: fixed;
+  top: 33px;
+  right: 40px;
+  width: 415px;
+  min-height: 180px;
+  padding: 8px;
+  scale: 0.8;
+  background: #34346dbb;
+  border: 3px solid #ffd700;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: visible;
+
+  z-index: 999999;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.player.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.player.visible {
+  opacity: 1;
+}
+.global-player:hover .player {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}

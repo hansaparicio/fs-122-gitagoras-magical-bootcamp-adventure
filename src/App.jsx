@@ -5,6 +5,8 @@ import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
 import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
 import CustomCursor from "./CustomCursor";
 import { IdleProvider } from "./context/IdleContext";
+import AppLayout from "./layout/AppLayout";
+
 
 
 
@@ -21,24 +23,27 @@ function App() {
 
         <IdleProvider>
             <CustomCursor />
+            <AppLayout>
 
-            {!inGame && !showAbout && (
-                <LoginScreen
-                    loggedIn={loggedIn}
-                    onStartGame={() => setInGame(true)}
-                    onLogout={() => setLoggedIn(false)}
-                    onAbout={() => setShowAbout(true)}
-                    onLogin={() => setLoggedIn(true)}
+                {!inGame && !showAbout && (
+                    <LoginScreen
+                        loggedIn={loggedIn}
+                        onStartGame={() => setInGame(true)}
+                        onLogout={() => setLoggedIn(false)}
+                        onAbout={() => setShowAbout(true)}
+                        onLogin={() => setLoggedIn(true)}
 
-                />
-            )}
+                    />
+                )}
 
-            {showAbout && !inGame && (
-                <TeamShowcase onBack={() => setShowAbout(false)} />
-            )}
+                {showAbout && !inGame && (
+                    <TeamShowcase onBack={() => setShowAbout(false)} />
+                )}
 
-            {inGame && <BeginningChapter />}
+                {inGame && <BeginningChapter />}
+            </AppLayout>
         </IdleProvider>
+
 
     );
 }
