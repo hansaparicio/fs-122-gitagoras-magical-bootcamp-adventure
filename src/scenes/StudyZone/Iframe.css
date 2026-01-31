@@ -80,6 +80,7 @@ body {
   box-shadow:
     0 0 24px rgba(120, 80, 255, 0.8),
     inset 0 0 20px rgba(0,0,0,0.6);
+    opacity: 0.9;
 }
 
 .preview-panel iframe {
@@ -105,6 +106,7 @@ body {
   cursor: pointer;
   background: #5391ed;
   color: #12071c;
+  display: flex;
 }
 
 .iframe-btn:hover {
@@ -158,4 +160,7 @@ body {
 .no-errors {
   text-align: center;
   color: #2fa84f;
+}
+.iframe-btn {
+  margin: 0 auto;
 }

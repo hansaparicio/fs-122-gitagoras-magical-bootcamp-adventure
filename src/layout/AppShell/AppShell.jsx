@@ -1,60 +1,62 @@
 import { useState } from "react";
+import { useInventory } from "../../context/InventoryContext";
 import SandTimer from "../../components/SandTimer/SandTimer";
 import Player from "../../components/mp3Player/mp3Player";
 import ChatBot from "../../components/ChatBot/ChatBot";
+import GrimorioModal from "../../components/Grimorios/GrimorioModal";
 import "./AppShell.css";
 
-export default function AppShell({ children }) {
+export default function AppShell({ children, onExitZone }) {
     const [showAudio, setShowAudio] = useState(false);
-
-    const toggleAudio = () => setShowAudio((prev) => !prev);
+    const [showInventory, setShowInventory] = useState(false);
+    const [openGrimoire, setOpenGrimoire] = useState(null);
+    const { inventory } = useInventory();
 
     return (
         <div className="app-shell">
             <div className="shell-top">
-                <div className="shell-left">INVENTARIO</div>
+                <button
+                    className="shell-left"
+                    onClick={() => setShowInventory(v => !v)}
+                >
+                    INVENTARIO
+                </button>
+
+                {showInventory && (
+                    <div className="inventory-panel">
+                        {inventory.length === 0 ? (
+                            <div className="inventory-empty">Bolsa vacía</div>
+                        ) : (
+                            <div className="inventory-bar">
+                                {inventory.map(grimoire => (
+                                    <img
+                                        key={grimoire.id}
+                                        src={grimoire.image}
+                                        alt={grimoire.hover}
+                                        title={grimoire.hover}
+                                        className="inventory-item"
+                                        onClick={() => setOpenGrimoire(grimoire)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 <SandTimer />
+
                 <div className="shell-right">
                     <button
-                        onClick={toggleAudio}
                         className="audio-toggle-button"
-                        style={{
-                            background: "rgba(245, 216, 140, 0.9)",
-                            border: "3px solid #4aa3ff",
-                            borderRadius: "10px",
-                            padding: "10px 14px",
-                            color: "black",
-                            fontSize: "14px",
-                            cursor: "pointer",
-                            pointerEvents: "auto",
-                            fontFamily: "Press Start 2P, cursive",
-                        }}
-
+                        onClick={() => setShowAudio(v => !v)}
                     >
                         AUDIO
                     </button>
+
                     {showAudio && (
-                        <div
-                            className="audio-container"
-                            style={{
-                                position: "absolute",
-                                top: "60px",
-                                right: "10px",
-                                zIndex: 800,
-                                padding: "0,8rem",
-                                borderRadius: "8px",
-                                boxShadow: "0 4px 10px rgba(255, 255, 255, 0.3)",
-                                fontFamily: "Press Start 2P, cursive",
-
-
-                                visibility: showAudio ? "visible" : "hidden",
-                                opacity: showAudio ? 1 : 0,
-                                pointerEvents: showAudio ? "auto" : "none",
-                            }}
-                        >
+                        <div className="audio-container">
                             <Player />
                         </div>
-
                     )}
                 </div>
             </div>
@@ -62,12 +64,24 @@ export default function AppShell({ children }) {
             <div className="scene-content">{children}</div>
 
             <div className="shell-bottom">
-                <div className="shell-left">SALIR DE LA ZONA</div>
+                <button
+                    className="shell-left exit-zone-button"
+                    onClick={onExitZone}
+                >
+                    SALIR DE LA ZONA
+                </button>
+
                 <div className="shell-right">
                     <ChatBot insideShell />
                 </div>
             </div>
+
+            {openGrimoire && (
+                <GrimorioModal
+                    grimoire={openGrimoire}
+                    onClose={() => setOpenGrimoire(null)}
+                />
+            )}
         </div>
     );
 }
-

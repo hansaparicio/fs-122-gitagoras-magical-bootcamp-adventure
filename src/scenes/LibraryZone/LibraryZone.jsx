@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTime } from "../../context/TimeContext";
 import { useGameOver } from "../../context/GameOverContext";
+import { useInventory } from "../../context/InventoryContext";
+import { GRIMORIOS } from "../../data/grimorios";
 import "./LibraryZone.css";
 import LibraryBackground from "../../assets/images/LibraryBackground.png";
 import RuneMatchGame from "./RuneMatchGame";
@@ -10,27 +12,39 @@ import BodyScroll from "../../assets/images/BodyScroll.png";
 import GitagorasAvatar from "../../assets/images/GitagorasAvatar.png";
 
 const INTRO_DIALOGS = [
-    "Bienvenido a la Biblioteca Arcana, joven aprendiz. Aquí no hallarás hechizos explosivos ni conjuros veloces. Este es un lugar de estudio, paciencia y comprensión profunda.",
-    "Antes de dominar la magia del movimiento o del color, debes entender su esqueleto. HTML es el lenguaje que define la estructura de todo hechizo digital.",
-    "HTML no decide cómo se ve la magia, sino qué existe. Define títulos, párrafos, imágenes y enlaces. Sin HTML, la web sería un vacío sin forma.",
-    "Cada elemento HTML se invoca mediante símbolos llamados etiquetas. Estas etiquetas indican al mundo qué representa cada fragmento del hechizo.",
-    "Las etiquetas suelen abrirse y cerrarse. Al abrir una etiqueta, invocas su poder. Al cerrarla, delimitas su alcance. Olvidar cerrarla es como dejar un portal inestable.",
-    "Un documento HTML completo posee jerarquía. Algunas etiquetas gobiernan a otras, formando una estructura clara y ordenada.",
-    "Dentro del cuerpo del documento —el <body>— vive todo aquello que el usuario puede ver y experimentar. Lo demás permanece oculto.",
-    "Algunas etiquetas aceptan atributos. Son encantamientos adicionales que modifican su comportamiento: rutas, descripciones, referencias.",
-    "Ahora que comprendes los fundamentos, es momento de demostrar que sabes reconocer cada símbolo y su verdadero propósito.",
-    "Las runas han sido separadas de su significado. Únelas correctamente y restablece el orden del conocimiento."
+    "Bienvenido a la Biblioteca Arcana, joven aprendiz. Este no es un lugar de prisas ni de conjuros ruidosos. Aquí se estudia la base de toda magia digital: la estructura. Sin estructura, no hay hechizo que se sostenga.",
+
+    "Antes de animar, colorear o hacer reaccionar la magia, debes comprender su esqueleto. HTML es el lenguaje que define qué existe en una página: qué es un título, qué es un texto, qué es una imagen.",
+
+    "HTML no decide cómo se ve la magia, sino qué es cada cosa. Un título sigue siendo un título aunque cambie su color. Un párrafo sigue siendo un párrafo aunque cambie su forma. HTML define el significado.",
+
+    "Cada fragmento de HTML se invoca mediante símbolos llamados etiquetas. Las etiquetas se escriben usando signos angulares: < >. Por ejemplo, <p> invoca un párrafo y </p> lo cierra, delimitando su contenido.",
+
+    "La mayoría de etiquetas se abren y se cierran. Abrir una etiqueta es como abrir un portal; cerrarla es sellarlo. Olvidar cerrar una etiqueta provoca caos: el hechizo se desborda y todo pierde sentido.",
+
+    "Un documento HTML no es plano: tiene jerarquía. Algunas etiquetas contienen a otras, formando una estructura en forma de árbol. Esta jerarquía permite que el navegador entienda qué es más importante y qué depende de qué.",
+
+    "Dentro del <body> vive todo aquello que el usuario puede ver y experimentar: textos, imágenes, botones y enlaces. Fuera de él existen reglas invisibles que organizan el documento, pero no se muestran.",
+
+    "Algunas etiquetas aceptan atributos. Los atributos son modificadores que se escriben dentro de la etiqueta y aportan información extra, como rutas, identificadores o descripciones. Por ejemplo: <img src='imagen.png'>.",
+
+    "Cuando comprendes qué representa cada etiqueta y cómo se relacionan entre sí, comienzas a pensar como un arquitecto del código, no como un simple escriba.",
+
+    "Las runas del conocimiento han sido separadas de su significado. Únelas correctamente y demuestra que no solo memorizas símbolos, sino que comprendes su verdadero propósito."
 ];
 
+
 const END_DIALOGS = [
-    "Excelente trabajo, joven aprendiz. Has demostrado comprensión, no solo memoria. Eso es lo que diferencia a un verdadero mago del código.",
-    "Como recompensa, te otorgo estos Grimorios de conocimiento. Consérvalo. Podrás consultarlo siempre que necesites repasar los fundamentos.",
-    "Recuerda: toda gran magia se construye sobre una base sólida. HTML es el inicio de tu viaje."
+    "Excelente trabajo, joven aprendiz. No te has limitado a repetir símbolos: has comprendido su propósito y su lugar en el hechizo.",
+    "Como recompensa, te entrego este Grimorio Arcano. En sus páginas se recoge el conocimiento fundamental sobre la estructura del HTML, la base de toda creación digital.",
+    "Guárdalo con cuidado. Un grimorio no responde solo a quien lo lee, sino a quien sabe cuándo volver a él. El camino del conocimiento apenas comienza."
 ];
+
 
 export default function LibraryZone() {
     const { startTimer, stopTimer } = useTime();
     const { registerGameOverActions } = useGameOver();
+    const { addGrimorio } = useInventory();
 
     const [phase, setPhase] = useState("intro");
     const [dialogIndex, setDialogIndex] = useState(0);
@@ -73,9 +87,7 @@ export default function LibraryZone() {
                     setGameKey(k => k + 1);
                     startTimer(60);
                 },
-                onExit: () => {
-                    console.log("Volver al mapa (pendiente)");
-                }
+                onExit: () => { }
             });
         }
 
@@ -98,31 +110,20 @@ export default function LibraryZone() {
 
     const handleGameWin = () => {
         stopTimer();
+        addGrimorio(GRIMORIOS.library);
         setPhase("end");
         setDialogIndex(0);
     };
 
     return (
-        <div
-            className="library-root"
-            style={{ backgroundImage: `url(${LibraryBackground})` }}
-        >
+        <div className="library-root" style={{ backgroundImage: `url(${LibraryBackground})` }}>
             {scrollImage && (
-                <img
-                    src={scrollImage}
-                    alt="Pergamino explicativo"
-                    className="library-scroll"
-                />
+                <img src={scrollImage} alt="Pergamino explicativo" className="library-scroll" />
             )}
 
             {(phase === "intro" || phase === "end") && (
                 <div className="dialog-container">
-                    <img
-                        src={GitagorasAvatar}
-                        alt="Gitágoras"
-                        className="dialog-avatar"
-                    />
-
+                    <img src={GitagorasAvatar} alt="Gitágoras" className="dialog-avatar" />
                     <div className="dialog-box">
                         <p>{typedDialog}</p>
                         {typedDialog.length ===
@@ -139,10 +140,7 @@ export default function LibraryZone() {
             )}
 
             {phase === "game" && (
-                <RuneMatchGame
-                    key={gameKey}
-                    onComplete={handleGameWin}
-                />
+                <RuneMatchGame key={gameKey} onComplete={handleGameWin} />
             )}
         </div>
     );

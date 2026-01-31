@@ -65,7 +65,8 @@ function validateCSS(css) {
 export default function Iframe() {
     const [html, setHtml] = useState(
         `<h1>Gitágoras dice:</h1>
-<p>Bienvenido joven aprendiz. Esta es una zona de estudio con caos controlado. Siéntete libre de experimentar con cualquier magia que hayas desbloqueado. La pizarra mágica actualmente está encantada con HTML y CSS. ¡Te deseo un estudio enriquecedor!</p>`
+<p>Bienvenido joven aprendiz. Esta es una zona de estudio con caos controlado. Siéntete libre de experimentar 
+con cualquier magia que hayas desbloqueado. La pizarra mágica actualmente está encantada con HTML y CSS. ¡Te deseo un estudio enriquecedor!</p>`
     );
 
     const [css, setCss] = useState(

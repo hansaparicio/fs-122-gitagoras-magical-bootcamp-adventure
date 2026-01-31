@@ -1,15 +1,9 @@
-
-import { useEffect, useState } from "react";
+/* import { useEffect, useState } from "react";
 
 import LoginScreen from "./scenes/LoginScreen/LoginScreen";
 import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
 import StackScreen from "./scenes/StackScreen/StackScreen";
 import LoaderOverlay from "./components/Loader/LoaderOverlay";
-import { GameOverProvider } from "./context/GameOverContext";
-
-import MusicLayout from "./layout/MusicLayout";
-import CustomCursor from "./CustomCursor";
-import { IdleProvider } from "./context/IdleContext";
 
 function App() {
     const [screen, setScreen] = useState("login");
@@ -34,8 +28,8 @@ function App() {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then((res) => (res.ok ? res.json() : null))
-            .then((data) => {
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
                 if (!data) return;
                 setLoggedIn(true);
                 setScrollSigned(data.scroll_signed);
@@ -51,50 +45,96 @@ function App() {
         }
     };
 
+    if (screen === "login") {
+        return (
+            <>
+                <LoaderOverlay visible={loading} />
+                <LoginScreen
+                    loggedIn={loggedIn}
+                    onLogin={() => setLoggedIn(true)}
+                    onLogout={() => {
+                        localStorage.removeItem("token");
+                        setLoggedIn(false);
+                        setScrollSigned(false);
+                        setScreen("login");
+                    }}
+                    onStartGame={handleStartGame}
+                />
+            </>
+        );
+    }
+
+    if (screen === "beginning") {
+        return (
+            <>
+                <LoaderOverlay visible={loading} />
+                <BeginningChapter
+                    onFinish={() => {
+                        setScrollSigned(true);
+                        goWithLoader("stack");
+                    }}
+                />
+            </>
+        );
+    }
+
+    if (screen === "stack") {
+        return (
+            <>
+                <LoaderOverlay visible={loading} />
+                <StackScreen
+                    onStart={() => {
+                        console.log("Aquí irá el mapa");
+                    }}
+                    onBackToMenu={() => {
+                        setScreen("login");
+                    }}
+                />
+            </>
+        );
+    }
+
+    return null;
+}
+
+export default App; */
+
+
+//------------------------------------------------------------------
+
+
+
+/* import AppShell from "./layout/AppShell/AppShell";
+import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
+
+import { InventoryProvider } from "./context/InventoryContext";
+import { TimeProvider } from "./context/TimeContext";
+import { GameOverProvider } from "./context/GameOverContext";
+import { IdleProvider } from "./context/IdleContext";
+
+function App() {
     return (
-        <GameOverProvider>
-            <IdleProvider>
-                <MusicLayout>
-                    <CustomCursor />
-                    <LoaderOverlay visible={loading} />
-
-                    {screen === "login" && (
-                        <LoginScreen
-                            loggedIn={loggedIn}
-                            onLogin={() => setLoggedIn(true)}
-                            onLogout={() => {
-                                localStorage.removeItem("token");
-                                setLoggedIn(false);
-                                setScrollSigned(false);
-                                setScreen("login");
-                            }}
-                            onStartGame={handleStartGame}
-                        />
-                    )}
-
-                    {screen === "beginning" && (
-                        <BeginningChapter
-                            onFinish={() => {
-                                setScrollSigned(true);
-                                goWithLoader("stack");
-                            }}
-                        />
-                    )}
-
-                    {screen === "stack" && (
-                        <StackScreen
-                            onStart={() => {
-                                console.log("Aquí irá el mapa");
-                            }}
-                            onBackToMenu={() => {
-                                setScreen("login");
-                            }}
-                        />
-                    )}
-                </MusicLayout>
-            </IdleProvider>
-        </GameOverProvider>
+        <IdleProvider>
+            <GameOverProvider>
+                <TimeProvider>
+                    <InventoryProvider>
+                        <AppShell onExitZone={() => { }}>
+                            <AlchemyZone />
+                        </AppShell>
+                    </InventoryProvider>
+                </TimeProvider>
+            </GameOverProvider>
+        </IdleProvider>
     );
+}
+
+export default App;  */
+
+import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
+
+function App() {
+    return <BeginningChapter />;
+
 }
 
 export default App;

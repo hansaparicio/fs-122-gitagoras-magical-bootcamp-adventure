@@ -230,20 +230,30 @@ const BeginningChapter = ({ onFinish }) => {
             {finalDialog && (
                 <div className="dialog-box">
                     <p className="dialog-text">{typedFinalDialog}</p>
-                    <button className="dialog-btn" onClick={handleSignScroll}>
-                        Firmar
-                    </button>
+
+                    {typedFinalDialog.length ===
+                        "Perfecto, entonces firma este pergamino y serás oficialmente un nuevo alumno de nuestra prestigiosa academia.".length && (
+                            <button className="dialog-btn" onClick={handleSignScroll}>
+                                Firmar
+                            </button>
+                        )}
                 </div>
             )}
 
+
             {phase === "pergamino" && (
-                <div className={`pergamino-container ${scrollVisible ? "visible" : ""}`} id="pergamino">
-                    <img src={MagicScroll} className="pergamino-img" />
-                    <div className={`pergamino-text ${scrollTextVisible ? "visible" : ""}`}>
-                        {playerName}
+                <>
+                    <div
+                        className={`pergamino-container ${scrollVisible ? "visible" : ""}`}
+                        id="pergamino"
+                    >
+                        <img src={MagicScroll} className="pergamino-img" />
+                        <div className={`pergamino-text ${scrollTextVisible ? "visible" : ""}`}>
+                            {playerName}
+                        </div>
                     </div>
 
-                    <div style={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                    <div className="pergamino-actions">
                         <button className="dialog-btn" onClick={handleDownload}>
                             Descargar
                         </button>
@@ -257,8 +267,10 @@ const BeginningChapter = ({ onFinish }) => {
                             Continuar
                         </button>
                     </div>
-                </div>
+                </>
             )}
+
+
         </div>
     );
 };

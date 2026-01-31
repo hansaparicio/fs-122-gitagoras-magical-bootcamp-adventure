@@ -190,7 +190,7 @@ button:hover {
 
 .pergamino-text {
   position: absolute;
-  top: 59%;
+  top: 63%;
   left: 46%;
   transform: translate(-50%, -50%);
   font-family: "Autograf", cursive;
@@ -207,4 +207,19 @@ button:hover {
 
 .download-btn {
   margin-top: 20px;
+
+}
+
+.pergamino-actions {
+  position: relative;
+  margin-top: 24px;
+  margin-right: 90px;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  pointer-events: auto;
+}
+
+.pergamino-actions .dialog-btn {
+  float: none;
 }
