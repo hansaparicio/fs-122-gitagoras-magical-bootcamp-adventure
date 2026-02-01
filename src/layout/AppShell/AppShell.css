@@ -64,7 +64,6 @@ body {
 }
 
 .shell-top .shell-left:hover,
-
 .shell-top .sand-timer:hover,
 .shell-bottom .shell-left:hover,
 .shell-bottom .shell-right:hover {
@@ -130,4 +129,85 @@ body {
 .audio-toggle-button:hover {
   background-color: rgb(159, 97, 23);
   color: rgb(0, 0, 0);
+}
+
+.inventory-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.inventory-item {
+  width: 36px;
+  height: 36px;
+  image-rendering: pixelated;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.inventory-item:hover {
+  border-color: #4aa3ff;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.exit-zone-button {
+  font-family: "Press Start 2P", cursive;
+  background: rgba(245, 216, 140, 0.9);
+  border: 3px solid #ff4a4a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.exit-zone-button:hover {
+  background-color: #ff4a4a;
+  color: black;
+}
+
+.inventory-panel {
+  position: absolute;
+  top: 64px;
+  left: 16px;
+  background: rgba(245, 216, 140, 0.95);
+  border: 3px solid #3493d7;
+  border-radius: 10px;
+  padding: 10px;
+  min-width: 160px;
+  z-index: 9500;
+  pointer-events: auto;
+}
+
+.inventory-empty {
+  font-size: 12px;
+  color: black;
+  text-align: center;
+  padding: 6px 0;
+}
+
+.inventory-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.inventory-item {
+  width: 36px;
+  height: 36px;
+  image-rendering: pixelated;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.inventory-item:hover {
+  border-color: #4aa3ff;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.shell-left {
+  font-family: "Press Start 2P", cursive;
 }

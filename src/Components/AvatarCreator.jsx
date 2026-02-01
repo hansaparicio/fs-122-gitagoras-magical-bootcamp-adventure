@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 
 import muneco from "../assets/images/Avatar/Avatar/Muneco.png";
@@ -60,49 +60,38 @@ const accesorioOptions = [accesorio1, accesorio2, accesorio3, accesorio4, acceso
 const gorroOptions = [gorro1, gorro2, gorro3, gorro4];
 const fondoOptions = [fondo1, fondo2, fondo3, fondo4];
 
+const defaultAvatar = {
+    muneco,
+    ojos: ojos1,
+    pelo: null,
+    ropa: null,
+    accesorio: null,
+    gorro: null,
+    fondo: fondo1,
 
-const AvatarCreator = ({ onClose, onSave }) => {
+};
+
+
+const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
     const [activeTab, setActiveTab] = useState('ojos')
-    const [avatar, setAvatar] = useState({
-        muneco: muneco,
-        ojos: ojos1,
-        pelo: pelo1,
-        ropa: ropa1,
-        accesorio: null,
-        gorro: null,
-        fondo: fondo1
-    });
+    const [avatar, setAvatar] = useState(defaultAvatar);
 
 
-    {/*const saveAvatar = () => {
-        localStorage.setItem("avatar", JSON.stringify(avatar));
-        if (onSave) {
-            onSave(avatar);
+    useEffect(() => {
+        if (initialAvatar) {
+            setAvatar({
+                ...defaultAvatar,
+                ...initialAvatar,
+            });
         }
-        onClose();
-    };
-*/}
-    // cuando esté el backend listo, descomentar este código y borrar el de arriba 
-    const changeOjos = (ojos) => {
-        setAvatar((prev) => ({ ...prev, ojos }));
-    };
-    const changePelo = (pelo) => {
-        setAvatar((prev) => ({ ...prev, pelo }));
-    };
-    const changeRopa = (ropa) => {
-        setAvatar((prev) => ({ ...prev, ropa }));
-    };
+    }, [initialAvatar]);
 
-    const changeAccesorio = (accesorio) => {
-        setAvatar((prev) => ({ ...prev, accesorio }));
-    }
 
-    const changeGorro = (gorro) => {
-        setAvatar((prev) => ({ ...prev, gorro }));
-    }
-    const changeFondo = (fondo) => {
-        setAvatar((prev) => ({ ...prev, fondo }));
-    }
+    const updateAvatar = (key, value) => {
+        setAvatar((prev) => ({
+            ...prev, [key]: value,
+        }));
+    };
 
 
 
@@ -119,9 +108,12 @@ const AvatarCreator = ({ onClose, onSave }) => {
                 },
                 body: JSON.stringify(avatar)
             });
-            if (!res.ok) throw new error("Error al guardar avatar");
+            if (!res.ok) throw new Error("Error al guardar avatar");
 
-            onSave(avatar);
+            onSave({
+                ...defaultAvatar,
+                ...avatar,
+            });
             onClose();
         } catch (err) {
             console.error(err);
@@ -132,7 +124,9 @@ const AvatarCreator = ({ onClose, onSave }) => {
     return (
         <div className="avatar-editor-layout">
             <div className="avatar-preview">
-                <Avatar {...avatar} />
+                <div className="avatar-preview-viewport">
+                    <Avatar {...avatar} />
+                </div>
             </div>
 
 
@@ -147,133 +141,112 @@ const AvatarCreator = ({ onClose, onSave }) => {
 
                 </div>
 
-
                 <div className="options-content">
-
-                    {activeTab === "ojos" && (
-                        <section className="options-section">
-                            <h2>Ojos</h2>
+                    {{
+                        ojos: (
                             <div className="options-grid">
                                 {ojosOptions.map((ojo, index) => (
                                     <button
                                         key={index}
                                         className={`option-button ${avatar.ojos === ojo ? "active" : ""}`}
-                                        onClick={() => changeOjos(ojo)}
+                                        onClick={() => updateAvatar("ojos", ojo)}
                                     >
                                         <img src={ojo} alt="" />
                                     </button>
                                 ))}
                             </div>
-                        </section>
-                    )}
+                        ),
 
-                    {activeTab === "pelo" && (
-                        <section className="options-section">
-                            <h2>Pelo</h2>
+                        pelo: (
                             <div className="options-grid">
                                 <button
-                                    className={`option-button empty ${avatar.pelo === null ? "active" : ""
-                                        }`}
-                                    onClick={() => changePelo(null)}
+                                    className={`option-button ${avatar.pelo === null ? "active" : ""}`}
+                                    onClick={() => updateAvatar("pelo", null)}
                                 >
-                                    <span>🚫</span>
+                                    🚫
                                 </button>
                                 {peloOptions.map((pelo, index) => (
                                     <button
                                         key={index}
                                         className={`option-button ${avatar.pelo === pelo ? "active" : ""}`}
-                                        onClick={() => changePelo(pelo)}
+                                        onClick={() => updateAvatar("pelo", pelo)}
                                     >
                                         <img src={pelo} alt="" />
                                     </button>
                                 ))}
                             </div>
-                        </section>
-                    )}
+                        ),
 
-                    {activeTab === "ropa" && (
-                        <section className="options-section">
-                            <h2>Ropa</h2>
+                        ropa: (
                             <div className="options-grid">
                                 {ropaOptions.map((ropa, index) => (
                                     <button
                                         key={index}
                                         className={`option-button ${avatar.ropa === ropa ? "active" : ""}`}
-                                        onClick={() => changeRopa(ropa)}
+                                        onClick={() => updateAvatar("ropa", ropa)}
                                     >
                                         <img src={ropa} alt="" />
                                     </button>
                                 ))}
                             </div>
-                        </section>
-                    )}
+                        ),
 
-                    {activeTab === "accesorio" && (
-                        <section className="options-section">
-                            <h2>Accesorios</h2>
+                        accesorio: (
                             <div className="options-grid">
                                 <button
-                                    className={`option-button empty ${avatar.accesorio === null ? "active" : ""
-                                        }`}
-                                    onClick={() => changeAccesorio(null)}
+                                    className={`option-button ${avatar.accesorio === null ? "active" : ""}`}
+                                    onClick={() => updateAvatar("accesorio", null)}
                                 >
-                                    <span>🚫</span>
+                                    🚫
                                 </button>
                                 {accesorioOptions.map((acc, index) => (
                                     <button
                                         key={index}
                                         className={`option-button ${avatar.accesorio === acc ? "active" : ""}`}
-                                        onClick={() => changeAccesorio(acc)}
+                                        onClick={() => updateAvatar("accesorio", acc)}
                                     >
                                         <img src={acc} alt="" />
                                     </button>
                                 ))}
                             </div>
-                        </section>
-                    )}
+                        ),
 
-                    {activeTab === "gorro" && (
-                        <section className="options-section">
-                            <h2>Gorros</h2>
+                        gorro: (
                             <div className="options-grid">
                                 <button
-                                    className={`option-button empty ${avatar.gorro === null ? "active" : ""
-                                        }`}
-                                    onClick={() => changeGorro(null)}
+                                    className={`option-button ${avatar.gorro === null ? "active" : ""}`}
+                                    onClick={() => updateAvatar("gorro", null)}
                                 >
-                                    <span>🚫</span>
+                                    🚫
                                 </button>
                                 {gorroOptions.map((gorro, index) => (
                                     <button
                                         key={index}
                                         className={`option-button ${avatar.gorro === gorro ? "active" : ""}`}
-                                        onClick={() => changeGorro(gorro)}
+                                        onClick={() => updateAvatar("gorro", gorro)}
                                     >
-
                                         <img src={gorro} alt="" />
                                     </button>
                                 ))}
                             </div>
-                        </section>
-                    )}
-                    {activeTab === "fondo" && (
-                        <section className="options-section">
-                            <h2>Fondos</h2>
+                        ),
+
+                        fondo: (
                             <div className="options-grid">
                                 {fondoOptions.map((fondo, index) => (
                                     <button
                                         key={index}
                                         className={`option-button ${avatar.fondo === fondo ? "active" : ""}`}
-                                        onClick={() => changeFondo(fondo)}
+                                        onClick={() => updateAvatar("fondo", fondo)}
                                     >
                                         <img src={fondo} alt="" />
                                     </button>
                                 ))}
                             </div>
-                        </section>
-                    )}
-
+                        ),
+                    }[activeTab]}
                 </div>
+
 
 
                 {/* Guardar*/}
@@ -282,7 +255,7 @@ const AvatarCreator = ({ onClose, onSave }) => {
                 </button>
 
             </div>
-        </div>
+        </div >
     )
 }
 

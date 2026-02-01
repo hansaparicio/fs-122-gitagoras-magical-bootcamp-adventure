@@ -1,0 +1,74 @@
+.rune-game {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  margin-top: 90px;
+}
+
+.rune-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 340px;
+  padding: 10px;
+}
+
+.column-title {
+  align-self: center;
+  text-align: center;
+  font-family: "Press Start 2P";
+  font-size: 13px;
+  color: #fff;
+  background: linear-gradient(135deg, #000, #222);
+  padding: 12px 18px;
+  border: 4px solid #4aa3ff;
+  border-radius: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 0 12px rgba(74, 163, 255, 0.6);
+}
+
+.rune {
+  padding: 18px 14px;
+  min-height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  font-family: "Press Start 2P";
+  font-size: 11px;
+  line-height: 1.5;
+
+  border: 4px solid #000;
+  border-radius: 18px;
+
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rune.term {
+  background: linear-gradient(135deg, #5724a0, #483d8b);
+  color: white;
+}
+
+.rune.def {
+  background: linear-gradient(135deg, #f5d88c, #c9a441);
+  color: black;
+}
+
+.rune:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 0 18px rgba(150, 100, 255, 0.9);
+}
+
+.rune.selected {
+  outline: 4px solid #4aa3ff;
+  box-shadow: 0 0 20px rgba(74, 163, 255, 0.9);
+}
+
+.rune.matched {
+  opacity: 0.35;
+  pointer-events: none;
+  transform: scale(0.95);
+  box-shadow: none;
+}

@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap");
 
-
 .audio-container > div {
   width: 400px;
   height: 250px;
@@ -18,11 +17,15 @@
 
 .audio-player {
   width: 100%;
-  height: 100%;
-  padding: 1px;
-  background: transparent;
-  overflow: hidden;
-  font-size: 6px;
+  max-width: 100%;
+  height: auto;
+  min-height: 160px;
+
+  padding: 6px;
+  font-size: 10px;
+
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .audio-player,
@@ -30,9 +33,12 @@
   font-family: "Pixelify Sans", monospace;
   line-height: 1;
   box-sizing: border-box;
-  background-color: rgba(44, 41, 41, 0.9);
+  background-color: transparent;
   color: rgb(255, 255, 255);
-
+  box-sizing: border-box;
+}
+.audio-player * {
+  max-width: 100%;
 }
 
 .audio-player .madza-player {
@@ -67,9 +73,6 @@
 }
 
 .audio-player input[type="range"] {
-  height: 4px;
-}
-
-.audio-player * {
   max-width: 100%;
+  box-sizing: border-box;
 }

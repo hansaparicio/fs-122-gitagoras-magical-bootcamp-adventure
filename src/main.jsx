@@ -1,9 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
 
-createRoot(document.getElementById('root')).render(
+import { IdleProvider } from "./context/IdleContext";
+import { TimeProvider } from "./context/TimeContext";
+import { GameOverProvider } from "./context/GameOverContext";
+
+createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <App />
+        <GameOverProvider>
+            <TimeProvider>
+                <IdleProvider>
+                    <App />
+                </IdleProvider>
+            </TimeProvider>
+        </GameOverProvider>
     </StrictMode>
-)
+);

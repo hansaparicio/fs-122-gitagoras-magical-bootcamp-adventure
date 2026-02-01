@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Avatar from './Avatar';
-import avatarCreator from '../AvatarCreator';
+
 
 const MiUsuario = () => {
     const [avatar, setAvatar] = useState(null);
@@ -9,19 +9,27 @@ const MiUsuario = () => {
         const fetchMe = async () => {
             const token = localStorage.getItem("token");
             if (!token) return;
-            const res = await fetch("http://127.0.0.1:3001/api/me", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            if (res.ok) {
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/me", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+
+
+                });
+
+                if (!res.ok) return;
+
                 const data = await res.json();
                 setAvatar(data.avatar);
+            } catch (err) {
+                console.error("Error cargando mi usuario", err);
             }
+
         };
+
         fetchMe();
-    },
-        []);
+    }, []);
 
 
     return (
@@ -29,7 +37,9 @@ const MiUsuario = () => {
             <h1>Mi Usuario</h1>
             {avatar ? (
                 <div className="user-panel-avatar">
-                    <Avatar {...avatar} />
+                    <div className="avatar-mask">
+                        <Avatar {...avatar} />
+                    </div>
                 </div>
             ) : (
                 <p>No hay avatar guardado</p>
