@@ -109,7 +109,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         }
 
         try {
-            const res = await fetch("http://127.0.0.1:5000/api/register", {
+            const res = await fetch("http://127.0.0.1:3001/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -136,7 +136,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://127.0.0.1:5000/api/login", {
+            const res = await fetch("http://127.0.0.1:3001/api/login", {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
@@ -178,6 +178,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         <div className="main-buttons">
                             <button onClick={() => setMode("register")}>Crear usuario</button>
                             <button onClick={() => setMode("login")}>Iniciar sesión</button>
+                            <button onClick={onQuizz} style={{ background: "#9333ea" }}>Jugar Quiz (Demo)</button>
                         </div>
 
                         {mode === "register" && (

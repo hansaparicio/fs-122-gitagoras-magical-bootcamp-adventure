@@ -5,6 +5,7 @@ import QuizContent from './components/QuizContent';
 import CompletionScreen from './components/CompletionScreen';
 import GameOverScreen from './components/GameOverScreen';
 import LoadingScreen from './components/LoadingScreen';
+import WizardIntro from './components/WizardIntro';
 import { generateQuestions, getFallbackQuestions } from './services/questionService';
 import './QuizGame.css';
 
@@ -17,7 +18,7 @@ const QuizGame = ({ onExit }) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(INITIAL_LIVES);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [gameStatus, setGameStatus] = useState('loading'); // loading, playing, completed, gameOver
+  const [gameStatus, setGameStatus] = useState('intro'); // intro, loading, playing, completed, gameOver
   const [isAnswerRevealed, setIsAnswerRevealed] = useState(false);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [timerReset, setTimerReset] = useState(0);
@@ -36,29 +37,25 @@ const QuizGame = ({ onExit }) => {
     []
   );
 
-  // Generar preguntas al montar el componente
-  useEffect(() => {
-    const loadQuestions = async () => {
-      setIsLoadingQuestions(true);
-      setGameStatus('loading');
+  // Cargar preguntas cuando se inicia el juego después de la intro
+  const loadQuestionsAndStart = async () => {
+    setIsLoadingQuestions(true);
+    setGameStatus('loading');
 
-      try {
-        const generatedQuestions = await generateQuestions(10);
-        setQuestions(generatedQuestions);
-        setGameStatus('playing');
-        setIsTimerActive(true);
-      } catch (error) {
-        console.error('Error cargando preguntas, usando fallback:', error);
-        setQuestions(getFallbackQuestions());
-        setGameStatus('playing');
-        setIsTimerActive(true);
-      } finally {
-        setIsLoadingQuestions(false);
-      }
-    };
-
-    loadQuestions();
-  }, []);
+    try {
+      const generatedQuestions = await generateQuestions(10);
+      setQuestions(generatedQuestions);
+      setGameStatus('playing');
+      setIsTimerActive(true);
+    } catch (error) {
+      console.error('Error cargando preguntas, usando fallback:', error);
+      setQuestions(getFallbackQuestions());
+      setGameStatus('playing');
+      setIsTimerActive(true);
+    } finally {
+      setIsLoadingQuestions(false);
+    }
+  };
 
   const currentQuestion = questions[currentQuestionIndex];
   const totalQuestions = questions.length;
@@ -155,6 +152,11 @@ const QuizGame = ({ onExit }) => {
       setIsLoadingQuestions(false);
     }
   };
+
+  // Mostrar intro del mago
+  if (gameStatus === 'intro') {
+    return <WizardIntro stars={stars} onStart={loadQuestionsAndStart} />;
+  }
 
   // Mostrar pantalla de carga
   if (isLoadingQuestions || gameStatus === 'loading') {

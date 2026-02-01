@@ -112,10 +112,10 @@ El JSON debe seguir EXACTAMENTE este esquema:
 }
 
 Reglas:
-- Genera EXACTAMENTE 6 pares
+- Genera EXACTAMENTE 10 pares
 - Los términos deben ser HTML básico
 - Las definiciones deben ser claras y cortas
-- Los IDs deben ir del 1 al 6
+- Los IDs deben ir del 1 al 10
 """
 
     payload = {
@@ -148,7 +148,7 @@ Reglas:
         parsed = json.loads(clean)
         pairs = parsed.get("pairs", [])
 
-        if len(pairs) != 6:
+        if len(pairs) != 10:
             raise ValueError("Número incorrecto de pares")
 
         return jsonify({
@@ -161,12 +161,16 @@ Reglas:
 
         return jsonify({
             "pairs": [
-                { "id": 1, "term": "<h1>", "definition": "Título principal del documento HTML" },
-                { "id": 2, "term": "<p>", "definition": "Define un párrafo de texto" },
-                { "id": 3, "term": "<img>", "definition": "Inserta una imagen en la página" },
-                { "id": 4, "term": "<a>", "definition": "Crea un enlace a otra página" },
-                { "id": 5, "term": "<body>", "definition": "Contiene el contenido visible del documento" },
-                { "id": 6, "term": "atributo", "definition": "Modifica una etiqueta HTML" }
+                   { "id": 1, "term": "<h1>", "definition": "Título principal del documento HTML" },
+                   { "id": 2, "term": "<p>", "definition": "Define un párrafo de texto" },
+                   { "id": 3, "term": "<img>", "definition": "Inserta una imagen en la página" },
+                   { "id": 4, "term": "<a>", "definition": "Crea un enlace a otra página" },
+                   { "id": 5, "term": "<body>", "definition": "Contiene el contenido visible del documento" },
+                   { "id": 6, "term": "atributo", "definition": "Modifica una etiqueta HTML" },
+                   { "id": 7, "term": "<br>", "definition": "Inserta un salto de línea" },
+                   { "id": 8, "term": "<strong>", "definition": "Resalta texto importante en negrita" },
+                   { "id": 9, "term": "elemento", "definition": "Unidad básica de una estructura HTML" },
+                   { "id": 10, "term": "<input>", "definition": "Campo para introducir datos del usuario" }
             ],
             "source": "fallback"
         })
