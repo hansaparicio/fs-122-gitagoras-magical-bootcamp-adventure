@@ -5,7 +5,7 @@ import WorldScene from "../WorldScenes/WorldScene";
 
 import AlchemyZone from "../AlchemyZone/AlchemyZone";
 import LibraryZone from "../LibraryZone/LibraryZone";
-import QuizGame from "../QuizGame/QuizGame";
+import QuizGame from "../GardenZone/QuizGame";
 import Iframe from "../StudyZone/Iframe";
 
 import AppShell from "../../layout/AppShell/AppShell";

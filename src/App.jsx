@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import LibraryZone from "./scenes/LibraryZone/LibraryZone";
-import AppShell from "./layout/AppShell/AppShell";
-import LoaderOverlay from "./components/Loader/LoaderOverlay";
+import SceneRouter from "./scenes/WorldScenes/SceneRouter";
+import LoaderOverlay from "./Components/Loader/LoaderOverlay";
 import { TimeProvider } from "./context/TimeContext";
 import { GameOverProvider } from "./context/GameOverContext";
-import GameOverModal from "./components/GameOverModal/GameOverModal";
+import CustomCursor from "./CustomCursor";
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -20,13 +19,10 @@ function App() {
     return (
         <GameOverProvider>
             <TimeProvider>
+                <CustomCursor />
                 <LoaderOverlay visible={loading} />
 
-                <AppShell>
-                    {!loading && <LibraryZone />}
-                </AppShell>
-
-                <GameOverModal />
+                {!loading && <SceneRouter />}
             </TimeProvider>
         </GameOverProvider>
     );
