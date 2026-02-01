@@ -6,6 +6,10 @@ import { useTime } from "../../context/TimeContext";
 import carolIcon from "../../assets/images/Chatbox/carol.png";
 import carolWorried from "../../assets/images/Chatbox/carol_worried.png";
 import carolMoreWorried from "../../assets/images/Chatbox/carol_more_worried.png";
+import idleSound from "../../assets/sounds/mensaje-carol.mp3"
+import { useIdle } from "../../context/IdleContext";
+
+
 
 
 const ChatBot = ({ insideShell }) => {
@@ -29,6 +33,18 @@ const ChatBot = ({ insideShell }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const { isIdle } = useIdle();
+  const IDLE_MENSAJES = ["¿Estas ahí o llevas capa de invisibilidad?", "¿Sigues ahí, pequeño mago?🪄", "El hechizo del ratón petrificado ha sido detectado🧙‍♂️", "Creo que la magia se quedó en pausa...", "¿Te has dormido o estás canalizando energía arcana?"]
+  const [idleMensaje, setIdleMensaje] = useState(null);
+  const idleAudioRef = useRef(null);
+
+
+
+  useEffect(() => {
+    idleAudioRef.current = new Audio(idleSound);
+    idleAudioRef.current.volume = 0.6;
+  }, [])
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -44,6 +60,22 @@ const ChatBot = ({ insideShell }) => {
             : carolIcon,
     );
   }, [timeLeft]);
+
+  useEffect(() => {
+    if (isIdle) {
+      const random = IDLE_MENSAJES[Math.floor(Math.random() * IDLE_MENSAJES.length)];
+      setIdleMensaje(random);
+
+
+      if (idleAudioRef.current) {
+        idleAudioRef.current.currentTime = 0;
+        idleAudioRef.current.play().catch(() => { });
+      }
+    } else {
+      setIdleMensaje(null)
+    }
+  }, [isIdle]);
+
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -235,6 +267,13 @@ const ChatBot = ({ insideShell }) => {
               ➤
             </button>
           </form>
+        </div>
+      )}
+
+      {isIdle && (
+        <div className="idle-mensaje">
+          <p>{idleMensaje}</p>
+
         </div>
       )}
     </div>

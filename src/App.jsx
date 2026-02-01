@@ -1,3 +1,5 @@
+/* 
+
 import { useState } from "react";
 
 import StackScreen from "./scenes/StackScreen/StackScreen";
@@ -65,4 +67,22 @@ function App() {
     );
 }
 
-export default App;
+export default function App() {
+    return (
+        <BrowserRouter>
+            <AppRoutes />
+        </BrowserRouter>
+    );
+} 
+ */
+
+//       <AppShell>
+
+//         {!loading && <LibraryZone />}
+//       </AppShell>
+//     </TimeProvider>
+//   );
+// }
+
+// export default App;
+
