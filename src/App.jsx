@@ -50,7 +50,16 @@ import LibraryZone from "./scenes/LibraryZone/LibraryZone";
 import TeamShowcase from "./components/AboutUs/TeamShowcase";
 import QuizzGame from "./scenes/QuizGame/QuizGame";
 import CustomCursor from "./CustomCursor";
+//--------------------------------------------------------------- Zona Alquimia
+
+/* 
+import { useState, useEffect } from "react";
+import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
+import AppShell from "./layout/AppShell/AppShell";
+import LoaderOverlay from "./components/Loader/LoaderOverlay";
 import { TimeProvider } from "./context/TimeContext";
+import { GameOverProvider } from "./context/GameOverContext";
+import GameOverModal from "./components/GameOverModal/GameOverModal";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -92,15 +101,71 @@ function App() {
                 )}
             </>
         </TimeProvider>
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    return (
+        <GameOverProvider>
+            <TimeProvider>
+                <LoaderOverlay visible={loading} />
+
+                <AppShell>
+                    {!loading && <AlchemyZone />}
+                </AppShell>
+
+                <GameOverModal />
+            </TimeProvider>
+        </GameOverProvider>
     );
 }
 
 export default App;
 
-import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone"
+//---------------------------------------------------------------------- Mapa
+/*
+import WorldScene from "./scenes/WorldScenes/WorldScene"
 
 function App() {
-    return <AlchemyZone />;
+
+   return <WorldScene />;
 }
 
-export default App;*/
+export default App;
+export default App;
+
+
+
+//----------------------------------------------------------------------- Biblioteca
+
+import AppShell from "./layout/AppShell/AppShell";
+
+import { TimeProvider } from "./context/TimeContext";
+import { GameOverProvider } from "./context/GameOverContext";
+import { InventoryProvider } from "./context/InventoryContext";
+
+import LibraryZone from "./scenes/LibraryZone/LibraryZone";
+
+export default function App() {
+    return (
+        <AppShell>
+            <TimeProvider>
+                <GameOverProvider>
+                    <InventoryProvider>
+                        <LibraryZone
+                            onExit={() => {
+                                console.log("Salir de la Biblioteca Arcana");
+                            }}
+                        />
+                    </InventoryProvider>
+                </GameOverProvider>
+            </TimeProvider>
+        </AppShell>
+    );
+}
