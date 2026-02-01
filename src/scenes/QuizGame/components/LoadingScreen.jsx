@@ -1,11 +1,11 @@
 import React from 'react';
 import StarField from './StarField';
 import cristalImg from '../assets/bola de cristal.png';
-import laboratorioImg from '../assets/laboratorio.png';
+import jardinImg from '../assets/Jardin.jpeg';
 
 const LoadingScreen = ({ stars }) => {
     return (
-        <div className="loading-screen" style={{ backgroundImage: `url(${laboratorioImg})` }}>
+        <div className="loading-screen" style={{ backgroundImage: `url(${jardinImg})` }}>
             <div className="loading-overlay"></div>
             <StarField stars={stars} />
 

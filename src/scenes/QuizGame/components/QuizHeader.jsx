@@ -1,7 +1,4 @@
 import React from 'react';
-import cristalImg from '../assets/bola de cristal.png';
-import pocionImg from '../assets/pocion.png';
-import pergaminoImg from '../assets/pergamino.png';
 import LivesDisplay from './LivesDisplay';
 import QuizTimer from './QuizTimer';
 
@@ -17,20 +14,13 @@ const QuizHeader = ({
     return (
         <header className="quiz-header">
             <div className="quiz-title-container">
-                <img src={cristalImg} alt="Cristal" className="quiz-icon pixelated" />
-                <h1 className="quiz-title">Laboratorio de Definiciones</h1>
-                <img src={cristalImg} alt="Cristal" className="quiz-icon pixelated" />
+                <h1 className="quiz-title">Desafío del Calvo Malvado</h1>
             </div>
 
             <div className="quiz-info-panel">
                 <div className="quiz-score-panel">
                     <div className="score-item">
-                        <img src={pocionImg} alt="Poción" className="score-icon pixelated" />
-                        <span>Pociones! {score}</span>
-                    </div>
-                    <div className="score-item">
-                        <img src={pergaminoImg} alt="Pergamino" className="score-icon pixelated" />
-                        <span>Pergamino! {currentQuestion} / {totalQuestions}</span>
+                        <span>Pregunta {currentQuestion} / {totalQuestions}</span>
                     </div>
                 </div>
 

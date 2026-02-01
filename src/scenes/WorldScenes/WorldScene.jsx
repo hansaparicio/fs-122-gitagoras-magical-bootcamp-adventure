@@ -370,9 +370,7 @@ export default function WorldScene({ stackId, onBack, onEnterZone }) {
             height={BASE_HEIGHT}
             className="worldscene-canvas"
           />
-          <button onClick={onBack} className="worldscene-back">
-            BACK
-          </button>
+
           {showGitagoras && (
             <div className="worldscene-overlay">
               <button

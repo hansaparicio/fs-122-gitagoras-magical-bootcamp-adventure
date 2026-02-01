@@ -2,19 +2,19 @@ import React, { useMemo } from 'react';
 import { Sparkles } from 'lucide-react';
 import StarField from './StarField';
 import calderoImg from '../assets/caldero_magico_pixel_art_asset.png';
-import laboratorioImg from '../assets/laboratorio.png';
+import wizardImg from '../assets/batalla hans.png';
 
 const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
-    // Mensajes alentadores aleatorios
+    // Mensajes del mago tras la derrota
     const encouragingMessages = [
-        "¡No te rindas! Cada intento te hace más fuerte.",
-        "El conocimiento se construye con práctica. ¡Sigue adelante!",
-        "Los grandes magos también fallaron al principio.",
-        "Cada error es una oportunidad para aprender.",
-        "¡Estás más cerca de dominar HTML! Inténtalo de nuevo.",
-        "La perseverancia es la clave del éxito.",
-        "¡Casi lo logras! Un intento más y lo conseguirás.",
-        "Aprender lleva tiempo, pero lo estás haciendo genial."
+        "¡Ja ja ja! Tu conocimiento no fue suficiente. Pero no desesperes, hasta los grandes magos comenzaron siendo aprendices.",
+        "Has caído ante mi desafío. El HTML es poderoso, y debes dominarlo antes de enfrentarme de nuevo.",
+        "Tu energía se ha agotado. Estudia más sobre las etiquetas y estructuras, luego regresa más fuerte.",
+        "¡Qué decepción! Creí que tendrías más conocimiento. Pero la magia del código requiere práctica constante.",
+        "Has sido derrotado, pero veo chispas de potencial en ti. Aprende de tus errores y vuelve a intentarlo.",
+        "El HTML es más complejo de lo que pensabas, ¿verdad? No te preocupes, todos fallan antes de triunfar.",
+        "Tu batalla ha terminado aquí, pero el conocimiento te espera. ¡Vuelve cuando estés listo!",
+        "Casi lo logras, pero el Calvo Malvado no es fácil de vencer. ¡Entrena más y regresa!"
     ];
 
     const randomMessage = useMemo(() => {
@@ -22,7 +22,7 @@ const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
     }, []);
 
     return (
-        <div className="game-over-screen" style={{ backgroundImage: `url(${laboratorioImg})` }}>
+        <div className="game-over-screen" style={{ backgroundImage: `url(${wizardImg})` }}>
             <div className="completion-overlay"></div>
             <StarField stars={stars} />
 
@@ -33,10 +33,10 @@ const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
                     className="game-over-cauldron pixelated"
                 />
 
-                <h1 className="game-over-title">Has perdido la batalla</h1>
+                <h1 className="game-over-title">¡EL MAGO TE HA DERROTADO!</h1>
 
                 <div className="game-over-reason">
-                    <Sparkles size={40} color="#fbbf24" />
+                    <Sparkles size={40} color="#ef4444" />
                     <p>{randomMessage}</p>
                 </div>
 
@@ -53,10 +53,10 @@ const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
 
                 <div className="game-over-buttons">
                     <button onClick={onReset} className="game-over-btn retry-btn">
-                        Reintentar
+                        🔄 Reintentar
                     </button>
                     <button onClick={onExit} className="game-over-btn exit-btn">
-                        Salir
+                        🗺️ Volver al Mapa
                     </button>
                 </div>
             </div>

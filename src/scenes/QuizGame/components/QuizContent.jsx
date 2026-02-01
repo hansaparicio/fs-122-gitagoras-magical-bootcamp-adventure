@@ -1,8 +1,8 @@
 import React from 'react';
-import Cauldron from './Cauldron';
 import QuestionCard from './QuestionCard';
 import OptionButton from './OptionButton';
 import FeedbackMessage from './FeedbackMessage';
+import MagicEffect from './MagicEffect';
 
 const QuizContent = ({
     question,
@@ -17,8 +17,9 @@ const QuizContent = ({
 
     return (
         <main className="quiz-content-main">
+            {isAnswerRevealed && <MagicEffect isCorrect={isCorrectAnswer} />}
+
             <section className="quiz-question-section">
-                <Cauldron />
 
                 <QuestionCard
                     questionNumber={questionNumber}
