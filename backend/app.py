@@ -6,7 +6,11 @@ import json
 import os
 
 app = Flask(__name__)
-CORS(app)
+
+
+CORS(app, resources={r"/api/*": {"origins": ["http://localhost:3000", "http://127.0.0.1:3000"], "supports_credentials": True}})
+
+app.config["JWT_SECRET_KEY"] = "supersecretkey"
 
 
 
@@ -80,16 +84,7 @@ def get_me():
     username = get_jwt_identity()
     user = users.get(username)
 
-    if not user: 
-        return jsonify({"msg": "usuario no encontrado"}), 404
-    return jsonify({
-        "username": username,
-        "avatar": user.get("avatar")
-}), 200
 
-
-     
-#avatar endpoint 
 
 @app.route("/api/avatar", methods=["POST"])
 @jwt_required()

@@ -176,6 +176,10 @@ const BeginningChapter = ({ onFinish }) => {
             link.download = `${playerName}_MagicScroll.png`;
             link.href = canvas.toDataURL("image/png");
             link.click();
+            // Trigger completion after download
+            setTimeout(() => {
+                if (onComplete) onComplete();
+            }, 1000);
         });
     };
 

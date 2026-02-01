@@ -1,35 +1,32 @@
-import { useState } from "react";
-
-import SceneRouter from "./scenes/WorldScenes/SceneRouter";
-import LoaderOverlay from "./components/loader/LoaderOverlay";
-
+import { useState, useEffect } from "react";
+import LibraryZone from "./scenes/LibraryZone/LibraryZone";
+import AppShell from "./layout/AppShell/AppShell";
+import LoaderOverlay from "./components/Loader/LoaderOverlay";
 import { TimeProvider } from "./context/TimeContext";
 import { GameOverProvider } from "./context/GameOverContext";
-import { InventoryProvider } from "./context/InventoryContext";
+import GameOverModal from "./components/GameOverModal/GameOverModal";
 
 function App() {
-    const [scene, setScene] = useState("stack");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    const changeScene = (next) => {
-        setLoading(true);
-        setTimeout(() => {
-            setScene(next);
+    useEffect(() => {
+        const timer = setTimeout(() => {
             setLoading(false);
-        }, 600);
-    };
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <GameOverProvider>
             <TimeProvider>
-                <InventoryProvider>
-                    <SceneRouter
-                        currentScene={scene}
-                        setScene={changeScene}
-                    />
+                <LoaderOverlay visible={loading} />
 
-                    <LoaderOverlay visible={loading} />
-                </InventoryProvider>
+                <AppShell>
+                    {!loading && <LibraryZone />}
+                </AppShell>
+
+                <GameOverModal />
             </TimeProvider>
         </GameOverProvider>
     );
