@@ -11,7 +11,7 @@ import "./WorldScene.css";
 import bgImageSrc from "./assets/bg_world.png";
 import studentMageSprite from "./assets/student_mage.png";
 import navMaskSrc from "./assets/nav_mask.png";
-import gitagorasImage from "../../assets/backgrounds/Gitagoras.jpeg";
+
 
 import zoneEnterSoundSrc from "./assets/sounds/zone-enter.mp3";
 import interactSoundSrc from "./assets/sounds/interact.mp3";

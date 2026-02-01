@@ -1,79 +1,84 @@
-//--------------------------------------------------------------- Zona Alquimia
+import { useState } from "react";
 
-/* 
-import { useState, useEffect } from "react";
-import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
-import AppShell from "./layout/AppShell/AppShell";
-import LoaderOverlay from "./components/Loader/LoaderOverlay";
-import { TimeProvider } from "./context/TimeContext";
-import { GameOverProvider } from "./context/GameOverContext";
-import GameOverModal from "./components/GameOverModal/GameOverModal";
+/* Screens */
+import LoginScreen from "./scenes/LoginScreen/LoginScreen";
+import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
+import StackScreen from "./scenes/StackScreen/StackScreen";
+import WorldScene from "./scenes/WorldScenes/WorldScene";
 
-function App() {
-    const [loading, setLoading] = useState(true);
+/* UI */
+import Loader from "./components/Loader/LoaderOverlay";
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+/* Contexts */
+import { IdleProvider } from "./context/IdleContext";
 
-        return () => clearTimeout(timer);
-    }, []);
-
-    return (
-        <GameOverProvider>
-            <TimeProvider>
-                <LoaderOverlay visible={loading} />
-
-                <AppShell>
-                    {!loading && <AlchemyZone />}
-                </AppShell>
-
-                <GameOverModal />
-            </TimeProvider>
-        </GameOverProvider>
-    );
-}
-
-export default App; */
-
-//---------------------------------------------------------------------- Mapa
-/*
-import WorldScene from "./scenes/WorldScenes/WorldScene"
-
-function App() {
-
-   return <WorldScene />;
-}
-
-export default App;
-*/
-
-
-//----------------------------------------------------------------------- Biblioteca
-
-import AppShell from "./layout/AppShell/AppShell";
-
-import { TimeProvider } from "./context/TimeContext";
-import { GameOverProvider } from "./context/GameOverContext";
-import { InventoryProvider } from "./context/InventoryContext";
-
-import LibraryZone from "./scenes/LibraryZone/LibraryZone";
+/* Screen enum */
+const SCREENS = {
+    LOGIN: "LOGIN",
+    BEGINNING: "BEGINNING",
+    STACK: "STACK",
+    WORLD: "WORLD",
+};
 
 export default function App() {
+    const [screen, setScreen] = useState(SCREENS.LOGIN);
+    const [loading, setLoading] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const goTo = (nextScreen, delay = 1200) => {
+        setLoading(true);
+        setTimeout(() => {
+            setScreen(nextScreen);
+            setLoading(false);
+        }, delay);
+    };
+
     return (
-        <AppShell>
-            <TimeProvider>
-                <GameOverProvider>
-                    <InventoryProvider>
-                        <LibraryZone
-                            onExit={() => {
-                                console.log("Salir de la Biblioteca Arcana");
+        <IdleProvider>
+            {loading && <Loader />}
+
+            {!loading && (
+                <>
+                    {screen === SCREENS.LOGIN && (
+                        <LoginScreen
+                            loggedIn={loggedIn}
+                            onLogin={() => {
+                                setLoggedIn(true);
+                                goTo(SCREENS.BEGINNING);
+                            }}
+                            onLogout={() => {
+                                setLoggedIn(false);
+                                setScreen(SCREENS.LOGIN);
+                            }}
+                            onStartGame={() => goTo(SCREENS.BEGINNING)}
+                            onAbout={() => console.log("About us")}
+                        />
+                    )}
+
+                    {screen === SCREENS.BEGINNING && (
+                        <BeginningChapter
+                            onSignScroll={() => goTo(SCREENS.STACK)}
+                        />
+                    )}
+
+                    {screen === SCREENS.STACK && (
+                        <StackScreen
+                            onBackToMenu={() => goTo(SCREENS.LOGIN)}
+                            onStart={() => goTo(SCREENS.WORLD)}
+                        />
+                    )}
+
+                    {screen === SCREENS.WORLD && (
+                        <WorldScene
+                            onBack={() => goTo(SCREENS.STACK)}
+                            onEnterZone={(zoneId) => {
+                                console.log("Entrando en zona:", zoneId);
+                                // aquí luego: AlchemyZone, LibraryZone, etc
                             }}
                         />
-                    </InventoryProvider>
-                </GameOverProvider>
-            </TimeProvider>
-        </AppShell>
+                    )}
+                </>
+            )}
+        </IdleProvider>
     );
 }
