@@ -4,6 +4,7 @@ import { useGameOver } from "../../context/GameOverContext";
 import { useInventory } from "../../context/InventoryContext";
 import { GRIMORIOS } from "../../data/grimorios";
 import "./AlchemyZone.css";
+
 import AlchemyBackground from "../../assets/images/AlchemyBackground.png";
 import CrossWordGame from "./CrossWordGame";
 import GitagorasAvatar from "../../assets/images/GitagorasAvatar.png";
@@ -12,28 +13,17 @@ import CrosswordScroll from "../../assets/images/CrosswordScroll.png";
 
 const INTRO_DIALOGS = [
     "Bienvenido, aprendiz, al Laboratorio de Alquimia del Código. Aquí no mezclamos hierbas ni metales, sino conceptos. La alquimia del marcado exige comprensión, no fuerza bruta.",
-
     "HTML es el lenguaje base de la web. No es programación, sino un lenguaje de marcado: su función no es decir qué hacer, sino describir qué es cada parte del contenido.",
-
     "Una página HTML está formada por ELEMENTOS. Un elemento suele componerse de una etiqueta de apertura, un contenido y una etiqueta de cierre. Por ejemplo: <h1>Título</h1> representa un encabezado.",
-
     "Las ETIQUETAS son las runas visibles del marcado. Indican al navegador si un fragmento es un párrafo, una imagen, una lista o un enlace. Cada etiqueta tiene un propósito concreto.",
-
     "Los ATRIBUTOS son modificadores alquímicos que se añaden a las etiquetas. Se escriben dentro de la etiqueta de apertura y aportan información adicional, como clases, identificadores o direcciones de archivo.",
-
     "Los COMENTARIOS son anotaciones invisibles para el navegador, pero esenciales para los alquimistas del código. Permiten explicar decisiones y recordar por qué se escribió un hechizo de cierta manera.",
-
     "Los elementos no existen de forma aislada: se organizan en una ESTRUCTURA jerárquica. Algunos contienen a otros, formando niveles de importancia y relación. Comprender esta estructura es clave para mantener el orden.",
-
     "Un COMPONENTE, en sentido conceptual, es un conjunto de elementos que trabajan juntos para cumplir una función. Pensar en componentes te ayuda a diseñar páginas claras, reutilizables y comprensibles.",
-
     "Una página bien construida es como una fórmula perfectamente equilibrada: cada etiqueta tiene un propósito, cada atributo una razón, y cada comentario una enseñanza para quien lea el código después.",
-
     "Para demostrar tu dominio del arte arcano del marcado, deberás resolver este crucigrama ancestral. No se trata de memorizar palabras, sino de comprender conceptos.",
-
     "Recuerda: en la alquimia del código, la precisión no es opcional. Una etiqueta mal cerrada o una estructura confusa puede romper todo el hechizo."
 ];
-
 
 const END_DIALOGS = [
     "Impresionante. Has demostrado atención al detalle, precisión y una comprensión profunda de cómo cada elemento encaja en el todo.",
@@ -41,8 +31,7 @@ const END_DIALOGS = [
     "Cuando te sientas preparado para avanzar, regresa a sus páginas. La verdadera alquimia del código se logra practicando, comprendiendo y refinando."
 ];
 
-
-export default function AlchemyZone({ onExitZone }) {
+function AlchemyZone({ onExitZone }) {
     const { startTimer, stopTimer } = useTime();
     const { registerGameOverActions, hideGameOver } = useGameOver();
     const { addGrimoire } = useInventory();
@@ -156,3 +145,5 @@ export default function AlchemyZone({ onExitZone }) {
         </div>
     );
 }
+
+export default AlchemyZone;

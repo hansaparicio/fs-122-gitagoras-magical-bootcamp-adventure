@@ -35,15 +35,18 @@
   border-radius: 12px;
   color: #000;
   font-family: 'Press Start 2P', cursive;
-  text-align: center;
+  text-align: left;
   max-width: 900px;
-  font-size: 18px;
+  font-size: 15px;
   border: 6px solid black;
   outline: 6px solid #4aa3ff;
   line-height: 1.2;
   margin-right: 95px;
 
+  display: flex;
+  flex-direction: column;
 }
+
 
 .dialog-btn {
   background-color: #4aa3ff;
@@ -54,7 +57,10 @@
   cursor: pointer;
   margin-top: 25px;
   font-family: "Press Start 2P";
+border-radius: 10px;
+  align-self: flex-end;
 }
+
 
 .library-scroll {
   display: block;
