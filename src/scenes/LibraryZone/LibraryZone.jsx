@@ -10,57 +10,48 @@ import RuneMatchGame from "./RuneMatchGame";
 import HtmlScroll from "../../assets/images/HtmlScroll.png";
 import TagScroll from "../../assets/images/TagScroll.png";
 import BodyScroll from "../../assets/images/BodyScroll.png";
+import ManyTagsScroll from "../../assets/images/ManyTagsScroll.png";
 import GitagorasAvatar from "../../assets/images/GitagorasAvatar.png";
 
 const INTRO_DIALOGS = [
-    "Bienvenido a la Biblioteca Arcana, joven aprendiz. Este no es un lugar de prisas ni de conjuros ruidosos. Aquí se estudia la base de toda magia digital: la estructura. Sin estructura, no hay hechizo que se sostenga.",
-
-    "Antes de animar, colorear o hacer reaccionar la magia, debes comprender su esqueleto. HTML es el lenguaje que define qué existe en una página: qué es un título, qué es un texto, qué es una imagen.",
-
-    "HTML no decide cómo se ve la magia, sino qué es cada cosa. Un título sigue siendo un título aunque cambie su color. Un párrafo sigue siendo un párrafo aunque cambie su forma. HTML define el significado.",
-
-    "Cada fragmento de HTML se invoca mediante símbolos llamados etiquetas. Las etiquetas se escriben usando signos angulares: < >. Por ejemplo, <p> invoca un párrafo y </p> lo cierra, delimitando su contenido.",
-
-    "La mayoría de etiquetas se abren y se cierran. Abrir una etiqueta es como abrir un portal; cerrarla es sellarlo. Olvidar cerrar una etiqueta provoca caos: el hechizo se desborda y todo pierde sentido.",
-
-    "Un documento HTML no es plano: tiene jerarquía. Algunas etiquetas contienen a otras, formando una estructura en forma de árbol. Esta jerarquía permite que el navegador entienda qué es más importante y qué depende de qué.",
-
-    "Dentro del <body> vive todo aquello que el usuario puede ver y experimentar: textos, imágenes, botones y enlaces. Fuera de él existen reglas invisibles que organizan el documento, pero no se muestran.",
-
-    "Algunas etiquetas aceptan atributos. Los atributos son modificadores que se escriben dentro de la etiqueta y aportan información extra, como rutas, identificadores o descripciones. Por ejemplo: <img src='imagen.png'>.",
-
-    "Cuando comprendes qué representa cada etiqueta y cómo se relacionan entre sí, comienzas a pensar como un arquitecto del código, no como un simple escriba.",
-
-    "Las runas del conocimiento han sido separadas de su significado. Únelas correctamente y demuestra que no solo memorizas símbolos, sino que comprendes su verdadero propósito."
+    "Bienvenido a la Biblioteca Arcana, joven aprendiz. Este no es un lugar de prisas ni de conjuros ruidosos. Aquí se estudia la base de toda magia digital: la estructura. Sin estructura, incluso el hechizo más poderoso se derrumba.",
+    "Antes de animar, colorear o hacer reaccionar la magia, debes comprender su esqueleto. HTML es el lenguaje que define qué existe en una página: qué es un título, qué es un texto, qué es una imagen. No habla de apariencia, sino de significado.",
+    "HTML no decide cómo se ve la magia, sino qué es cada cosa. Un título sigue siendo un título aunque cambie su color. Un párrafo sigue siendo un párrafo aunque cambie su tamaño. HTML da sentido al contenido antes de embellecerlo.",
+    "Cada fragmento de HTML se invoca mediante símbolos llamados etiquetas. Estas runas se escriben usando signos angulares: < >. Una etiqueta abre un concepto, y su cierre lo delimita, definiendo dónde empieza y dónde termina su influencia.",
+    "La mayoría de etiquetas funcionan como portales: se abren y se cierran. Abrir una etiqueta es permitir que algo exista; cerrarla es contenerlo. Olvidar cerrar una etiqueta provoca caos: el hechizo se desborda y la estructura pierde coherencia.",
+    "Un documento HTML no es plano ni caótico. Posee jerarquía. Algunas etiquetas contienen a otras, formando una estructura en forma de árbol. Esta jerarquía permite al navegador —y al aprendiz— comprender qué es más importante y qué depende de qué.",
+    "Dentro del <body> vive todo aquello que el usuario puede ver y experimentar: textos, imágenes, botones y enlaces. Es el escenario visible del hechizo. Fuera de él existen reglas invisibles, necesarias, pero no mostradas.",
+    "Algunas etiquetas aceptan atributos. Los atributos son modificadores: pequeñas inscripciones que añaden información extra. Gracias a ellos, una imagen sabe dónde encontrar su forma, o un elemento puede ser identificado entre muchos otros.",
+    "Cuando comienzas a comprender qué representa cada etiqueta y cómo se relaciona con las demás, dejas de escribir símbolos al azar. Empiezas a pensar como un arquitecto del código, no como un simple copista.",
+    "Sin embargo, el conocimiento verdadero no se demuestra repitiendo definiciones, sino reconociendo el propósito oculto tras cada símbolo.",
+    "Las runas del conocimiento han sido separadas de su significado. Algunas muestran su forma, otras guardan su intención. Solo quien logra unir ambos aspectos demuestra haber entendido la estructura del hechizo.",
+    "No te preocupes si no conoces todas, intenta utilizar lo que has leído y tu propio sentido común. Verás que es más sencillo de lo que parece"
 ];
-
 
 const END_DIALOGS = [
-    "Excelente trabajo, joven aprendiz. No te has limitado a repetir símbolos: has comprendido su propósito y su lugar en el hechizo.",
-    "Como recompensa, te entrego este Grimorio Arcano. En sus páginas se recoge el conocimiento fundamental sobre la estructura del HTML, la base de toda creación digital.",
-    "Guárdalo con cuidado. Un grimorio no responde solo a quien lo lee, sino a quien sabe cuándo volver a él. El camino del conocimiento apenas comienza."
+    "Excelente trabajo, joven aprendiz.",
+    "Un nuevo conocimiento ha sido añadido a tu inventario.",
+    "El camino del conocimiento apenas comienza."
 ];
-
 
 export default function LibraryZone({ onExit }) {
     const { startTimer, stopTimer } = useTime();
     const { registerGameOverActions } = useGameOver();
-    const { addGrimorio } = useInventory();
+    const { addGrimoire } = useInventory();
 
     const [phase, setPhase] = useState("intro");
     const [dialogIndex, setDialogIndex] = useState(0);
     const [typedDialog, setTypedDialog] = useState("");
-    const [gameKey, setGameKey] = useState(0);
+    const [grimorioGranted, setGrimorioGranted] = useState(false);
 
     const getScrollImage = () => {
         if (phase !== "intro") return null;
         if (dialogIndex === 1 || dialogIndex === 2) return HtmlScroll;
+        if (dialogIndex === 3) return ManyTagsScroll;
         if (dialogIndex === 4) return TagScroll;
         if (dialogIndex === 6) return BodyScroll;
         return null;
     };
-
-    const scrollImage = getScrollImage();
 
     useEffect(() => {
         let interval;
@@ -82,12 +73,10 @@ export default function LibraryZone({ onExit }) {
 
     useEffect(() => {
         if (phase === "game") {
-            startTimer(60);
+            startTimer(180);
+
             registerGameOverActions({
-                onRetry: () => {
-                    setGameKey(k => k + 1);
-                    startTimer(60);
-                },
+                onRetry: () => startTimer(180),
                 onExit: () => { }
             });
         }
@@ -95,7 +84,7 @@ export default function LibraryZone({ onExit }) {
         if (phase === "end" || phase === "finished") {
             stopTimer();
         }
-    }, [phase, onExit, registerGameOverActions, startTimer, stopTimer]);
+    }, [phase]);
 
     const nextDialog = () => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
@@ -112,27 +101,31 @@ export default function LibraryZone({ onExit }) {
 
     const handleGameWin = () => {
         stopTimer();
-        addGrimorio(GRIMORIOS.library);
+
+        if (!grimorioGranted) {
+            addGrimoire(GRIMORIOS.library);
+            setGrimorioGranted(true);
+        }
+
         setPhase("end");
         setDialogIndex(0);
     };
 
     return (
         <div className="library-root" style={{ backgroundImage: `url(${LibraryBackground})` }}>
-            {scrollImage && (
-                <img src={scrollImage} alt="Pergamino explicativo" className="library-scroll" />
+            {getScrollImage() && (
+                <img src={getScrollImage()} className="library-scroll" />
             )}
 
             {(phase === "intro" || phase === "end") && (
                 <div className="dialog-container">
-                    <img src={GitagorasAvatar} alt="Gitágoras" className="dialog-avatar" />
+                    <img src={GitagorasAvatar} className="dialog-avatar" />
                     <div className="dialog-box">
                         <p>{typedDialog}</p>
                         {typedDialog.length ===
                             (phase === "intro"
                                 ? INTRO_DIALOGS[dialogIndex]
-                                : END_DIALOGS[dialogIndex]
-                            ).length && (
+                                : END_DIALOGS[dialogIndex]).length && (
                                 <button className="dialog-btn" onClick={nextDialog}>
                                     Continuar
                                 </button>
@@ -142,7 +135,7 @@ export default function LibraryZone({ onExit }) {
             )}
 
             {phase === "game" && (
-                <RuneMatchGame key={gameKey} onComplete={handleGameWin} />
+                <RuneMatchGame onComplete={handleGameWin} />
             )}
         </div>
     );
