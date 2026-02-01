@@ -6,10 +6,9 @@ const TIMER_DURATION = 30; // 30 segundos por pregunta
 const QuizTimer = ({ onTimeUp, isActive, onReset }) => {
     const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
 
+    // Resetear el timer cuando cambia onReset
     useEffect(() => {
-        if (onReset) {
-            setTimeLeft(TIMER_DURATION);
-        }
+        setTimeLeft(TIMER_DURATION);
     }, [onReset]);
 
     useEffect(() => {
