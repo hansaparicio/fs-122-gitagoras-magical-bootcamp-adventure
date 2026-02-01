@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import "./App.css";
 import LoginScreen from "./scenes/LoginScreen/LoginScreen";
 import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
@@ -49,6 +49,14 @@ function App() {
       </>
     </TimeProvider>
   );
+}
+
+export default App; */
+
+import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone"
+
+function App() {
+    return <AlchemyZone />;
 }
 
 export default App;
