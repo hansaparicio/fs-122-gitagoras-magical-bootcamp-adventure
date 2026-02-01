@@ -6,7 +6,7 @@ import ChatBot from "../../components/ChatBot/ChatBot";
 import GrimorioModal from "../../components/Grimorios/GrimorioModal";
 import "./AppShell.css";
 
-export default function AppShell({ children, onExitZone }) {
+export default function AppShell({ children, onExit }) {
     const [showAudio, setShowAudio] = useState(false);
     const [showInventory, setShowInventory] = useState(false);
     const [openGrimoire, setOpenGrimoire] = useState(null);
@@ -64,13 +64,7 @@ export default function AppShell({ children, onExitZone }) {
             <div className="scene-content">{children}</div>
 
             <div className="shell-bottom">
-                <button
-                    className="shell-left exit-zone-button"
-                    onClick={onExitZone}
-                >
-                    SALIR DE LA ZONA
-                </button>
-
+                <div className="shell-left" onClick={onExit}>SALIR DE LA ZONA</div>
                 <div className="shell-right">
                     <ChatBot insideShell />
                 </div>
