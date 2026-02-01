@@ -100,7 +100,7 @@ const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
     const saveAvatar = async () => {
         const token = localStorage.getItem("token");
         try {
-            const res = await fetch("http://127.0.0.1:3001/api/avatar", {
+            const res = await fetch("http://127.0.0.1:5000/api/avatar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

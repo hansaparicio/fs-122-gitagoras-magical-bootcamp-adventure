@@ -5,9 +5,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import os
 
+app = Flask(__name__)
+
+
+'''CORS(
+    app,
+    supports_credentials=True,
+    origins=["http://localhost:3000"]
+)'''
+
+app.config["JWT_SECRET_KEY"] = "supersecretkey"
 from api.routes import api
 
-app = Flask(__name__)
+
 
 CORS(
     app,
@@ -89,7 +99,15 @@ def get_me():
     users = load_users()
     username = get_jwt_identity()
     user = users.get(username)
-    return jsonify(user), 200
+    if not user:
+        return jsonify({"msg":"usuario no encontrado"}), 404
+    return jsonify({
+        "username": username,
+        "email":user.get("email"),
+        "avatar":user.get("avatar"),
+    }), 200
+
+
 
 @app.route("/api/avatar", methods=["POST"])
 @jwt_required()
@@ -120,6 +138,7 @@ def get_avatar():
         return jsonify({"msg": "usuario no encontrado"}), 404
 
     return jsonify(user.get("avatar", {})), 200
+
 
 @app.route("/api/protected", methods=["GET"])
 @jwt_required()

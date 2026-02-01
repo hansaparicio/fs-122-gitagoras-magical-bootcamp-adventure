@@ -70,5 +70,49 @@
       "gorro": "/src/assets/images/Avatar/Gorros/Gorro-1.png",
       "fondo": "/src/assets/images/Avatar/Fondos/fondo-4.png"
     }
+  },
+  "1212": {
+    "password": "pbkdf2:sha256:1000000$YU7vITzTXwqRnMNa$58de3ce6793ac46821b966be882c76a4adfae42eda215fac19a9f25a41f0d920",
+    "email": "aa@hotmail.com",
+    "avatar": null
+  },
+  "12345": {
+    "password": "pbkdf2:sha256:1000000$ruh9XCIwAmlL1dkI$af5103966773fbc982fe9371400538b911799c971504dcbbd344043a9364acfb",
+    "email": "aa@hotmail.com",
+    "avatar": {
+      "muneco": "/src/assets/images/Avatar/Avatar/Muneco.png",
+      "ojos": "/src/assets/images/Avatar/Ojos/Ojos-3.png",
+      "pelo": null,
+      "ropa": "/src/assets/images/Avatar/Ropa/Ropa-5.png",
+      "accesorio": null,
+      "gorro": null,
+      "fondo": "/src/assets/images/Avatar/Fondos/fondo-1.png"
+    }
+  },
+  "mierda": {
+    "password": "pbkdf2:sha256:1000000$FoQJdSmExYNp7uya$0b57a94ab2f45759440b0ba85507ca71e49728a4f10b5001bfe08fd7ec89fd82",
+    "email": "eva@hotmail.com",
+    "avatar": {
+      "muneco": "/src/assets/images/Avatar/Avatar/Muneco.png",
+      "ojos": "/src/assets/images/Avatar/Ojos/Ojos-5.png",
+      "pelo": "/src/assets/images/Avatar/Pelo/Pelo-8.png",
+      "ropa": "/src/assets/images/Avatar/Ropa/Ropa-5.png",
+      "accesorio": "/src/assets/images/Avatar/Accesorios/Accesorio-5.png",
+      "gorro": null,
+      "fondo": "/src/assets/images/Avatar/Fondos/fondo-3.png"
+    }
+  },
+  "mierda1": {
+    "password": "pbkdf2:sha256:1000000$obuB2naZvuAusRZp$ed07a7ba9d081cbe98eee4007428d35675f3425141265786d8c2e10798503dd2",
+    "email": "aa@hotmail.com",
+    "avatar": {
+      "muneco": "/src/assets/images/Avatar/Avatar/Muneco.png",
+      "ojos": "/src/assets/images/Avatar/Ojos/Ojos-7.png",
+      "pelo": "/src/assets/images/Avatar/Pelo/Pelo-3.png",
+      "ropa": "/src/assets/images/Avatar/Ropa/Ropa-4.png",
+      "accesorio": "/src/assets/images/Avatar/Accesorios/Accesorio-5.png",
+      "gorro": "/src/assets/images/Avatar/Gorros/Gorro-3.png",
+      "fondo": "/src/assets/images/Avatar/Fondos/fondo-1.png"
+    }
   }
 }

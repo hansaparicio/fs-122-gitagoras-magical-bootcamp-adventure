@@ -3,14 +3,15 @@ import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
 import Avatar from "../../components/Avatar";
 import AvatarCreator from "../../components/AvatarCreator";
-import Player from "../../components/mp3Player/mp3Player";
-import ChatBot from "../../components/ChatBot/ChatBot";
 import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
 import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";
 import idleSound from "../../assets/sounds/mensaje-carol.mp3"
 import ChatBot from "../../Components/ChatBot/ChatBot.jsx";
 import { TimeProvider } from "../../context/TimeContext.jsx"
+
+
+
 
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
@@ -75,7 +76,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                     ...data.avatar
                 });
                 setUser(data);
-                onLogin?.(me.username);
+                onLogin?.(data.username);
 
             } catch (err) {
                 console.error("error cargando usuario", err);
@@ -109,7 +110,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         }
 
         try {
-            const res = await fetch("http://127.0.0.1:3001/api/register", {
+            const res = await fetch("http://127.0.0.1:5000/api/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -136,7 +137,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://127.0.0.1:3001/api/login", {
+            const res = await fetch("http://127.0.0.1:5000/api/login", {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
@@ -178,7 +179,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         <div className="main-buttons">
                             <button onClick={() => setMode("register")}>Crear usuario</button>
                             <button onClick={() => setMode("login")}>Iniciar sesión</button>
-                            <button onClick={onQuizz} style={{ background: "#9333ea" }}>Jugar Quiz (Demo)</button>
+                            { /*<button onClick={onQuizz} style={{ background: "#9333ea" }}>Jugar Quiz (Demo)</button>*/}
                         </div>
 
                         {mode === "register" && (
@@ -261,7 +262,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                     </div>
                 )}
                 <div
-                    className="user-badge" onClick={() => user && setShowUserPanel(true)}>
+                    className="user-badge" onClick={() => setShowUserPanel(true)}>
                     {avatar ? <Avatar {...avatar} /> : <div className="user-avatar placeholder" />}
                     <span>{user?.username}</span>
                 </div>
@@ -271,7 +272,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         <div className="user-panel">
                             <button className="boton-mu" onClick={() => setShowUserPanel(false)}>X</button>
                             {avatar ? <Avatar {...avatar} /> : <div className="user-avatar-placeholder" />}
-                            <p>{user.username}</p>
+                            <p>{user?.username}</p>
                             <button onClick={() => {
                                 setShowUserPanel(false);
                                 setShowAvatarCreator(true);

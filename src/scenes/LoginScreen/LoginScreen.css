@@ -151,11 +151,11 @@ button {
   align-items: center;
   gap: 10px;
   background: rgba(0, 0, 0, 0.6);
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 999px;
   cursor: pointer;
   border: 2px solid #ffd700;
-  z-index: 1000;
+  z-index: 100000;
 }
 
 .user-avatar {
@@ -188,20 +188,6 @@ button {
 }
 
 /* provisional */
-.user-badge {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 6px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  border: 2px solid #ffd700;
-  z-index: 10;
-}
 
 .user-panel {
   background: #1f1f2e;
