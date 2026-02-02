@@ -98,9 +98,6 @@ def sign_scroll():
     return jsonify(msg="Pergamino firmado correctamente")
 
 
-# =========================
-# HF API (NO TOCAR 😄)
-# =========================
 
 @api.route("/html-runes-hf", methods=["GET"])
 def get_html_runes_hf():

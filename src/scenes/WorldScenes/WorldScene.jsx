@@ -7,6 +7,8 @@ import Zone from "./core/world/Zone";
 import ZoneManager from "./core/world/ZoneManager";
 
 import "./WorldScene.css";
+import MapControl from "../../assets/images/MapControl.png";
+
 
 import bgImageSrc from "./assets/bg_world.png";
 import studentMageSprite from "./assets/student_mage.png";
@@ -210,7 +212,10 @@ export default function WorldScene({ onBack, onEnterZone }) {
 
   return (
     <div className="worldscene-root">
-      <div className="worldscene-scale" style={{ transform: `scale(${scale})` }}>
+      <div
+        className="worldscene-scale"
+        style={{ transform: `scale(${scale})` }}
+      >
         <div className="worldscene-container">
           <canvas
             ref={canvasRef}
@@ -218,11 +223,19 @@ export default function WorldScene({ onBack, onEnterZone }) {
             height={BASE_HEIGHT}
             className="worldscene-canvas"
           />
+
+          <img
+            src={MapControl}
+            alt="Map Controls"
+            className="worldscene-map-control"
+          />
+
           <button onClick={onBack} className="worldscene-back">
-            BACK
+            Volver a <br />selección <br />de magia
           </button>
         </div>
       </div>
     </div>
   );
+
 }

@@ -62,13 +62,13 @@ function AlchemyZone({ onExitZone }) {
 
     useEffect(() => {
         if (phase === "game") {
-            startTimer(480);
+            startTimer(30);
 
             registerGameOverActions({
                 onRetry: () => {
                     hideGameOver();
                     setGameKey(k => k + 1);
-                    startTimer(480);
+                    startTimer(30);
                 },
                 onExit: () => {
                     hideGameOver();

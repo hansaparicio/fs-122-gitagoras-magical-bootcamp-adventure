@@ -45,20 +45,7 @@ export default function AppShell({ children, onExit }) {
 
                 <SandTimer />
 
-                <div className="shell-right">
-                    <button
-                        className="audio-toggle-button"
-                        onClick={() => setShowAudio(v => !v)}
-                    >
-                        AUDIO
-                    </button>
 
-                    {showAudio && (
-                        <div className="audio-container">
-                            <Player />
-                        </div>
-                    )}
-                </div>
             </div>
 
             <div className="scene-content">{children}</div>
