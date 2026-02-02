@@ -5,9 +5,11 @@ import KeyboardController from "./core/input/KeyboardController";
 import NavMask from "./core/world/NavMask";
 import Zone from "./core/world/Zone";
 import ZoneManager from "./core/world/ZoneManager";
+import OficinaGitagoras from "../../Components/Oficina de Gitagoras/OficinaGitagoras";
 
 import "./WorldScene.css";
 import MapControl from "../../assets/images/MapControl.png";
+
 
 
 import bgImageSrc from "./assets/bg_world.png";
@@ -235,6 +237,10 @@ export default function WorldScene({ onBack, onEnterZone }) {
           </button>
         </div>
       </div>
+
+      {showGitagoras && (
+        <OficinaGitagoras onExit={() => setShowGitagoras(false)} />
+      )}
     </div>
   );
 
