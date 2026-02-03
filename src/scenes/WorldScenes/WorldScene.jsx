@@ -13,6 +13,8 @@ import "./WorldScene.css";
 import bgImageSrc from "./assets/bg_world.png";
 import studentMageSprite from "./assets/student_mage.png";
 import navMaskSrc from "./assets/nav_mask.png";
+import gitagorasImage from "../../assets/backgrounds/Gitagoras.jpeg";
+import gitagorasAvatar from "../../assets/images/GitagorasAvatar.png";
 
 import zoneEnterSoundSrc from "./assets/sounds/zone-enter.mp3";
 import interactSoundSrc from "./assets/sounds/interact.mp3";
@@ -21,20 +23,82 @@ const BASE_WIDTH = 1480;
 const BASE_HEIGHT = 982;
 
 const GITAGORAS_FALLBACK = [
-  "¡Saludos, aprendiz! Soy Gitágoras. Ahora mismo estoy MUY ocupado.",
-  "Estoy alineando los astros del código.",
-  "Vuelve luego, aprendiz."
+  "Ocupado debuggeando hechizos antiguos.",
+  "No puedo, mis conjuros tienen syntax errors.",
+  "Ahora no, el grimorio no compila.",
+  "Ocupado con stack overflow en mis runas."
 ];
 
 export default function WorldScene({ onBack, onEnterZone }) {
   const canvasRef = useRef(null);
   const [scale, setScale] = useState(1);
   const [fontReady, setFontReady] = useState(false);
+
   const [showGitagoras, setShowGitagoras] = useState(false);
   const [gitagorasDialogues] = useState(GITAGORAS_FALLBACK);
   const [gitagorasIndex, setGitagorasIndex] = useState(0);
   const [gitagorasTyped, setGitagorasTyped] = useState("");
   const [gitagorasTyping, setGitagorasTyping] = useState(false);
+  const [isLoadingGitagoras, setIsLoadingGitagoras] = useState(false);
+
+  // Función para obtener respuestas de Gitagoras usando la API
+  const fetchGitagorasResponse = async () => {
+    try {
+      const apiKey = import.meta.env.VITE_MISTRAL_API_KEY;
+
+      if (!apiKey) {
+        console.warn("API key not configured, using fallback messages");
+        return GITAGORAS_FALLBACK;
+      }
+
+      const response = await fetch(
+        "https://api.mistral.ai/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "mistral-tiny-latest",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "Eres Gitágoras, un mago anciano que programa. Genera exactamente 4 excusas MUY CORTAS (máximo 8 palabras) de por qué estás ocupado. Patrón: 'Ocupado/No puedo/Ahora no + [problema de código/debugging/compilación]'. Tono místico de mago. Ejemplos: 'Ocupado debuggeando hechizos antiguos', 'No puedo, mis runas tienen syntax errors'. NO números ni viñetas. Una frase por línea.",
+              },
+              {
+                role: "user",
+                content: "Dame 4 excusas de estar ocupado con problemas de código",
+              },
+            ],
+            max_tokens: 120,
+            temperature: 0.9,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0].message.content;
+
+      // Dividir el contenido en frases y limpiar números y viñetas
+      const dialogues = content
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line.length > 0)
+        .map(line => line.replace(/^[\d\-\*\.\)\]\}\:]+\s*/g, '')) // Eliminar números, guiones, asteriscos, puntos, paréntesis, etc.
+        .map(line => line.replace(/^\s*\d+[\.\)\-\:]\s*/g, '')); // Segunda pasada para patrones como "1.", "1)", "1-", "1:"
+
+      return dialogues.length > 0 ? dialogues : GITAGORAS_FALLBACK;
+    } catch (error) {
+      console.error("Error calling Mistral API:", error);
+      return GITAGORAS_FALLBACK;
+    }
+  };
 
   useEffect(() => {
     const updateScale = () =>
@@ -104,14 +168,13 @@ export default function WorldScene({ onBack, onEnterZone }) {
         navMask
       });
 
-      zoneManager = new ZoneManager([
-        new Zone({ id: "Alchemy_Lab", x: 260, y: 310, width: 50, height: 50 }),
-        new Zone({ id: "Astronomy", x: 700, y: 310, width: 50, height: 50 }),
-        new Zone({ id: "Wizard_Office", x: 1166, y: 310, width: 50, height: 50 }),
-        new Zone({ id: "Library", x: 500, y: 600, width: 50, height: 20 }),
-        new Zone({ id: "Study_Room", x: 725, y: 480, width: 50, height: 20 }),
-        new Zone({ id: "Garden_Courtyard", x: 950, y: 750, width: 30, height: 50 })
-      ]);
+      const zones = [
+        new Zone({ id: "zone_1", type: "1", x: 268, y: 310, width: 50, height: 50 }),
+        new Zone({ id: "zone_2", type: "2", x: 700, y: 310, width: 50, height: 50 }),
+        new Zone({ id: "zone_3", type: "3", x: 1166, y: 310, width: 50, height: 50 }),
+        new Zone({ id: "zone_4", type: "4", x: 950, y: 680, width: 50, height: 50 }),
+        new Zone({ id: "zone_5", type: "5", x: 720, y: 600, width: 50, height: 50 })
+      ];
 
       requestAnimationFrame(loop);
     });
@@ -181,7 +244,22 @@ export default function WorldScene({ onBack, onEnterZone }) {
       if (inputState.interact && !wasInteractPressed && activeZone) {
         interactSound.currentTime = 0;
         interactSound.play();
-        onEnterZone(activeZone.id);
+        if (activeZone.id === "zone_3") {
+          setGitagorasIndex(0);
+          setGitagorasDialogues(GITAGORAS_FALLBACK); // Establecer fallback inmediatamente
+          setIsLoadingGitagoras(true);
+          setShowGitagoras(true);
+
+          // Llamar a la API para obtener diálogos dinámicos
+          fetchGitagorasResponse().then(dialogues => {
+            setGitagorasDialogues(dialogues);
+            setIsLoadingGitagoras(false);
+          }).catch(() => {
+            setIsLoadingGitagoras(false); // Asegurar que se desactiva loading incluso si falla
+          });
+        } else {
+          onEnterZone?.(activeZone.id);
+        }
       }
 
       wasInteractPressed = inputState.interact;
@@ -204,6 +282,45 @@ export default function WorldScene({ onBack, onEnterZone }) {
     }
   }, [fontReady, onEnterZone]);
 
+  // Typing effect para diálogos de Gitágoras
+  useEffect(() => {
+    if (!showGitagoras || isLoadingGitagoras) return;
+
+    const text = gitagorasDialogues[gitagorasIndex];
+    if (!text) return;
+
+    setGitagorasTyped("");
+    setGitagorasTyping(true);
+
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < text.length) {
+        setGitagorasTyped(text.slice(0, i + 1));
+        i++;
+      } else {
+        setGitagorasTyping(false);
+        clearInterval(interval);
+      }
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [showGitagoras, gitagorasIndex, gitagorasDialogues, isLoadingGitagoras]);
+
+  const handleGitagorasContinue = () => {
+    if (gitagorasTyping) {
+      setGitagorasTyped(gitagorasDialogues[gitagorasIndex]);
+      setGitagorasTyping(false);
+      return;
+    }
+
+    if (gitagorasIndex < gitagorasDialogues.length - 1) {
+      setGitagorasIndex(i => i + 1);
+    } else {
+      setShowGitagoras(false);
+      setGitagorasIndex(0);
+    }
+  };
+
   return (
     <div className="worldscene-root">
       <div
@@ -218,11 +335,36 @@ export default function WorldScene({ onBack, onEnterZone }) {
             className="worldscene-canvas"
           />
 
-
-
-          <button onClick={onBack} className="worldscene-back">
-            Volver a <br />selección <br />de magia
-          </button>
+          {showGitagoras && (
+            <div className="worldscene-overlay">
+              <button
+                className="worldscene-back-to-map"
+                onClick={() => setShowGitagoras(false)}
+              >
+                VOLVER
+              </button>
+              <div className="worldscene-image-modal">
+                <img src={gitagorasImage} alt="Gitagoras" className="worldscene-gitagoras-image" />
+                <div className="dialog-container">
+                  <img src={gitagorasAvatar} alt="Gitagoras" className="dialog-avatar" />
+                  <div className="dialog-box">
+                    {isLoadingGitagoras ? (
+                      <p>Canalizando la sabiduría arcana...</p>
+                    ) : (
+                      <>
+                        <p>{gitagorasTyped}</p>
+                        {!gitagorasTyping && (
+                          <button className="dialog-btn" onClick={handleGitagorasContinue}>
+                            Continuar
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

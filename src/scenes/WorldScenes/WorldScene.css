@@ -81,6 +81,42 @@
   display: block;
 }
 
+.worldscene-image-modal .dialog-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  z-index: 120;
+}
+
+.worldscene-image-modal .dialog-avatar {
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #4aa3ff;
+  background: #f5d88c;
+  margin-bottom: 0;
+  box-shadow: 0 0 12px rgba(74, 163, 255, 0.8);
+  flex-shrink: 0;
+}
+
+.worldscene-image-modal .dialog-box {
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  width: auto;
+  max-width: 900px;
+  z-index: 120;
+  margin: 0;
+}
+
 .worldscene-dialog-box {
   position: absolute;
   bottom: 40px;

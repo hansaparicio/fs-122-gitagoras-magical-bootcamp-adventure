@@ -5,14 +5,14 @@ const InventoryContext = createContext();
 export function InventoryProvider({ children }) {
     const [inventory, setInventory] = useState([]);
 
-    const addGrimoire = (grimoire) => {
+    const addGrimorio = (grimoire) => {
         setInventory(prev =>
             prev.some(g => g.id === grimoire.id) ? prev : [...prev, grimoire]
         );
     };
 
     return (
-        <InventoryContext.Provider value={{ inventory, addGrimoire }}>
+        <InventoryContext.Provider value={{ inventory, addGrimorio }}>
             {children}
         </InventoryContext.Provider>
     );

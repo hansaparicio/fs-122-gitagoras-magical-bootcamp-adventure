@@ -149,7 +149,7 @@ const generateSingleQuestion = async (questionNumber, usedTopics = []) => {
 
     } catch (error) {
         clearTimeout(timeoutId);
-        console.error(`Error generando pregunta ${questionNumber}:`, error.message);
+        // console.error(`Error generando pregunta ${questionNumber}:`, error.message);
         throw error;
     }
 };
@@ -172,7 +172,7 @@ export const generateQuestions = async (totalQuestions = TOTAL_QUESTIONS) => {
                 await new Promise(resolve => setTimeout(resolve, 500));
             }
         } catch (error) {
-            console.error(`Fallo al generar pregunta ${i}, usando fallback`);
+            // console.error(`Fallo al generar pregunta ${i}, usando fallback`);
             // Usar pregunta de fallback
             const fallbackQuestion = FALLBACK_QUESTIONS[i - 1] || FALLBACK_QUESTIONS[0];
             questions.push({ ...fallbackQuestion, id: i });

@@ -6,24 +6,17 @@ const TIMER_DURATION = 30; // 30 segundos por pregunta
 const QuizTimer = ({ onTimeUp, isActive, onReset }) => {
     const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
 
+    // Resetear el timer cuando cambia onReset
     useEffect(() => {
-        if (onReset) {
-            setTimeLeft(TIMER_DURATION);
-        }
+        setTimeLeft(TIMER_DURATION);
     }, [onReset]);
 
     useEffect(() => {
         if (!isActive) return;
 
-        if (timeLeft <= 0) {
-            onTimeUp();
-            return;
-        }
-
         const timer = setInterval(() => {
             setTimeLeft(prev => {
                 if (prev <= 1) {
-                    clearInterval(timer);
                     onTimeUp();
                     return 0;
                 }
@@ -32,7 +25,7 @@ const QuizTimer = ({ onTimeUp, isActive, onReset }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [timeLeft, isActive, onTimeUp]);
+    }, [isActive, onTimeUp]);
 
     const timerClass =
         timeLeft <= 5 ? 'danger' :
