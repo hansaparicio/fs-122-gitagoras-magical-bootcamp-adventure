@@ -103,10 +103,15 @@ const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
 
 
     const saveAvatar = async () => {
+
         const token = localStorage.getItem("token");
 
         try {
+<<<<<<< new-eva
             const res = await fetch("http://127.0.0.1:5000/api/avatar", {
+=======
+            const res = await fetch("http://localhost:5000/api/avatar", {
+>>>>>>> Main-Branch
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -115,6 +120,7 @@ const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
                 body: JSON.stringify(avatar),
             });
 
+<<<<<<< new-eva
             if (!res.ok) {
                 const text = await res.text();
                 throw new Error(text);
@@ -134,6 +140,25 @@ const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
 
 
 
+=======
+            if (res.ok) {
+                onSave(avatar);
+
+            } else {
+                console.error("No se pudo guardar avatar");
+            }
+        } catch (err) {
+            console.error("Error de red", err);
+
+        } finally {
+            onClose();
+        }
+
+
+    };
+
+
+>>>>>>> Main-Branch
     return (
         <div className="avatar-editor-layout">
             <div className="avatar-preview">

@@ -8,9 +8,19 @@ from flask_jwt_extended import (
 
 from api.models import db, User
 
+import os
+import json
+import requests
+
 api = Blueprint("api", __name__)
 
+<<<<<<< new-eva
 # REGISTER
+=======
+# =========================
+# REGISTER
+# =========================
+>>>>>>> Main-Branch
 @api.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -52,7 +62,13 @@ def register():
     }), 201
 
 
+<<<<<<< new-eva
 # LOGIN
+=======
+# =========================
+# LOGIN
+# =========================
+>>>>>>> Main-Branch
 @api.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -77,7 +93,13 @@ def login():
     }), 200
 
 
+<<<<<<< new-eva
 # ME
+=======
+# =========================
+# ME
+# =========================
+>>>>>>> Main-Branch
 @api.route("/me", methods=["GET"])
 @jwt_required()
 def me():
@@ -86,6 +108,16 @@ def me():
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
+<<<<<<< new-eva
+=======
+
+    return jsonify({
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "avatar": user.avatar
+    }), 200
+>>>>>>> Main-Branch
 
     return jsonify({
         "id": user.id,
@@ -94,8 +126,14 @@ def me():
         "avatar": user.avatar
     }), 200
 
+<<<<<<< new-eva
 
 # AVATAR
+=======
+# =========================
+# AVATAR
+# =========================
+>>>>>>> Main-Branch
 @api.route("/avatar", methods=["POST"])
 @jwt_required()
 def save_avatar():
@@ -113,10 +151,16 @@ def save_avatar():
     db.session.commit()
 
     return jsonify({"msg": "Avatar guardado"}), 200
+<<<<<<< new-eva
     return jsonify(msg="Pergamino firmado correctamente")
 
+=======
+>>>>>>> Main-Branch
 
 
+# =========================
+# HTML RUNES (JUEGO)
+# =========================
 @api.route("/html-runes-hf", methods=["GET"])
 def get_html_runes_hf():
     hf_token = os.getenv("HF_API_KEY")
@@ -129,7 +173,6 @@ def get_html_runes_hf():
     prompt = """
 Eres una API que genera datos educativos.
 Devuelve ÚNICAMENTE un JSON válido.
-NO escribas texto fuera del JSON.
 
 {
   "pairs": [
@@ -169,18 +212,17 @@ Reglas:
 
     except Exception:
         return jsonify(
-         pairs = [
-  { "id": 1, "term": "<h1>", "definition": "Encabezado principal de mayor jerarquía" },
-  { "id": 2, "term": "<p>", "definition": "Elemento para definir párrafos de texto" },
-  { "id": 3, "term": "<img>", "definition": "Etiqueta para mostrar imágenes en la página" },
-  { "id": 4, "term": "<a>", "definition": "Crea enlaces a otras páginas o recursos" },
-  { "id": 5, "term": "<body>", "definition": "Contiene el contenido visible del documento" },
-  { "id": 6, "term": "<br>", "definition": "Inserta un salto de línea forzado" },
-  { "id": 7, "term": "<strong>", "definition": "Resalta texto con énfasis semántico fuerte" },
-  { "id": 8, "term": "<input>", "definition": "Campo para introducir datos del usuario" },
-  { "id": 9, "term": "<div>", "definition": "Contenedor genérico para agrupar elementos" },
-  { "id": 10, "term": "<span>", "definition": "Contenedor en línea para texto o estilos" }
-],
-
+            pairs=[
+                { "id": 1, "term": "<h1>", "definition": "Encabezado principal" },
+                { "id": 2, "term": "<p>", "definition": "Párrafo" },
+                { "id": 3, "term": "<img>", "definition": "Imagen" },
+                { "id": 4, "term": "<a>", "definition": "Enlace" },
+                { "id": 5, "term": "<body>", "definition": "Contenido visible" },
+                { "id": 6, "term": "<br>", "definition": "Salto de línea" },
+                { "id": 7, "term": "<strong>", "definition": "Texto fuerte" },
+                { "id": 8, "term": "<input>", "definition": "Entrada de datos" },
+                { "id": 9, "term": "<div>", "definition": "Contenedor" },
+                { "id": 10, "term": "<span>", "definition": "Texto en línea" }
+            ],
             source="fallback"
         )

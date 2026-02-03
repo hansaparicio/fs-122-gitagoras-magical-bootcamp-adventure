@@ -286,6 +286,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                                 }}
                             >
                                 Editar Avatar
+<<<<<<< new-eva
 
                             </button>
                             <button
@@ -297,6 +298,8 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                                 }}
                             >
                                 Cerrar sesión
+=======
+>>>>>>> Main-Branch
                             </button>
 
 
