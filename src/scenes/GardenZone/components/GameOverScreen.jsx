@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Sparkles } from 'lucide-react';
 import StarField from './StarField';
 import calderoImg from '../assets/caldero_magico_pixel_art_asset.png';
-import wizardImg from '../assets/batalla hans.png';
+import hansWinsImg from '../assets/hans wins.png';
 
 const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
     // Mensajes del mago tras la derrota
@@ -22,7 +22,7 @@ const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
     }, []);
 
     return (
-        <div className="game-over-screen" style={{ backgroundImage: `url(${wizardImg})` }}>
+        <div className="game-over-screen" style={{ backgroundImage: `url(${hansWinsImg})` }}>
             <div className="completion-overlay"></div>
             <StarField stars={stars} />
 
