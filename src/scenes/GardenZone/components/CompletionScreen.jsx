@@ -1,6 +1,7 @@
 import React from 'react';
 import StarField from './StarField';
 import wizardImg from '../assets/batalla hans.png';
+import victoryImg from '../assets/gitagoras-victory.png';
 
 const CompletionScreen = ({ score, total, stars, onReset, onExit }) => {
   const percentage = (score / total) * 100;
@@ -13,7 +14,7 @@ const CompletionScreen = ({ score, total, stars, onReset, onExit }) => {
   }
 
   return (
-    <div className="completion-screen" style={{ backgroundImage: `url(${wizardImg})` }}>
+    <div className="completion-screen" style={{ backgroundImage: `url(${victoryImg})` }}>
       <div className="completion-overlay"></div>
       <StarField stars={stars} />
 
