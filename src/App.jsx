@@ -11,6 +11,7 @@ import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
 import LibraryZone from "./scenes/LibraryZone/LibraryZone";
 import QuizGame from "./scenes/GardenZone/QuizGame";
 import Iframe from "./scenes/StudyZone/Iframe";
+import OficinaGitagoras from "./scenes/OficinaGitagoras/OficinaGitagoras";
 
 import AppShell from "./layout/AppShell/AppShell";
 import MusicLayout from "./layout/MusicLayout";
@@ -230,6 +231,12 @@ function App() {
 
                                 {screen === "zone" && activeZone === "Study_Room" && (
                                     <Iframe onExit={exitZoneSafely} />
+                                )}
+
+                                {screen === "zone" && activeZone === "Wizard_Office" && (
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <OficinaGitagoras onExit={exitZoneSafely} />
+                                    </AppShell>
                                 )}
                             </>
                         )}

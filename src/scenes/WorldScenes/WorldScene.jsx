@@ -181,13 +181,7 @@ export default function WorldScene({ onBack, onEnterZone }) {
       if (inputState.interact && !wasInteractPressed && activeZone) {
         interactSound.currentTime = 0;
         interactSound.play();
-
-        if (activeZone.id === "Wizard_Office") {
-          setGitagorasIndex(0);
-          setShowGitagoras(true);
-        } else {
-          onEnterZone(activeZone.id);
-        }
+        onEnterZone(activeZone.id);
       }
 
       wasInteractPressed = inputState.interact;

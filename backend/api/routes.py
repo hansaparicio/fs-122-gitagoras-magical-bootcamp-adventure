@@ -190,3 +190,87 @@ Reglas:
             ],
             source="fallback"
         )
+
+
+# =========================
+# OFICINA DE GITAGORAS
+# =========================
+@api.route("/gitagoras/dialogues", methods=["GET"])
+def get_gitagoras_dialogues():
+    """
+    Endpoint para obtener diálogos de Gitágoras.
+    Devuelve diálogos aleatorios o generados.
+    """
+    try:
+        # Lista de diálogos predeterminados
+        fallback_dialogues = [
+            "Ocupado debuggeando hechizos antiguos.",
+            "No puedo, mis conjuros tienen syntax errors.",
+            "Ahora no, el grimorio no compila.",
+            "Ocupado con stack overflow en mis runas."
+        ]
+        
+        return jsonify({
+            "dialogues": fallback_dialogues,
+            "source": "backend"
+        }), 200
+    
+    except Exception as e:
+        return jsonify({
+            "msg": "Error al obtener diálogos",
+            "error": str(e)
+        }), 500
+
+
+@api.route("/gitagoras/visit", methods=["POST"])
+@jwt_required()
+def register_gitagoras_visit():
+    """
+    Registra una visita del usuario a la Oficina de Gitágoras.
+    """
+    try:
+        user_id = int(get_jwt_identity())
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({"msg": "Usuario no encontrado"}), 404
+        
+        # Aquí puedes agregar lógica para tracking de visitas
+        # Por ejemplo, incrementar un contador o registrar timestamp
+        
+        return jsonify({
+            "msg": "Visita registrada",
+            "user": user.username
+        }), 200
+    
+    except Exception as e:
+        return jsonify({
+            "msg": "Error al registrar visita",
+            "error": str(e)
+        }), 500
+
+
+@api.route("/gitagoras/status", methods=["GET"])
+def get_gitagoras_status():
+    """
+    Devuelve el estado actual de Gitágoras (disponible/ocupado).
+    """
+    try:
+        import random
+        
+        # Probabilidad de que esté ocupado (70%)
+        is_busy = random.random() < 0.7
+        
+        status = {
+            "available": not is_busy,
+            "status": "ocupado" if is_busy else "disponible",
+            "message": "Gitágoras está ocupado con sus hechizos" if is_busy else "Gitágoras está disponible para consultas"
+        }
+        
+        return jsonify(status), 200
+    
+    except Exception as e:
+        return jsonify({
+            "msg": "Error al obtener estado",
+            "error": str(e)
+        }), 500
