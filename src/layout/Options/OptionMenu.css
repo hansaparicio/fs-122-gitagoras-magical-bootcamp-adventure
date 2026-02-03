@@ -1,0 +1,107 @@
+.option-root {
+  position: fixed;
+  top: 80px;
+  right: 16px;
+  z-index: 999998;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.option-button {
+  width: 48px;
+  height: 48px;
+  background: #34346e;
+  color: #ffd700;
+  font-family: "Press Start 2P", monospace;
+  border: 3px solid #ffd700;
+  border-radius: 12px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-modal-root {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  z-index: 999999;
+}
+
+.option-dialog-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  z-index: 10;
+}
+
+.option-dialog-box {
+  background: rgba(245, 216, 140, 1);
+  padding: 14px;
+  border-radius: 12px;
+  color: #000;
+  font-family: "Press Start 2P";
+  max-width: 900px;
+  font-size: 13px;
+  border: 6px solid black;
+  outline: 6px solid #4aa3ff;
+  line-height: 1.7;
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+  position: relative;
+  margin-bottom: 200px;
+  z-index: 20;
+}
+
+.option-dialog-title {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 10px;
+  background-color: #9e99a1;
+  border: solid, 2px, black;
+  border-radius: 10px;
+}
+
+.option-dialog-text {
+  font-size: 12px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.option-dialog-list {
+  font-size: 11px;
+  line-height: 1.9;
+  margin-left: 18px;
+}
+
+.option-dialog-list li {
+  margin-bottom: 6px;
+}
+
+.option-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.option-dialog-btn {
+  background-color: #4aa3ff;
+  color: black;
+  border: solid 2px #000000;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: "Press Start 2P";
+  border-radius: 10px;
+}

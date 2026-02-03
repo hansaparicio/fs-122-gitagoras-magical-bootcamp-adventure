@@ -4,8 +4,6 @@ import { useGameOver } from "../../context/GameOverContext";
 import { useInventory } from "../../context/InventoryContext";
 import { GRIMORIOS } from "../../data/grimorios";
 import "./LibraryZone.css";
-
-
 import LibraryBackground from "../../assets/images/LibraryBackground.png";
 import RuneMatchGame from "./RuneMatchGame";
 import HtmlScroll from "../../assets/images/HtmlScroll.png";
@@ -55,19 +53,18 @@ export default function LibraryZone({ onExit }) {
     };
 
     useEffect(() => {
-        let interval;
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
         const text = dialogs[dialogIndex];
+        if (!text) return;
 
-        if (text) {
-            setTypedDialog("");
-            let i = 0;
-            interval = setInterval(() => {
-                i++;
-                setTypedDialog(text.slice(0, i));
-                if (i >= text.length) clearInterval(interval);
-            }, 25);
-        }
+        setTypedDialog("");
+        let i = 0;
+
+        const interval = setInterval(() => {
+            i++;
+            setTypedDialog(text.slice(0, i));
+            if (i >= text.length) clearInterval(interval);
+        }, 32);
 
         return () => clearInterval(interval);
     }, [phase, dialogIndex]);
@@ -75,7 +72,6 @@ export default function LibraryZone({ onExit }) {
     useEffect(() => {
         if (phase === "game") {
             startTimer(180);
-
             registerGameOverActions({
                 onRetry: () => startTimer(180),
                 onExit: () => { }
@@ -85,7 +81,7 @@ export default function LibraryZone({ onExit }) {
         if (phase === "end" || phase === "finished") {
             stopTimer();
         }
-    }, [phase, onExit, registerGameOverActions, startTimer, stopTimer]);
+    }, [phase, startTimer, stopTimer, registerGameOverActions]);
 
     const nextDialog = () => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
@@ -100,6 +96,8 @@ export default function LibraryZone({ onExit }) {
         }
     };
 
+    const skipIntro = () => setPhase("game");
+
     const handleGameWin = () => {
         stopTimer();
 
@@ -113,31 +111,69 @@ export default function LibraryZone({ onExit }) {
     };
 
     return (
-        <div className="library-root" style={{ backgroundImage: `url(${LibraryBackground})` }}>
-            {getScrollImage() && (
-                <img src={getScrollImage()} className="library-scroll" />
-            )}
+        <div
+            className="library-root"
+            style={{ backgroundImage: `url(${LibraryBackground})` }}
+        >
+            <div className="library-stage">
 
-            {(phase === "intro" || phase === "end") && (
-                <div className="dialog-container">
-                    <img src={GitagorasAvatar} className="dialog-avatar" />
-                    <div className="dialog-box">
-                        <p>{typedDialog}</p>
-                        {typedDialog.length ===
-                            (phase === "intro"
-                                ? INTRO_DIALOGS[dialogIndex]
-                                : END_DIALOGS[dialogIndex]).length && (
-                                <button className="dialog-btn" onClick={nextDialog}>
-                                    Continuar
-                                </button>
-                            )}
+                {getScrollImage() && (
+                    <img
+                        src={getScrollImage()}
+                        className="library-scroll"
+                        alt="Pergamino ilustrativo"
+                    />
+                )}
+
+                {(phase === "intro" || phase === "end") && (
+                    <div className="library-dialog-wrapper">
+
+                        <img
+                            src={GitagorasAvatar}
+                            className="library-dialog-avatar"
+                            alt="Gitágoras"
+                        />
+
+                        <div className="library-dialog-box">
+                            <p>{typedDialog}</p>
+
+                            <div className="library-dialog-actions">
+
+                                {typedDialog.length ===
+                                    (phase === "intro"
+                                        ? INTRO_DIALOGS[dialogIndex]
+                                        : END_DIALOGS[dialogIndex]).length && (
+                                        <>
+                                            {phase === "intro" && (
+                                                <button
+                                                    className="library-dialog-btn library-dialog-skip"
+                                                    onClick={skipIntro}
+                                                >
+                                                    IGNORAR <br /> (salta al minijuego)
+                                                </button>
+                                            )}
+
+                                            <button
+                                                className="library-dialog-btn"
+                                                onClick={nextDialog}
+                                            >
+                                                Continuar
+                                            </button>
+                                        </>
+                                    )}
+
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
-            )}
+                )}
 
-            {phase === "game" && (
-                <RuneMatchGame onComplete={handleGameWin} />
-            )}
+                {phase === "game" && (
+                    <RuneMatchGame onComplete={handleGameWin} />
+                )}
+
+            </div>
         </div>
     );
 }

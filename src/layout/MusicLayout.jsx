@@ -12,7 +12,7 @@ export default function MusicLayout({ children }) {
             {children}
             <div className="global-player">
 
-                <button className="music-button">MUSIC</button>
+                <button className="music-button">AUDIO</button>
 
                 <div className="player">
                     <Mp3Player />

@@ -18,7 +18,7 @@ import LoaderOverlay from "./components/loader/LoaderOverlay";
 import CustomCursor from "./CustomCursor";
 
 import GameOverModal from "./components/GameOverModal/GameOverModal";
-
+import OptionMenu from "./layout/Options/OptionMenu";
 import { IdleProvider } from "./context/IdleContext";
 import { TimeProvider } from "./context/TimeContext";
 import { GameOverProvider } from "./context/GameOverContext";
@@ -76,6 +76,7 @@ function App() {
                 <TimeProvider>
                     <CustomCursor />
                     <MusicLayout>
+                        <OptionMenu />
 
                         {!inGame && !showAbout && (
                             <LoginScreen

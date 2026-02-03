@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./BeginningChapter.css";
 import BeginningBg from "../../assets/images/BeginningChapterImage.png";
 import MagicScroll from "../../assets/images/MagicScroll.png";
+import ScrollBackground from "../../assets/images/ScrollBackground.png";
 import html2canvas from "html2canvas";
 
 const INTRO_TEXT = `Aquí comienza tu viaje hacia el mundo mágico del código.
@@ -107,7 +108,6 @@ const BeginningChapter = ({ onFinish }) => {
         setTypedQuestion("");
         setTypedOptions([]);
         setOptionsVisible(false);
-
         let q = QUESTIONS[questionIndex];
         let i = 0;
         const interval = setInterval(() => {
@@ -176,9 +176,6 @@ const BeginningChapter = ({ onFinish }) => {
             link.download = `${playerName}_MagicScroll.png`;
             link.href = canvas.toDataURL("image/png");
             link.click();
-            setTimeout(() => {
-                if (onComplete) onComplete();
-            }, 1000);
         });
     };
 
@@ -186,7 +183,20 @@ const BeginningChapter = ({ onFinish }) => {
         <div className="bc-root">
             <div className={`bc-black ${phase}`} />
             <div className={`bc-text ${phase}`}><p>{INTRO_TEXT}</p></div>
-            <div className={`bc-scene ${phase}`} style={{ backgroundImage: `url(${BeginningBg})` }} />
+
+            {phase !== "pergamino" && (
+                <div
+                    className={`bc-scene ${phase}`}
+                    style={{ backgroundImage: `url(${BeginningBg})` }}
+                />
+            )}
+
+            {phase === "pergamino" && (
+                <div
+                    className="bc-scene showScene"
+                    style={{ backgroundImage: `url(${ScrollBackground})` }}
+                />
+            )}
 
             {phase === "showScene" && !showQuestions && (
                 <div className="dialog-box">
@@ -233,7 +243,6 @@ const BeginningChapter = ({ onFinish }) => {
             {finalDialog && (
                 <div className="dialog-box">
                     <p className="dialog-text">{typedFinalDialog}</p>
-
                     {typedFinalDialog.length ===
                         "Perfecto, entonces firma este pergamino y serás oficialmente un nuevo alumno de nuestra prestigiosa academia.".length && (
                             <button className="dialog-btn" onClick={handleSignScroll}>
@@ -243,16 +252,17 @@ const BeginningChapter = ({ onFinish }) => {
                 </div>
             )}
 
-
             {phase === "pergamino" && (
                 <>
                     <div
                         className={`pergamino-container ${scrollVisible ? "visible" : ""}`}
                         id="pergamino"
                     >
-                        <img src={MagicScroll} className="pergamino-img" />
-                        <div className={`pergamino-text ${scrollTextVisible ? "visible" : ""}`}>
-                            {playerName}
+                        <div className="pergamino-wrapper">
+                            <img src={MagicScroll} className="pergamino-img" />
+                            <div className={`pergamino-text ${scrollTextVisible ? "visible" : ""}`}>
+                                {playerName}
+                            </div>
                         </div>
                     </div>
 
@@ -272,8 +282,6 @@ const BeginningChapter = ({ onFinish }) => {
                     </div>
                 </>
             )}
-
-
         </div>
     );
 };
