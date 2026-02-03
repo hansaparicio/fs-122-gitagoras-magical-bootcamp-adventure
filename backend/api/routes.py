@@ -151,17 +151,18 @@ Reglas:
 
     except Exception:
         return jsonify(
-            pairs=[
-                { "id": 1, "term": "<h1>", "definition": "Título principal del documento HTML" },
-                { "id": 2, "term": "<p>", "definition": "Define un párrafo" },
-                { "id": 3, "term": "<img>", "definition": "Inserta una imagen" },
-                { "id": 4, "term": "<a>", "definition": "Crea un enlace" },
-                { "id": 5, "term": "<body>", "definition": "Contenido visible" },
-                { "id": 6, "term": "<br>", "definition": "Salto de línea" },
-                { "id": 7, "term": "<strong>", "definition": "Texto importante" },
-                { "id": 8, "term": "<input>", "definition": "Entrada de datos" },
-                { "id": 9, "term": "<div>", "definition": "Contenedor" },
-                { "id": 10, "term": "<span>", "definition": "Texto en línea" }
-            ],
+         pairs = [
+  { "id": 1, "term": "<h1>", "definition": "Encabezado principal de mayor jerarquía" },
+  { "id": 2, "term": "<p>", "definition": "Elemento para definir párrafos de texto" },
+  { "id": 3, "term": "<img>", "definition": "Etiqueta para mostrar imágenes en la página" },
+  { "id": 4, "term": "<a>", "definition": "Crea enlaces a otras páginas o recursos" },
+  { "id": 5, "term": "<body>", "definition": "Contiene el contenido visible del documento" },
+  { "id": 6, "term": "<br>", "definition": "Inserta un salto de línea forzado" },
+  { "id": 7, "term": "<strong>", "definition": "Resalta texto con énfasis semántico fuerte" },
+  { "id": 8, "term": "<input>", "definition": "Campo para introducir datos del usuario" },
+  { "id": 9, "term": "<div>", "definition": "Contenedor genérico para agrupar elementos" },
+  { "id": 10, "term": "<span>", "definition": "Contenedor en línea para texto o estilos" }
+],
+
             source="fallback"
         )

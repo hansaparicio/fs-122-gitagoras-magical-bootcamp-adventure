@@ -155,7 +155,7 @@ button:hover {
 }
 
 .dialog-btn.dialog-option:hover {
-  background-color: #f7e700f7;
+  background-color: #006bf7f7;
   transform: translateX(2px);
 }
 
@@ -197,7 +197,7 @@ button:hover {
   transform: translate(-50%, -50%);
   font-family: "Autograf", cursive;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 40px;
   color: #000000;
   opacity: 0;
   transition: opacity 1.5s ease-in;

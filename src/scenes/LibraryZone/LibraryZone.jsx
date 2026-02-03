@@ -35,13 +35,26 @@ const END_DIALOGS = [
 
 export default function LibraryZone({ onExit }) {
     const { startTimer, stopTimer } = useTime();
-    const { registerGameOverActions } = useGameOver();
+    const { registerGameOverActions, hideGameOver } = useGameOver();
     const { addGrimoire } = useInventory();
 
     const [phase, setPhase] = useState("intro");
     const [dialogIndex, setDialogIndex] = useState(0);
     const [typedDialog, setTypedDialog] = useState("");
     const [grimorioGranted, setGrimorioGranted] = useState(false);
+
+    const exitZoneSafely = () => {
+        stopTimer();
+        hideGameOver();
+        onExit?.();
+    };
+
+    useEffect(() => {
+        return () => {
+            stopTimer();
+            hideGameOver();
+        };
+    }, []);
 
     const getScrollImage = () => {
         if (phase !== "intro") return null;
@@ -74,14 +87,12 @@ export default function LibraryZone({ onExit }) {
             startTimer(180);
             registerGameOverActions({
                 onRetry: () => startTimer(180),
-                onExit: () => { }
+                onExit: exitZoneSafely
             });
-        }
-
-        if (phase === "end" || phase === "finished") {
+        } else {
             stopTimer();
         }
-    }, [phase, startTimer, stopTimer, registerGameOverActions]);
+    }, [phase]);
 
     const nextDialog = () => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
@@ -92,7 +103,7 @@ export default function LibraryZone({ onExit }) {
             setPhase("game");
         } else {
             setPhase("finished");
-            onExit?.();
+            exitZoneSafely();
         }
     };
 
@@ -111,34 +122,20 @@ export default function LibraryZone({ onExit }) {
     };
 
     return (
-        <div
-            className="library-root"
-            style={{ backgroundImage: `url(${LibraryBackground})` }}
-        >
+        <div className="library-root" style={{ backgroundImage: `url(${LibraryBackground})` }}>
             <div className="library-stage">
-
                 {getScrollImage() && (
-                    <img
-                        src={getScrollImage()}
-                        className="library-scroll"
-                        alt="Pergamino ilustrativo"
-                    />
+                    <img src={getScrollImage()} className="library-scroll" />
                 )}
 
                 {(phase === "intro" || phase === "end") && (
                     <div className="library-dialog-wrapper">
-
-                        <img
-                            src={GitagorasAvatar}
-                            className="library-dialog-avatar"
-                            alt="Gitágoras"
-                        />
+                        <img src={GitagorasAvatar} className="library-dialog-avatar" />
 
                         <div className="library-dialog-box">
                             <p>{typedDialog}</p>
 
                             <div className="library-dialog-actions">
-
                                 {typedDialog.length ===
                                     (phase === "intro"
                                         ? INTRO_DIALOGS[dialogIndex]
@@ -161,16 +158,15 @@ export default function LibraryZone({ onExit }) {
                                             </button>
                                         </>
                                     )}
-
                             </div>
-
                         </div>
-
                     </div>
                 )}
 
                 {phase === "game" && (
-                    <RuneMatchGame onComplete={handleGameWin} />
+                    <div className="rune-game-container">
+                        <RuneMatchGame onComplete={handleGameWin} />
+                    </div>
                 )}
 
             </div>

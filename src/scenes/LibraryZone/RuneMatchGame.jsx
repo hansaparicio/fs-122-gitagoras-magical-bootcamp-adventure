@@ -18,13 +18,31 @@ export default function RuneMatchGame({ onComplete }) {
     fetch("http://localhost:5000/api/html-runes-hf")
       .then(res => res.json())
       .then(data => {
-        const pairs = data.pairs || [];
-        setPairs(pairs);
-        setShuffledDefs([...pairs].sort(() => Math.random() - 0.5));
+        const fetchedPairs = data.pairs || [];
+        setPairs(fetchedPairs);
+        setShuffledDefs([...fetchedPairs].sort(() => Math.random() - 0.5));
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        const fallbackPairs = [
+          { id: 1, term: "<h1>", definition: "Encabezado principal de mayor jerarquía" },
+          { id: 2, term: "<p>", definition: "Elemento para definir párrafos de texto" },
+          { id: 3, term: "<img>", definition: "Etiqueta para mostrar imágenes en la página" },
+          { id: 4, term: "<a>", definition: "Crea enlaces a otras páginas o recursos" },
+          { id: 5, term: "<body>", definition: "Contiene el contenido visible del documento" },
+          { id: 6, term: "<br>", definition: "Inserta un salto de línea forzado" },
+          { id: 7, term: "<strong>", definition: "Resalta texto con énfasis semántico fuerte" },
+          { id: 8, term: "<input>", definition: "Campo para introducir datos del usuario" },
+          { id: 9, term: "<div>", definition: "Contenedor genérico para agrupar elementos" },
+          { id: 10, term: "<span>", definition: "Contenedor en línea para texto o estilos" }
+        ];
+
+        setPairs(fallbackPairs);
+        setShuffledDefs([...fallbackPairs].sort(() => Math.random() - 0.5));
+        setLoading(false);
+      });
   }, []);
+
 
   useEffect(() => {
     if (
@@ -58,7 +76,7 @@ export default function RuneMatchGame({ onComplete }) {
   };
 
   if (loading) {
-    return <div className="rune-game">Cargando runas mágicas...</div>;
+    return <div className="rune-gameLoader">Cargando runas mágicas...</div>;
   }
 
   return (

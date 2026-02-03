@@ -49,7 +49,7 @@ function App() {
         }, 800);
     };
 
-    const backToWorld = () => {
+    const exitZoneSafely = () => {
         setLoading(true);
         setTimeout(() => {
             setScreen("world");
@@ -121,32 +121,31 @@ function App() {
                                 )}
 
                                 {screen === "zone" && activeZone === "Alchemy_Lab" && (
-                                    <AppShell onExit={backToWorld}>
-                                        <AlchemyZone onExitZone={backToWorld} />
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <AlchemyZone onExitZone={exitZoneSafely} />
                                     </AppShell>
                                 )}
 
                                 {screen === "zone" && activeZone === "Library" && (
-                                    <AppShell onExit={backToWorld}>
-                                        <LibraryZone />
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <LibraryZone onExit={exitZoneSafely} />
                                     </AppShell>
                                 )}
 
                                 {screen === "zone" && activeZone === "Garden_Courtyard" && (
-                                    <AppShell onExit={backToWorld}>
+                                    <AppShell onExit={exitZoneSafely}>
                                         <QuizGame />
                                     </AppShell>
                                 )}
 
                                 {screen === "zone" && activeZone === "Study_Room" && (
-                                    <Iframe onExit={backToWorld} />
+                                    <Iframe onExit={exitZoneSafely} />
                                 )}
                             </>
                         )}
 
                         <GameOverModal />
                         <LoaderOverlay visible={loading} />
-
                     </MusicLayout>
                 </TimeProvider>
             </GameOverProvider>

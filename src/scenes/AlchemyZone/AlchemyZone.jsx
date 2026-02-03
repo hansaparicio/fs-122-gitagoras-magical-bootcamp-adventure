@@ -24,6 +24,7 @@ const INTRO_DIALOGS = [
     "Para demostrar tu dominio del arte arcano del marcado, deberás resolver este crucigrama ancestral. No se trata de memorizar palabras, sino de comprender conceptos.",
     "Recuerda: en la alquimia del código, la precisión no es opcional. Una etiqueta mal cerrada o una estructura confusa puede romper todo el hechizo."
 ];
+
 const END_DIALOGS = [
     "Impresionante. Has demostrado atención al detalle...",
     "Como recompensa, te otorgo este Grimorio...",
@@ -40,6 +41,19 @@ function AlchemyZone({ onExitZone }) {
     const [typedDialog, setTypedDialog] = useState("");
     const [gameKey, setGameKey] = useState(0);
     const [grimorioGranted, setGrimorioGranted] = useState(false);
+
+    const exitZoneSafely = () => {
+        stopTimer();
+        hideGameOver();
+        onExitZone?.();
+    };
+
+    useEffect(() => {
+        return () => {
+            stopTimer();
+            hideGameOver();
+        };
+    }, []);
 
     useEffect(() => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
@@ -60,22 +74,17 @@ function AlchemyZone({ onExitZone }) {
 
     useEffect(() => {
         if (phase === "game") {
-            startTimer(30);
+            startTimer(240);
 
             registerGameOverActions({
                 onRetry: () => {
                     hideGameOver();
                     setGameKey(k => k + 1);
-                    startTimer(30);
+                    startTimer(240);
                 },
-                onExit: () => {
-                    hideGameOver();
-                    onExitZone?.();
-                }
+                onExit: exitZoneSafely
             });
-        }
-
-        if (phase === "end" || phase === "finished") {
+        } else {
             stopTimer();
         }
     }, [phase]);
@@ -107,10 +116,7 @@ function AlchemyZone({ onExitZone }) {
     };
 
     return (
-        <div
-            className="alchemy-root"
-            style={{ backgroundImage: `url(${AlchemyBackground})` }}
-        >
+        <div className="alchemy-root" style={{ backgroundImage: `url(${AlchemyBackground})` }}>
             {phase === "intro" && dialogIndex >= 2 && dialogIndex < 9 && (
                 <img src={ComponentScroll} className="alchemy-scroll" />
             )}
@@ -121,12 +127,7 @@ function AlchemyZone({ onExitZone }) {
 
             {(phase === "intro" || phase === "end") && (
                 <div className="alchemy-dialog-wrapper">
-
-                    <img
-                        src={GitagorasAvatar}
-                        className="alchemy-dialog-avatar"
-                        alt="Gitágoras"
-                    />
+                    <img src={GitagorasAvatar} className="alchemy-dialog-avatar" />
 
                     <div className="alchemy-dialog-box">
                         <p>{typedDialog}</p>
@@ -156,15 +157,11 @@ function AlchemyZone({ onExitZone }) {
                                 )}
                         </div>
                     </div>
-
                 </div>
             )}
 
             {phase === "game" && (
-                <CrossWordGame
-                    key={gameKey}
-                    onComplete={handleGameWin}
-                />
+                <CrossWordGame key={gameKey} onComplete={handleGameWin} />
             )}
         </div>
     );

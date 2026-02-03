@@ -2,6 +2,15 @@ import { useState } from "react";
 import "./Iframe.css";
 import IframeBackground from "../../assets/images/StudyRoomBackground.png";
 
+const SELF_CLOSING_TAGS = [
+    "img",
+    "br",
+    "hr",
+    "input",
+    "meta",
+    "link"
+];
+
 function validateHTML(html) {
     const tagRegex = /<\/?([a-zA-Z0-9]+)[^>]*>/g;
     const stack = [];
@@ -10,8 +19,14 @@ function validateHTML(html) {
 
     while ((match = tagRegex.exec(html))) {
         const fullTag = match[0];
-        const tagName = match[1];
+        const tagName = match[1].toLowerCase();
         const isClosing = fullTag.startsWith("</");
+        const isSelfClosing =
+            fullTag.endsWith("/>") || SELF_CLOSING_TAGS.includes(tagName);
+
+        if (isSelfClosing) {
+            continue;
+        }
 
         if (!isClosing) {
             stack.push(tagName);
@@ -51,11 +66,11 @@ function validateCSS(css) {
         if (!trimmed || trimmed.endsWith("{") || trimmed.endsWith("}")) return;
 
         if (trimmed.includes(":") && !trimmed.endsWith(";")) {
-            errors.push(`Falta ; al final de una propiedad `);
+            errors.push("Falta ; al final de una propiedad");
         }
 
         if (!trimmed.includes(":") && trimmed.endsWith(";")) {
-            errors.push(`Propiedad sin ':' detectada `);
+            errors.push("Propiedad sin ':' detectada");
         }
     });
 
@@ -67,6 +82,7 @@ export default function Iframe({ onExit }) {
         `<h1>Gitágoras dice:</h1>
 <p>Bienvenido joven aprendiz. Esta es una zona de estudio con caos controlado. Siéntete libre de experimentar 
 con cualquier magia que hayas desbloqueado. La pizarra mágica actualmente está encantada con HTML y CSS. ¡Te deseo un estudio enriquecedor!</p>`
+
     );
 
     const [css, setCss] = useState(
@@ -170,11 +186,11 @@ p {
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-box">
-                        <h3> A ver, revisemos ese hechizo...</h3>
+                        <h3>A ver, revisemos ese hechizo...</h3>
 
                         {errors.length > 0 ? (
                             errors.map((err, i) => (
-                                <p key={i}>!Cuidado! {err}</p>
+                                <p key={i}>¡Cuidado! {err}</p>
                             ))
                         ) : (
                             <p className="no-errors">
