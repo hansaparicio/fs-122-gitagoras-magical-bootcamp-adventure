@@ -26,13 +26,13 @@
   min-height: 180px;
   padding: 8px;
   scale: 0.8;
-  background: #34346dbb;
+  background: #1877ecbb;
   border: 3px solid #ffd700;
   border-radius: 10px;
-
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: visible;
+
 
   z-index: 999999;
 

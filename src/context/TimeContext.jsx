@@ -7,16 +7,20 @@ export function TimeProvider({ children }) {
     const { showGameOver } = useGameOver();
 
     const [timeLeft, setTimeLeft] = useState(null);
+    const [active, setActive] = useState(false);
     const intervalRef = useRef(null);
 
     const startTimer = (seconds) => {
         clearInterval(intervalRef.current);
+        setActive(true);
         setTimeLeft(seconds);
 
         intervalRef.current = setInterval(() => {
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     clearInterval(intervalRef.current);
+                    intervalRef.current = null;
+                    setActive(false);
                     showGameOver();
                     return 0;
                 }
@@ -27,7 +31,9 @@ export function TimeProvider({ children }) {
 
     const stopTimer = () => {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
         setTimeLeft(null);
+        setActive(false);
     };
 
     useEffect(() => {
@@ -35,7 +41,7 @@ export function TimeProvider({ children }) {
     }, []);
 
     return (
-        <TimeContext.Provider value={{ timeLeft, startTimer, stopTimer }}>
+        <TimeContext.Provider value={{ timeLeft, startTimer, stopTimer, active }}>
             {children}
         </TimeContext.Provider>
     );

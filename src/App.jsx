@@ -18,7 +18,7 @@ import LoaderOverlay from "./components/loader/LoaderOverlay";
 import CustomCursor from "./CustomCursor";
 
 import GameOverModal from "./components/GameOverModal/GameOverModal";
-
+import OptionMenu from "./layout/Options/OptionMenu";
 import { IdleProvider } from "./context/IdleContext";
 import { TimeProvider } from "./context/TimeContext";
 import { GameOverProvider } from "./context/GameOverContext";
@@ -49,7 +49,7 @@ function App() {
         }, 800);
     };
 
-    const backToWorld = () => {
+    const exitZoneSafely = () => {
         setLoading(true);
         setTimeout(() => {
             setScreen("world");
@@ -82,6 +82,7 @@ function App() {
                 <TimeProvider>
                     <CustomCursor />
                     <MusicLayout>
+                        <OptionMenu />
 
                         {!inGame && !showAbout && (
                             <LoginScreen
@@ -126,32 +127,31 @@ function App() {
                                 )}
 
                                 {screen === "zone" && activeZone === "Alchemy_Lab" && (
-                                    <AppShell onExit={backToWorld}>
-                                        <AlchemyZone onExitZone={backToWorld} />
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <AlchemyZone onExitZone={exitZoneSafely} />
                                     </AppShell>
                                 )}
 
                                 {screen === "zone" && activeZone === "Library" && (
-                                    <AppShell onExit={backToWorld}>
-                                        <LibraryZone />
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <LibraryZone onExit={exitZoneSafely} />
                                     </AppShell>
                                 )}
 
                                 {screen === "zone" && activeZone === "Garden_Courtyard" && (
-                                    <AppShell onExit={backToWorld}>
+                                    <AppShell onExit={exitZoneSafely}>
                                         <QuizGame />
                                     </AppShell>
                                 )}
 
                                 {screen === "zone" && activeZone === "Study_Room" && (
-                                    <Iframe onExit={backToWorld} />
+                                    <Iframe onExit={exitZoneSafely} />
                                 )}
                             </>
                         )}
 
                         <GameOverModal />
                         <LoaderOverlay visible={loading} />
-
                     </MusicLayout>
                 </TimeProvider>
             </GameOverProvider>

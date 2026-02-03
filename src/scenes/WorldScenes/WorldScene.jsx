@@ -7,7 +7,7 @@ import Zone from "./core/world/Zone";
 import ZoneManager from "./core/world/ZoneManager";
 
 import "./WorldScene.css";
-import MapControl from "../../assets/images/MapControl.png";
+
 
 
 import bgImageSrc from "./assets/bg_world.png";
@@ -224,11 +224,7 @@ export default function WorldScene({ onBack, onEnterZone }) {
             className="worldscene-canvas"
           />
 
-          <img
-            src={MapControl}
-            alt="Map Controls"
-            className="worldscene-map-control"
-          />
+
 
           <button onClick={onBack} className="worldscene-back">
             Volver a <br />selección <br />de magia

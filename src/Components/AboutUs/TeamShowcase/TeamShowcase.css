@@ -22,9 +22,14 @@
   max-width: 100%;
   width: fit-content;
   padding: 1rem 0.6rem;
-  margin-top: 10rem;
+  margin-top: 12rem;
   box-sizing: border-box;
-  background: linear-gradient(to right, rgb(197, 178, 178), rgb(194, 104, 104));
+
+  background: linear-gradient(
+    to right,
+    rgba(197, 178, 178, 0.7),
+    rgba(144, 91, 202, 0.7)
+  );
 
   border: 4px solid #000000;
   border-radius: 36px;
@@ -33,6 +38,7 @@
     inset 0 0 0 4px #000000;
   color: #000000;
 }
+
 
 .avatar-container > div {
   text-align: center;
@@ -156,7 +162,7 @@
 .team-title {
   position: relative;
   z-index: 2;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   font-family: "Press Start 2P", system-ui;
   font-size: clamp(1.5rem, 4vw, 3.5rem);
 }

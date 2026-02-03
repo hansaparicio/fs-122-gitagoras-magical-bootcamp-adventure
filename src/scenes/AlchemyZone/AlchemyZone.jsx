@@ -26,9 +26,9 @@ const INTRO_DIALOGS = [
 ];
 
 const END_DIALOGS = [
-    "Impresionante. Has demostrado atención al detalle, precisión y una comprensión profunda de cómo cada elemento encaja en el todo.",
-    "Como recompensa, te otorgo este Grimorio de Conocimiento Alquímico. No contiene fórmulas simples, sino caminos para perfeccionar tu dominio del HTML.",
-    "Cuando te sientas preparado para avanzar, regresa a sus páginas. La verdadera alquimia del código se logra practicando, comprendiendo y refinando."
+    "Impresionante. Has demostrado atención al detalle...",
+    "Como recompensa, te otorgo este Grimorio...",
+    "Cuando te sientas preparado para avanzar..."
 ];
 
 function AlchemyZone({ onExitZone }) {
@@ -42,42 +42,49 @@ function AlchemyZone({ onExitZone }) {
     const [gameKey, setGameKey] = useState(0);
     const [grimorioGranted, setGrimorioGranted] = useState(false);
 
+    const exitZoneSafely = () => {
+        stopTimer();
+        hideGameOver();
+        onExitZone?.();
+    };
+
     useEffect(() => {
-        let interval;
+        return () => {
+            stopTimer();
+            hideGameOver();
+        };
+    }, []);
+
+    useEffect(() => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;
         const text = dialogs[dialogIndex];
+        if (!text) return;
 
-        if (text) {
-            setTypedDialog("");
-            let i = 0;
-            interval = setInterval(() => {
-                i++;
-                setTypedDialog(text.slice(0, i));
-                if (i >= text.length) clearInterval(interval);
-            }, 25);
-        }
+        setTypedDialog("");
+        let i = 0;
+
+        const interval = setInterval(() => {
+            i++;
+            setTypedDialog(text.slice(0, i));
+            if (i >= text.length) clearInterval(interval);
+        }, 25);
 
         return () => clearInterval(interval);
     }, [phase, dialogIndex]);
 
     useEffect(() => {
         if (phase === "game") {
-            startTimer(30);
+            startTimer(240);
 
             registerGameOverActions({
                 onRetry: () => {
                     hideGameOver();
                     setGameKey(k => k + 1);
-                    startTimer(30);
+                    startTimer(240);
                 },
-                onExit: () => {
-                    hideGameOver();
-                    onExitZone?.();
-                }
+                onExit: exitZoneSafely
             });
-        }
-
-        if (phase === "end" || phase === "finished") {
+        } else {
             stopTimer();
         }
     }, [phase]);
@@ -94,6 +101,8 @@ function AlchemyZone({ onExitZone }) {
         }
     };
 
+    const skipIntro = () => setPhase("game");
+
     const handleGameWin = () => {
         stopTimer();
 
@@ -107,40 +116,52 @@ function AlchemyZone({ onExitZone }) {
     };
 
     return (
-        <div
-            className="alchemy-root"
-            style={{ backgroundImage: `url(${AlchemyBackground})` }}
-        >
+        <div className="alchemy-root" style={{ backgroundImage: `url(${AlchemyBackground})` }}>
             {phase === "intro" && dialogIndex >= 2 && dialogIndex < 9 && (
-                <img src={ComponentScroll} className="library-scroll" />
+                <img src={ComponentScroll} className="alchemy-scroll" />
             )}
 
             {phase === "intro" && dialogIndex >= 9 && (
-                <img src={CrosswordScroll} className="library-scroll" />
+                <img src={CrosswordScroll} className="alchemy-scroll" />
             )}
 
             {(phase === "intro" || phase === "end") && (
-                <div className="dialog-container">
-                    <img src={GitagorasAvatar} className="dialog-avatar" />
-                    <div className="dialog-box">
+                <div className="alchemy-dialog-wrapper">
+                    <img src={GitagorasAvatar} className="alchemy-dialog-avatar" />
+
+                    <div className="alchemy-dialog-box">
                         <p>{typedDialog}</p>
-                        {typedDialog.length ===
-                            (phase === "intro"
-                                ? INTRO_DIALOGS[dialogIndex]
-                                : END_DIALOGS[dialogIndex]).length && (
-                                <button className="dialog-btn" onClick={nextDialog}>
-                                    Continuar
-                                </button>
-                            )}
+
+                        <div className="alchemy-dialog-actions">
+                            {typedDialog.length ===
+                                (phase === "intro"
+                                    ? INTRO_DIALOGS[dialogIndex]
+                                    : END_DIALOGS[dialogIndex]).length && (
+                                    <>
+                                        {phase === "intro" && (
+                                            <button
+                                                className="alchemy-dialog-btn alchemy-dialog-skip"
+                                                onClick={skipIntro}
+                                            >
+                                                IGNORAR <br /> (Saltar al minijuego)
+                                            </button>
+                                        )}
+
+                                        <button
+                                            className="alchemy-dialog-btn"
+                                            onClick={nextDialog}
+                                        >
+                                            Continuar
+                                        </button>
+                                    </>
+                                )}
+                        </div>
                     </div>
                 </div>
             )}
 
             {phase === "game" && (
-                <CrossWordGame
-                    key={gameKey}
-                    onComplete={handleGameWin}
-                />
+                <CrossWordGame key={gameKey} onComplete={handleGameWin} />
             )}
         </div>
     );

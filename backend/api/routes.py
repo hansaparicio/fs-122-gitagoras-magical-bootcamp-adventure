@@ -113,3 +113,74 @@ def save_avatar():
     db.session.commit()
 
     return jsonify({"msg": "Avatar guardado"}), 200
+    return jsonify(msg="Pergamino firmado correctamente")
+
+
+
+@api.route("/html-runes-hf", methods=["GET"])
+def get_html_runes_hf():
+    hf_token = os.getenv("HF_API_KEY")
+
+    headers = {
+        "Authorization": f"Bearer {hf_token}",
+        "Content-Type": "application/json"
+    }
+
+    prompt = """
+Eres una API que genera datos educativos.
+Devuelve ÚNICAMENTE un JSON válido.
+NO escribas texto fuera del JSON.
+
+{
+  "pairs": [
+    { "id": 1, "term": "<h1>", "definition": "Título principal del documento HTML" }
+  ]
+}
+
+Reglas:
+- EXACTAMENTE 10 pares
+- IDs del 1 al 10
+"""
+
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "max_new_tokens": 300,
+            "temperature": 0.3
+        }
+    }
+
+    try:
+        response = requests.post(
+            "https://router.huggingface.co/hf-inference/models/mistralai/Mistral-7B-Instruct-v0.2",
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+
+        raw = response.json()
+        text = raw[0].get("generated_text", "") if isinstance(raw, list) else raw.get("generated_text", "")
+
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        parsed = json.loads(text[start:end])
+
+        return jsonify(pairs=parsed["pairs"], source="huggingface")
+
+    except Exception:
+        return jsonify(
+         pairs = [
+  { "id": 1, "term": "<h1>", "definition": "Encabezado principal de mayor jerarquía" },
+  { "id": 2, "term": "<p>", "definition": "Elemento para definir párrafos de texto" },
+  { "id": 3, "term": "<img>", "definition": "Etiqueta para mostrar imágenes en la página" },
+  { "id": 4, "term": "<a>", "definition": "Crea enlaces a otras páginas o recursos" },
+  { "id": 5, "term": "<body>", "definition": "Contiene el contenido visible del documento" },
+  { "id": 6, "term": "<br>", "definition": "Inserta un salto de línea forzado" },
+  { "id": 7, "term": "<strong>", "definition": "Resalta texto con énfasis semántico fuerte" },
+  { "id": 8, "term": "<input>", "definition": "Campo para introducir datos del usuario" },
+  { "id": 9, "term": "<div>", "definition": "Contenedor genérico para agrupar elementos" },
+  { "id": 10, "term": "<span>", "definition": "Contenedor en línea para texto o estilos" }
+],
+
+            source="fallback"
+        )

@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useInventory } from "../../context/InventoryContext";
 import SandTimer from "../../components/SandTimer/SandTimer";
-import Player from "../../components/mp3Player/mp3Player";
 import ChatBot from "../../components/ChatBot/ChatBot";
 import GrimorioModal from "../../components/Grimorios/GrimorioModal";
 import "./AppShell.css";
 
 export default function AppShell({ children, onExit }) {
-    const [showAudio, setShowAudio] = useState(false);
     const [showInventory, setShowInventory] = useState(false);
     const [openGrimoire, setOpenGrimoire] = useState(null);
     const { inventory } = useInventory();
