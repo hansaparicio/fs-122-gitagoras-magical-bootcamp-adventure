@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import LoginScreen from "./scenes/LoginScreen/LoginScreen";
 import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
@@ -16,6 +16,12 @@ import AppShell from "./layout/AppShell/AppShell";
 import MusicLayout from "./layout/MusicLayout";
 import LoaderOverlay from "./components/loader/LoaderOverlay";
 import CustomCursor from "./CustomCursor";
+import UserBadge from "./Components/UserBadge";
+import UserPanel from "./components/UserPanel";
+import AvatarCreator from "./components/AvatarCreator";
+
+
+
 
 import GameOverModal from "./components/GameOverModal/GameOverModal";
 import OptionMenu from "./layout/Options/OptionMenu";
@@ -31,6 +37,42 @@ function App() {
     const [screen, setScreen] = useState("intro");
     const [loading, setLoading] = useState(false);
     const [activeZone, setActiveZone] = useState(null);
+
+    const [user, setUser] = useState(null);
+    const [avatar, setAvatar] = useState(null);
+    const [showUserPanel, setShowUserPanel] = useState(false);
+    const [showAvatarCreator, setShowAvatarCreator] = useState(false);
+
+
+
+
+
+    useEffect(() => {
+        const fetchMe = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const res = await fetch("http://127.0.0.1:5000/api/me", {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) return;
+
+                const data = await res.json();
+                setUser(data);
+                setAvatar(data.avatar);
+                setLoggedIn(true);
+            } catch (err) {
+                console.error("Error cargando usuario", err);
+            }
+        };
+
+        fetchMe();
+    }, []);
+
 
     const goToWorld = () => {
         setLoading(true);
@@ -73,6 +115,8 @@ function App() {
     const handleLogout = () => {
         localStorage.removeItem("token");
         setLoggedIn(false);
+        setUser(null);
+        setAvatar(null);
     };
 
 
@@ -83,11 +127,51 @@ function App() {
                     <CustomCursor />
                     <MusicLayout>
                         <OptionMenu />
+                        <UserBadge
+                            user={user}
+                            avatar={avatar}
+                            onClick={() => setShowUserPanel(true)}
+                        />
+
+                        {showUserPanel && user && (
+                            <UserPanel
+                                user={user}
+                                avatar={avatar}
+                                onClose={() => setShowUserPanel(false)}
+                                onEditAvatar={() => {
+                                    setShowUserPanel(false);
+                                    setShowAvatarCreator(true)
+                                }}
+                                onLogout={handleLogout}
+                            />
+                        )}
+
+                        {showAvatarCreator && (
+                            <div className="modal-overlay">
+                                <div className="modal-center">
+                                    <AvatarCreator
+                                        initialAvatar={avatar}
+                                        onSave={(newAvatar) => {
+                                            setAvatar(newAvatar);
+                                            setShowAvatarCreator(false);
+                                        }}
+                                        onClose={() => setShowAvatarCreator(false)}
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+
 
                         {!inGame && !showAbout && (
                             <LoginScreen
                                 loggedIn={loggedIn}
-                                onLogin={() => setLoggedIn(true)}
+                                onLogin={(userData) => {
+                                    console.log("LOGIN USER:", userData);
+                                    setUser(userData);
+                                    setAvatar(userData.avatar);
+                                    setLoggedIn(true);
+                                }}
                                 onLogout={handleLogout}
                                 onAbout={() => setShowAbout(true)}
                                 onStartGame={() => setInGame(true)}

@@ -1,0 +1,21 @@
+.logout-btn {
+  background-color: #e74c3c; /* rojo bonito */
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
+}

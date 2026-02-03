@@ -1,13 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import "./LoginScreen.css";
 import LoginBackground from "../../assets/images/LoginScreenImage.png";
-import Avatar from "../../components/Avatar";
-import AvatarCreator from "../../components/AvatarCreator";
-import muneco from "../../assets/images/Avatar/Avatar/Muneco.png";
-import fondo1 from "../../assets/images/Avatar/Fondos/Fondo-1.png";
 import { useIdle } from "../../context/IdleContext";
 import idleSound from "../../assets/sounds/mensaje-carol.mp3"
-import ChatBot from "../../Components/ChatBot/ChatBot.jsx";
+import ChatBot from "../../components/ChatBot/ChatBot.jsx";
 import { TimeProvider } from "../../context/TimeContext.jsx"
 
 
@@ -17,15 +13,13 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     const [mode, setMode] = useState(null);
 
-    const [showUserPanel, setShowUserPanel] = useState(false);
-    const [showAvatarCreator, setShowAvatarCreator] = useState(false);
+
+
 
     const IDLE_MENSAJES = ["¿Estas ahí o llevas capa de invisibilidad?", "¿Sigues ahí, pequeño mago?🪄", "El hechizo del ratón petrificado ha sido detectado🧙‍♂️", "Creo que la magia se quedó en pausa...", "¿Te has dormido o estás canalizando energía arcana?"]
     const [idleMensaje, setIdleMensaje] = useState(null);
 
 
-    const [user, setUser] = useState(null);
-    const [avatar, setAvatar] = useState(null);
 
 
 
@@ -56,45 +50,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
     }, [isIdle])
 
-    useEffect(() => {
-        const fetchMe = async () => {
-            const token = localStorage.getItem("token");
-            if (!token) return;
-            try {
-                const res = await fetch("http://127.0.0.1:5000/api/me", {
 
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                if (!res.ok) return;
-
-                const data = await res.json();
-                setAvatar({
-                    muneco,
-                    fondo: fondo1,
-                    ...data.avatar
-                });
-                setUser(data);
-                onLogin?.(data.username);
-
-            } catch (err) {
-                console.error("error cargando usuario", err);
-            }
-        }
-
-        fetchMe();
-    }, []);
-
-    useEffect(() => {
-        if (!loggedIn) {
-            setUser(null);
-            setAvatar(null);
-            setShowUserPanel(false)
-            setShowAvatarCreator(false);
-            setMode(null)
-        }
-    }, [loggedIn])
 
 
     const handleChange = (e) => {
@@ -155,16 +111,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
 
             localStorage.setItem("token", data.access_token);
-
-
-            setUser(data.user);
-            setAvatar({
-                muneco,
-                fondo: fondo1,
-                ...data.user.avatar,
-            });
-
-            onLogin?.(data.user.username);
+            onLogin(data.user);
             setMode(null);
 
         } catch (err) {
@@ -265,69 +212,9 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
                         </button>
                     </div>
                 )}
-                <div
-                    className="user-badge" onClick={() => setShowUserPanel(true)}>
-                    {avatar ? <Avatar {...avatar} /> : <div className="user-avatar placeholder" />}
-                    <span>{user?.username}</span>
-                </div>
-
-                {showUserPanel && (
-                    <div className="user-panel-overlay">
-                        <div className="user-panel">
-                            <button className="boton-mu" onClick={() => setShowUserPanel(false)}>X</button>
-                            {avatar ? <Avatar {...avatar} /> : <div className="user-avatar-placeholder" />}
-                            <p>{user?.username}</p>
-                            <button
-                                disabled={!user}
-                                onClick={() => {
-                                    if (!user) return;
-                                    setShowUserPanel(false);
-                                    setShowAvatarCreator(true);
-                                }}
-                            >
-                                Editar Avatar
-<<<<<<< new-eva
-
-                            </button>
-                            <button
-                                className="logout-btn"
-                                onClick={() => {
-                                    localStorage.removeItem("token");
-                                    setShowUserPanel(false);
-                                    onLogout();
-                                }}
-                            >
-                                Cerrar sesión
-=======
->>>>>>> Main-Branch
-                            </button>
 
 
 
-
-                        </div>
-                    </div>
-                )}
-                {showAvatarCreator && user && (
-                    <div className="avatar-editor-overlay">
-                        <div className="avatar-creator-modal">
-                            <AvatarCreator
-                                initialAvatar={avatar}
-                                onSave={async (newAvatar) => {
-                                    setAvatar({
-                                        muneco,
-                                        fondo: fondo1,
-                                        ...newAvatar,
-                                    });
-
-
-                                    setShowAvatarCreator(false);
-                                }}
-                                onClose={() => setShowAvatarCreator(false)}
-                            />
-                        </div>
-                    </div>
-                )}
 
                 <div className="footer-buttons-container">
                     <button onClick={onAbout}>About us</button>

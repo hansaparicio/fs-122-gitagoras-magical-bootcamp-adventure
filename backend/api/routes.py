@@ -14,13 +14,7 @@ import requests
 
 api = Blueprint("api", __name__)
 
-<<<<<<< new-eva
-# REGISTER
-=======
-# =========================
-# REGISTER
-# =========================
->>>>>>> Main-Branch
+
 @api.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
@@ -62,13 +56,7 @@ def register():
     }), 201
 
 
-<<<<<<< new-eva
-# LOGIN
-=======
-# =========================
-# LOGIN
-# =========================
->>>>>>> Main-Branch
+
 @api.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -93,13 +81,7 @@ def login():
     }), 200
 
 
-<<<<<<< new-eva
-# ME
-=======
-# =========================
-# ME
-# =========================
->>>>>>> Main-Branch
+
 @api.route("/me", methods=["GET"])
 @jwt_required()
 def me():
@@ -108,16 +90,6 @@ def me():
 
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
-<<<<<<< new-eva
-=======
-
-    return jsonify({
-        "id": user.id,
-        "username": user.username,
-        "email": user.email,
-        "avatar": user.avatar
-    }), 200
->>>>>>> Main-Branch
 
     return jsonify({
         "id": user.id,
@@ -126,14 +98,7 @@ def me():
         "avatar": user.avatar
     }), 200
 
-<<<<<<< new-eva
 
-# AVATAR
-=======
-# =========================
-# AVATAR
-# =========================
->>>>>>> Main-Branch
 @api.route("/avatar", methods=["POST"])
 @jwt_required()
 def save_avatar():
@@ -151,11 +116,10 @@ def save_avatar():
     db.session.commit()
 
     return jsonify({"msg": "Avatar guardado"}), 200
-<<<<<<< new-eva
+
+
     return jsonify(msg="Pergamino firmado correctamente")
 
-=======
->>>>>>> Main-Branch
 
 
 # =========================

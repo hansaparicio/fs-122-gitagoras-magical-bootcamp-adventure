@@ -1,0 +1,63 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0; /* top right bottom left */
+  background: rgba(176, 170, 255, 0);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 10000;
+}
+
+.modal-center {
+  background: #201831;
+  border-radius: 16px;
+  border: dotted 5px rgb(255, 238, 0);
+  padding: 10px;
+
+  max-width: 90vw;
+  max-height: 90vh;
+
+  overflow: hidden;
+}
+.avatar-editor-layout button {
+  background: rgb(135, 124, 255);
+  color: #222;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.avatar-editor-layout button:hover {
+  background: #fdef50;
+}
+.avatar-editor-layout .option-button.active {
+  background: #d383f9;
+}
+.avatar-editor-layout .guardar {
+  margin-top: 12px;
+  background: rgb(121, 116, 245);
+  color: #000;
+  font-size: 16px;
+  padding: 10px 18px;
+}
+.avatar-editor-layout .guardar {
+  margin-top: 30px;
+  background: white;
+  color: #000;
+  font-size: 16px;
+  padding: 18px;
+}
+.avatar-editor-layout .guardar {
+  margin-top: 35px;
+  background: white;
+  color: #000;
+  font-size: 16px;
+  padding: 10px 18px;
+}
+.avatar-editor-layout .option-button:hover img {
+  transform: scale(3);
+}
