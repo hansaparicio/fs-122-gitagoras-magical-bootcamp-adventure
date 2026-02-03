@@ -117,6 +117,10 @@ function App() {
         setLoggedIn(false);
         setUser(null);
         setAvatar(null);
+        setInGame(false);
+        setScreen("intro");
+        setActiveZone(null);
+        setShowUserPanel(false);
     };
 
 
