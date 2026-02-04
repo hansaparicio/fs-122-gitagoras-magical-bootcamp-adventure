@@ -24,7 +24,7 @@
 .worldscene-back {
   position: absolute;
   bottom: 25px;
-  left: -220px;
+  left: -270px;
   z-index: 200;
 
   background-color: #4aa3ff;

@@ -1,9 +1,29 @@
-import { useState, useEffect } from "react";
-import SceneRouter from "./scenes/WorldScenes/SceneRouter";
-import LoaderOverlay from "./Components/Loader/LoaderOverlay";
+import { useState } from "react";
+
+import LoginScreen from "./scenes/LoginScreen/LoginScreen";
+import TeamShowcase from "./components/AboutUs/TeamShowcase/TeamShowcase";
+import BeginningChapter from "./scenes/BeginningChapter/BeginningChapter";
+
+import StackScreen from "./scenes/StackScreen/StackScreen";
+import WorldScene from "./scenes/WorldScenes/WorldScene";
+
+import AlchemyZone from "./scenes/AlchemyZone/AlchemyZone";
+import LibraryZone from "./scenes/LibraryZone/LibraryZone";
+import QuizGame from "./scenes/GardenZone/QuizGame";
+import Iframe from "./scenes/StudyZone/Iframe";
+
+import UpdatingZone from "./scenes/Updatingzone/UpdatingZone";
+
+import AppShell from "./layout/AppShell/AppShell";
+import MusicLayout from "./layout/MusicLayout";
+import LoaderOverlay from "./components/loader/LoaderOverlay";
+import CustomCursor from "./CustomCursor";
+
+import GameOverModal from "./components/GameOverModal/GameOverModal";
+import OptionMenu from "./layout/Options/OptionMenu";
+import { IdleProvider } from "./context/IdleContext";
 import { TimeProvider } from "./context/TimeContext";
 import { GameOverProvider } from "./context/GameOverContext";
-import CustomCursor from "./CustomCursor";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -13,42 +33,6 @@ function App() {
     const [screen, setScreen] = useState("intro");
     const [loading, setLoading] = useState(false);
     const [activeZone, setActiveZone] = useState(null);
-
-    const [user, setUser] = useState(null);
-    const [avatar, setAvatar] = useState(null);
-    const [showUserPanel, setShowUserPanel] = useState(false);
-    const [showAvatarCreator, setShowAvatarCreator] = useState(false);
-
-
-
-
-
-    useEffect(() => {
-        const fetchMe = async () => {
-            const token = localStorage.getItem("token");
-            if (!token) return;
-
-            try {
-                const res = await fetch("http://127.0.0.1:5000/api/me", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                if (!res.ok) return;
-
-                const data = await res.json();
-                setUser(data);
-                setAvatar(data.avatar);
-                setLoggedIn(true);
-            } catch (err) {
-                console.error("Error cargando usuario", err);
-            }
-        };
-
-        fetchMe();
-    }, []);
-
 
     const goToWorld = () => {
         setLoading(true);
@@ -88,27 +72,90 @@ function App() {
         }, 800);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        setLoggedIn(false);
-        setUser(null);
-        setAvatar(null);
-        setInGame(false);
-        setScreen("intro");
-        setActiveZone(null);
-        setShowUserPanel(false);
-    };
-
-
     return (
-        <GameOverProvider>
-            <TimeProvider>
-                <CustomCursor />
-                <LoaderOverlay visible={loading} />
+        <IdleProvider>
+            <GameOverProvider>
+                <TimeProvider>
+                    <CustomCursor />
+                    <MusicLayout>
+                        <OptionMenu />
 
-                {!loading && <SceneRouter />}
-            </TimeProvider>
-        </GameOverProvider>
+                        {!inGame && !showAbout && (
+                            <LoginScreen
+                                loggedIn={loggedIn}
+                                onLogin={() => setLoggedIn(true)}
+                                onLogout={() => setLoggedIn(false)}
+                                onAbout={() => setShowAbout(true)}
+                                onStartGame={() => setInGame(true)}
+                            />
+                        )}
+
+                        {showAbout && !inGame && (
+                            <TeamShowcase onBack={() => setShowAbout(false)} />
+                        )}
+
+                        {inGame && screen === "intro" && (
+                            <BeginningChapter
+                                onFinish={() => {
+                                    setLoading(true);
+                                    setTimeout(() => {
+                                        setScreen("stack");
+                                        setLoading(false);
+                                    }, 800);
+                                }}
+                            />
+                        )}
+
+                        {inGame && screen !== "intro" && (
+                            <>
+                                {screen === "stack" && (
+                                    <StackScreen
+                                        onStart={goToWorld}
+                                        onBackToMenu={backToLogin}
+                                    />
+                                )}
+
+                                {screen === "world" && (
+                                    <WorldScene
+                                        onBack={() => setScreen("stack")}
+                                        onEnterZone={goToZone}
+                                    />
+                                )}
+
+                                {screen === "zone" && activeZone === "Alchemy_Lab" && (
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <AlchemyZone onExitZone={exitZoneSafely} />
+                                    </AppShell>
+                                )}
+
+                                {screen === "zone" && activeZone === "Library" && (
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <LibraryZone onExitZone={exitZoneSafely} />
+                                    </AppShell>
+                                )}
+
+                                {screen === "zone" && activeZone === "Garden_Courtyard" && (
+                                    <AppShell onExit={exitZoneSafely}>
+                                        <QuizGame />
+                                    </AppShell>
+                                )}
+
+                                {screen === "zone" && activeZone === "Study_Room" && (
+                                    <Iframe onExit={exitZoneSafely} />
+                                )}
+
+                                {screen === "zone" && activeZone === "Astronomy" && (
+                                    <UpdatingZone onExit={exitZoneSafely} />
+                                )}
+                            </>
+                        )}
+
+                        <GameOverModal />
+                        <LoaderOverlay visible={loading} />
+                    </MusicLayout>
+                </TimeProvider>
+            </GameOverProvider>
+        </IdleProvider>
     );
 }
 
