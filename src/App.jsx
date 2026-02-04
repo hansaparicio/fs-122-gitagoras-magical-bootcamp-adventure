@@ -14,9 +14,9 @@ import Iframe from "./scenes/StudyZone/Iframe";
 
 import AppShell from "./layout/AppShell/AppShell";
 import MusicLayout from "./layout/MusicLayout";
-import LoaderOverlay from "./components/loader/LoaderOverlay";
+import LoaderOverlay from "./components/Loader/LoaderOverlay";
 import CustomCursor from "./CustomCursor";
-import UserBadge from "./Components/UserBadge";
+import UserBadge from "./components/UserBadge";
 import UserPanel from "./components/UserPanel";
 import AvatarCreator from "./components/AvatarCreator";
 

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useInventory } from "../../context/InventoryContext";
-import SandTimer from "../../Components/SandTimer/SandTimer";
-import Player from "../../Components/mp3Player/mp3Player";
-import ChatBot from "../../Components/ChatBot/ChatBot";
-import GrimorioModal from "../../Components/Grimorios/GrimorioModal";
+import SandTimer from "../../components/SandTimer/SandTimer";
+import Player from "../../components/mp3Player/mp3Player";
+import ChatBot from "../../components/ChatBot/ChatBot";
+import GrimorioModal from "../../components/Grimorios/GrimorioModal";
 import "./AppShell.css";
 
 export default function AppShell({ children, onExit }) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LoaderGif from "../../assets/images/Loader.gif";
+import LoaderGif from "../../assets/images/loader.gif";
 import "./LoaderOverlay.css";
 
 export default function LoaderOverlay({ visible }) {

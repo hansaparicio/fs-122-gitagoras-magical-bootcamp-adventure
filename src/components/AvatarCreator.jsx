@@ -22,14 +22,14 @@ import pelo6 from "../assets/images/Avatar/Pelo/Pelo-6.png";
 import pelo7 from "../assets/images/Avatar/Pelo/Pelo-7.png";
 import pelo8 from "../assets/images/Avatar/Pelo/Pelo-8.png";
 
-import ropa1 from "../assets/images/Avatar/Ropa/ropa-1.png";
-import ropa2 from "../assets/images/Avatar/Ropa/ropa-2.png";
-import ropa3 from "../assets/images/Avatar/Ropa/ropa-3.png";
-import ropa4 from "../assets/images/Avatar/Ropa/ropa-4.png";
-import ropa5 from "../assets/images/Avatar/Ropa/ropa-5.png";
-import ropa6 from "../assets/images/Avatar/Ropa/ropa-6.png";
-import ropa7 from "../assets/images/Avatar/Ropa/ropa-7.png";
-import ropa8 from "../assets/images/Avatar/Ropa/ropa-8.png";
+import ropa1 from "../assets/images/Avatar/Ropa/Ropa-1.png";
+import ropa2 from "../assets/images/Avatar/Ropa/Ropa-2.png";
+import ropa3 from "../assets/images/Avatar/Ropa/Ropa-3.png";
+import ropa4 from "../assets/images/Avatar/Ropa/Ropa-4.png";
+import ropa5 from "../assets/images/Avatar/Ropa/Ropa-5.png";
+import ropa6 from "../assets/images/Avatar/Ropa/Ropa-6.png";
+import ropa7 from "../assets/images/Avatar/Ropa/Ropa-7.png";
+import ropa8 from "../assets/images/Avatar/Ropa/Ropa-8.png";
 
 import accesorio1 from "../assets/images/Avatar/Accesorios/Accesorio-1.png";
 import accesorio2 from "../assets/images/Avatar/Accesorios/Accesorio-2.png";
@@ -45,10 +45,10 @@ import gorro2 from "../assets/images/Avatar/Gorros/Gorro-2.png";
 import gorro3 from "../assets/images/Avatar/Gorros/Gorro-3.png";
 import gorro4 from "../assets/images/Avatar/Gorros/Gorro-4.png";
 
-import fondo1 from "../assets/images/Avatar/Fondos/Fondo-1.png";
-import fondo2 from "../assets/images/Avatar/Fondos/Fondo-2.png";
-import fondo3 from "../assets/images/Avatar/Fondos/Fondo-3.png";
-import fondo4 from "../assets/images/Avatar/Fondos/Fondo-4.png";
+import fondo1 from "../assets/images/Avatar/Fondos/fondo-1.png";
+import fondo2 from "../assets/images/Avatar/Fondos/fondo-2.png";
+import fondo3 from "../assets/images/Avatar/Fondos/fondo-3.png";
+import fondo4 from "../assets/images/Avatar/Fondos/fondo-4.png";
 
 
 
