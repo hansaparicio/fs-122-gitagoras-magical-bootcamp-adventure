@@ -49,9 +49,10 @@ export default function OptionMenu() {
                                     <b>"E"</b> para interactuar con una zona.
                                 </li>
                                 <li>
-                                    Si tienes dudas de como explorar una zona ¡tranquilo! cada
-                                    mapa tiene un índice con recomendaciones del orden en el que
-                                    explorarlas.
+                                    Si tienes dudas de como explorar una zona ¡tranquilo! todo está conectado.
+                                </li>
+                                <li>
+                                    <strong> CONSEJO: visita la biblioteca de la academia en tu primer día como aprendiz</strong>
                                 </li>
                             </ul>
 

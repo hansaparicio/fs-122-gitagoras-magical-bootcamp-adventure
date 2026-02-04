@@ -191,10 +191,7 @@ export default function WorldScene({ onBack, onEnterZone }) {
         interactSound.currentTime = 0;
         interactSound.play();
 
-        if (activeZone.id === "Wizard_Office") {
-          setGitagorasIndex(0);
-          setShowGitagoras(true);
-        } else {
+        if (activeZone) {
           onEnterZone(activeZone.id);
         }
       }

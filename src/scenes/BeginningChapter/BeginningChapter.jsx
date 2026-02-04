@@ -178,6 +178,12 @@ const BeginningChapter = ({ onFinish }) => {
             link.click();
         });
     };
+    const handleSkipDialog = () => {
+
+        localStorage.setItem("introSkipped", "true");
+
+        onFinish();
+    };
 
     return (
         <div className="bc-root">
@@ -199,15 +205,29 @@ const BeginningChapter = ({ onFinish }) => {
             )}
 
             {phase === "showScene" && !showQuestions && (
-                <div className="dialog-box">
-                    <p className="dialog-text">{typedText}</p>
-                    {!isTyping && (
-                        <button className="dialog-btn" onClick={handleContinueDialog}>
-                            Continuar
+                <div className="dialog-wrapper">
+                    {phase !== "pergamino" && (
+                        <button
+                            className="dialog-btn dialog-btn-skip-fixed"
+                            onClick={handleSkipDialog}
+                        >
+                            Saltar diálogo
                         </button>
                     )}
+
+
+                    <div className="dialog-box">
+                        <p className="dialog-text">{typedText}</p>
+                        {!isTyping && (
+                            <button className="dialog-btn" onClick={handleContinueDialog}>
+                                Continuar
+                            </button>
+                        )}
+                    </div>
                 </div>
+
             )}
+
 
             {showQuestions && !finalDialog && (
                 <div className="dialog-box">

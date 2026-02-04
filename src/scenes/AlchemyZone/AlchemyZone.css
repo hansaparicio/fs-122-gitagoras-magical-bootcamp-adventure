@@ -84,3 +84,7 @@
   font-size: 12px;
   line-height: 1.2;
 }
+
+.alchemy-dialog-skip:hover {
+  background-color: darkred;
+}

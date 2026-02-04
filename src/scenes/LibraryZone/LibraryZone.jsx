@@ -109,7 +109,7 @@ export default function LibraryZone({ onExit }) {
         } else {
             stopTimer();
         }
-    }, [phase]); // Solo depender de phase
+    }, [phase]);
 
     const nextDialog = () => {
         const dialogs = phase === "intro" ? INTRO_DIALOGS : END_DIALOGS;

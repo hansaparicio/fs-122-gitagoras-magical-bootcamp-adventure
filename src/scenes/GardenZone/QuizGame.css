@@ -230,16 +230,20 @@
 }
 
 .quiz-question-section {
-    background: transparent;
-    backdrop-filter: none;
-    border: none;
-    border-radius: 28px;
-    padding: 1.25rem 2rem;
-    box-shadow: none;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 27, 75, 0.85));
+    backdrop-filter: blur(10px);
+    border: 3px solid #8b5cf6;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6), 
+                0 0 80px rgba(99, 102, 241, 0.3),
+                inset 0 0 30px rgba(139, 92, 246, 0.2);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
     align-items: center;
+    width: 100%;
+    max-width: 900px;
 }
 
 /* Cauldron */
@@ -726,8 +730,10 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0f172a;
     overflow: hidden;
 }
 
@@ -769,19 +775,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    padding: 1.5rem;
+    gap: 0.8rem;
+    padding: 1.2rem;
     background: rgba(239, 68, 68, 0.1);
     border: 2px solid rgba(239, 68, 68, 0.3);
     border-radius: 1rem;
-    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .game-over-reason p {
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: #fecaca;
     text-align: center;
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
 }
 
@@ -932,8 +939,12 @@
 .wizard-intro-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    background-image: url('./assets/gitagorasVShans.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     z-index: 1;
+    opacity: 0.9;
 }
 
 .wizard-intro-content {
@@ -944,11 +955,11 @@
 }
 
 .wizard-dialogue-box {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 27, 75, 0.95));
-    border: 4px solid #8b5cf6;
+    background: transparent;
+    border: none;
     border-radius: 20px;
     padding: 2rem;
-    box-shadow: 0 0 50px rgba(139, 92, 246, 0.6), inset 0 0 30px rgba(139, 92, 246, 0.2);
+    box-shadow: none;
     animation: pulseGlow 2s infinite;
 }
 
@@ -1185,4 +1196,49 @@
         transform: rotate(var(--angle)) translateY(-200px);
         opacity: 0;
     }
+}
+
+/* Game Over Screen - Retry Button Styling */
+.game-over-reason .game-over-buttons {
+    margin-top: 2rem;
+    z-index: 10;
+}
+
+.game-over-reason .game-over-btn {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 
+        4px 4px 0 rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(168, 85, 247, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-over-reason .retry-btn {
+    background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%);
+}
+
+.game-over-reason .retry-btn:hover {
+    background: linear-gradient(180deg, #c084fc 0%, #a855f7 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+        6px 6px 0 rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(168, 85, 247, 0.6);
+}
+
+.game-over-reason .exit-btn {
+    background: linear-gradient(180deg, #64748b 0%, #475569 100%);
+}
+
+.game-over-reason .exit-btn:hover {
+    background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%);
+    transform: translateY(-2px);
+    box-shadow: 
+        6px 6px 0 rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(100, 116, 139, 0.6);
+}
+
+/* Fix CompletionScreen background image display */
+.completion-screen {
+    background-size: 100% 100% !important;
 }

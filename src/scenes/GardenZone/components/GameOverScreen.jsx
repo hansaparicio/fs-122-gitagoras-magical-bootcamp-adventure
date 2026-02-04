@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Sparkles } from 'lucide-react';
 import StarField from './StarField';
 import calderoImg from '../assets/caldero_magico_pixel_art_asset.png';
-import wizardImg from '../assets/batalla hans.png';
+import hansWinsImg from '../assets/hans wins.png';
 
 const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
     // Mensajes del mago tras la derrota
@@ -22,42 +22,23 @@ const GameOverScreen = ({ score, total, stars, onReset, onExit, reason }) => {
     }, []);
 
     return (
-        <div className="game-over-screen" style={{ backgroundImage: `url(${wizardImg})` }}>
+        <div className="game-over-screen" style={{ backgroundImage: `url(${hansWinsImg})` }}>
             <div className="completion-overlay"></div>
             <StarField stars={stars} />
 
-            <div className="game-over-content">
-                <img
-                    src={calderoImg}
-                    alt="Caldero"
-                    className="game-over-cauldron pixelated"
-                />
-
-                <h1 className="game-over-title">¡EL MAGO TE HA DERROTADO!</h1>
-
-                <div className="game-over-reason">
-                    <Sparkles size={40} color="#ef4444" />
-                    <p>{randomMessage}</p>
-                </div>
-
-                <div className="game-over-stats">
-                    <div className="game-over-stat-item">
-                        <span className="stat-label">Respuestas Correctas</span>
-                        <span className="stat-value">{score} / {total}</span>
-                    </div>
-                    <div className="game-over-stat-item">
-                        <span className="stat-label">Porcentaje de Aciertos</span>
-                        <span className="stat-value">{Math.round((score / total) * 100)}%</span>
-                    </div>
-                </div>
-
+            <div className="game-over-reason">
+                <Sparkles size={40} color="#ef4444" />
+                <p>{randomMessage}</p>
+                
                 <div className="game-over-buttons">
-                    <button onClick={onReset} className="game-over-btn retry-btn">
+                    <button className="game-over-btn retry-btn" onClick={onReset}>
                         🔄 Reintentar
                     </button>
-                    <button onClick={onExit} className="game-over-btn exit-btn">
-                        🗺️ Volver al Mapa
-                    </button>
+                    {onExit && (
+                        <button className="game-over-btn exit-btn" onClick={onExit}>
+                            🗺️ Volver al Mapa
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

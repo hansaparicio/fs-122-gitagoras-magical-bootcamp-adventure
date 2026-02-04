@@ -3,6 +3,7 @@ import AlchemyZone from "../AlchemyZone/AlchemyZone";
 import LibraryZone from "../LibraryZone/LibraryZone";
 import QuizGame from "../GardenZone/QuizGame";
 import Iframe from "../StudyZone/Iframe";
+import ChaosOffice from "../ChaosOffice/ChaosOffice";
 
 import AppShell from "../../layout/AppShell/AppShell";
 
@@ -16,9 +17,6 @@ export default function SceneRouter({ currentScene, setScene }) {
 
     switch (currentScene) {
 
-        /* ======================
-           MUNDO PRINCIPAL
-        ====================== */
         case "world":
             return (
                 <WorldScene
@@ -27,9 +25,7 @@ export default function SceneRouter({ currentScene, setScene }) {
                 />
             );
 
-        /* ======================
-           ZONAS
-        ====================== */
+
         case "Alchemy_Lab":
             return (
                 <AppShell onExit={goToWorld}>
@@ -43,6 +39,9 @@ export default function SceneRouter({ currentScene, setScene }) {
                     <LibraryZone onExitZone={goToWorld} />
                 </AppShell>
             );
+        case "Wizard_Office":
+            return <ChaosOffice onExit={goToWorld} />;
+
 
         case "Garden_Courtyard":
             return (
@@ -56,9 +55,7 @@ export default function SceneRouter({ currentScene, setScene }) {
                 <Iframe onExit={goToWorld} />
             );
 
-        /* ======================
-           FALLBACK
-        ====================== */
+
         default:
             return (
                 <WorldScene
@@ -66,5 +63,6 @@ export default function SceneRouter({ currentScene, setScene }) {
                     onBack={() => setScene("stack")}
                 />
             );
+
     }
 }

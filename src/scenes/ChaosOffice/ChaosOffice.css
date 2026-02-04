@@ -1,14 +1,14 @@
-.library-root {
+.chaos-office-root {
   position: fixed;
   inset: 0;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   display: flex;
   justify-content: center;
   padding-top: 20px;
 }
 
-.library-stage {
+.chaos-office-stage {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,18 +16,9 @@
   margin-top: 103px;
 }
 
-.library-scroll {
-  height: 450px;
-  max-width: 750px;
-  opacity: 0.95;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-  box-shadow: 1px 1px 28px 7px #e7ab51;
-}
-
 .library-dialog-wrapper {
   position: fixed;
-  bottom: 20px; 
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -67,39 +58,20 @@
   position: relative;
 }
 
+.library-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 12px;
+}
+
 .library-dialog-btn {
   background-color: #4aa3ff;
   color: black;
   border: solid 2px #000000;
-  padding: 6px 12px;
-  font-size: 16px;
+  padding: 6px 14px;
+  font-size: 14px;
   cursor: pointer;
   font-family: "Press Start 2P";
   border-radius: 10px;
-}
-
-.library-dialog-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
-  gap: 16px;
-}
-
-.library-dialog-skip {
-  margin-right: auto;
-  margin-top: 6px;
-  font-size: 12px;
-  background-color: red !important;
-}
-
-.library-dialog-skip:hover {
-  background-color: darkred !important;
-}
-.rune-game-container {
-  position: relative;
-  margin-top: -80px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
 }

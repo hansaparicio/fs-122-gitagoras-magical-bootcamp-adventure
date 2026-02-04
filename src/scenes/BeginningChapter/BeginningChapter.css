@@ -66,6 +66,24 @@
   opacity: 0;
   transition: opacity 3s ease;
 }
+.dialog-btn-skip-fixed {
+  position: fixed;
+  bottom: 40px;          
+  left: calc(50% - 720px); 
+  
+  background-color: #e74c3c !important;
+  color: black;
+  border: solid 3px #000000;
+  padding: 8px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  font-family: "Press Start 2P";
+  z-index: 6000;
+}
+
+.dialog-btn-skip-fixed:hover {
+  background-color: #c0392b !important;
+}
 
 .bc-scene.showScene {
   opacity: 1;

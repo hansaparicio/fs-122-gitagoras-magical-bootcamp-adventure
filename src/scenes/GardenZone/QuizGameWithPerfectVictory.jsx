@@ -12,7 +12,7 @@ import './QuizGame.css';
 
 const INITIAL_LIVES = 3;
 
-const QuizGame = ({ onExit }) => {
+const QuizGameWithPerfectVictory = ({ onExit }) => {
   const [questions, setQuestions] = useState([]);
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -83,12 +83,12 @@ const QuizGame = ({ onExit }) => {
     }
   }, [isAnswerRevealed, lives, gameStatus]);
 
-  const moveToNextQuestion = (currentScore, currentLives) => {
+  const moveToNextQuestion = () => {
     const nextIndex = currentQuestionIndex + 1;
 
     if (nextIndex >= totalQuestions) {
       // Verificar si es victoria perfecta (todas las respuestas correctas y tiene 1 vida o más)
-      if (currentScore === totalQuestions && currentLives >= 1) {
+      if (score === totalQuestions && lives >= 1) {
         setGameStatus('perfectVictory');
       } else {
         setGameStatus('completed');
@@ -111,15 +111,10 @@ const QuizGame = ({ onExit }) => {
     setSelectedOption(option);
     setIsAnswerRevealed(true);
 
-    const isCorrect = option === currentQuestion.correct;
-    let newScore = score;
-    let newLives = lives;
-
-    if (isCorrect) {
-      newScore = score + 1;
-      setScore(newScore);
+    if (option === currentQuestion.correct) {
+      setScore(prevScore => prevScore + 1);
     } else {
-      newLives = lives - 1;
+      const newLives = lives - 1;
       setLives(newLives);
       setIncorrectAnswers(prev => prev + 1);
 
@@ -132,7 +127,7 @@ const QuizGame = ({ onExit }) => {
 
     // Esperar antes de avanzar a la siguiente pregunta
     setTimeout(() => {
-      moveToNextQuestion(newScore, newLives);
+      moveToNextQuestion();
     }, 1500);
   };
 
@@ -201,7 +196,7 @@ const QuizGame = ({ onExit }) => {
     );
   }
 
-  // Mostrar pantalla de completado (victoria)
+  // Mostrar pantalla de completado (victoria normal)
   if (gameStatus === 'completed') {
     return (
       <CompletionScreen
@@ -239,4 +234,4 @@ const QuizGame = ({ onExit }) => {
   );
 };
 
-export default QuizGame;
+export default QuizGameWithPerfectVictory;

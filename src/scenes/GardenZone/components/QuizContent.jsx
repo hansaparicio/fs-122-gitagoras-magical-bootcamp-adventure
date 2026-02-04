@@ -1,6 +1,6 @@
 import React from 'react';
 import QuestionCard from './QuestionCard';
-import OptionButton from './OptionButton';
+import PixelArtOptionButton from './PixelArtOptionButton';
 import FeedbackMessage from './FeedbackMessage';
 import MagicEffect from './MagicEffect';
 
@@ -34,7 +34,7 @@ const QuizContent = ({
                         const isWrong = isAnswerRevealed && isSelected && !isCorrect;
 
                         return (
-                            <OptionButton
+                            <PixelArtOptionButton
                                 key={option}
                                 option={option}
                                 isSelected={isSelected}

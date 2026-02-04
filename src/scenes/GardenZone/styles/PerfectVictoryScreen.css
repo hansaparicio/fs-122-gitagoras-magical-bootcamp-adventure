@@ -1,0 +1,249 @@
+/* Perfect Victory Screen */
+.perfect-victory-screen {
+  position: fixed;
+  inset: 0;
+  min-height: 100vh;
+  background-size: 100% 100%;
+  background-position: center;
+  background-color: #1e293b;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', cursive;
+  overflow: hidden;
+}
+
+.perfect-victory-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.perfect-victory-content {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+}
+
+.perfect-victory-card {
+  background: linear-gradient(135deg, #6c28d979 0%, #7c3aed9b 100%);
+  border: 4px solid #fbbf24;
+  border-radius: 24px;
+  padding: 3rem;
+  max-width: 600px;
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.6), 
+              0 0 80px rgba(139, 92, 246, 0.4),
+              inset 0 0 40px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  animation: perfectVictoryPulse 1s ease-in-out infinite;
+ 
+}
+
+@keyframes perfectVictoryPulse {
+  0%, 100% {
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.6), 
+                0 0 80px rgba(139, 92, 246, 0.4),
+                inset 0 0 40px rgba(255, 255, 255, 0.1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(251, 191, 36, 0.8), 
+                0 0 120px rgba(139, 92, 246, 0.6),
+                inset 0 0 60px rgba(255, 255, 255, 0.2);
+    transform: scale(1.02);
+  }
+}
+
+.perfect-victory-header {
+  margin-bottom: 2rem;
+  animation: slideDown 0.8s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfect-victory-title {
+  font-size: 2.5rem;
+  color: #fef08a;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.8),
+               0 0 40px rgba(234, 179, 8, 0.6),
+               3px 3px 8px rgba(0, 0, 0, 0.9);
+  letter-spacing: 0.1em;
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.8),
+                 0 0 40px rgba(234, 179, 8, 0.6),
+                 3px 3px 8px rgba(0, 0, 0, 0.9);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(251, 191, 36, 1),
+                 0 0 60px rgba(234, 179, 8, 0.8),
+                 3px 3px 8px rgba(0, 0, 0, 0.9);
+  }
+}
+
+.perfect-victory-subtitle {
+  font-size: 1.2rem;
+  color: #fff59d;
+  margin: 0.5rem 0 0 0;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+  animation: slideDown 1s ease-out 0.3s both;
+}
+
+.perfect-victory-label {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  margin: 1.5rem 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  animation: fadeIn 0.8s ease-out 0.6s both;
+}
+
+.perfect-victory-score {
+  font-size: 3rem;
+  color: #fef08a;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.8),
+               2px 2px 6px rgba(0, 0, 0, 0.8);
+  animation: scaleUp 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.perfect-victory-message {
+  font-size: 0.9rem;
+  color: #fef08a;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  animation: fadeIn 0.8s ease-out 1s both;
+}
+
+.perfect-victory-button {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  padding: 1rem 2rem;
+  margin: 0.75rem;
+  border: 2px solid #fbbf24;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.8s ease-out 1.2s both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfect-victory-button-reset {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+}
+
+.perfect-victory-button-reset:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.6), 
+              0 4px 15px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.perfect-victory-button-reset:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.perfect-victory-button-exit {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  color: #fff;
+}
+
+.perfect-victory-button-exit:hover {
+  background: linear-gradient(135deg, #db2777 0%, #be185d 100%);
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.6), 
+              0 4px 15px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.perfect-victory-button-exit:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .perfect-victory-card {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  .perfect-victory-title {
+    font-size: 1.8rem;
+  }
+
+  .perfect-victory-score {
+    font-size: 2.2rem;
+  }
+
+  .perfect-victory-message {
+    font-size: 0.8rem;
+  }
+
+  .perfect-victory-button {
+    font-size: 0.7rem;
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+  }
+}
+
+/* Make overlay transparent to show Gitagoras Wins background */
+.perfect-victory-screen .perfect-victory-overlay {
+  background-color: transparent;
+}
