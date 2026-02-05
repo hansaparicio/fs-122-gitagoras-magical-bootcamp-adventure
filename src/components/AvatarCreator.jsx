@@ -71,6 +71,8 @@ const defaultAvatar = {
 
 };
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 
 const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
     const [activeTab, setActiveTab] = useState('ojos')
@@ -107,7 +109,7 @@ const AvatarCreator = ({ initialAvatar, onClose, onSave }) => {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch("http://127.0.0.1:5000/api/avatar", {
+            const res = await fetch(`${backendUrl}/avatar`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

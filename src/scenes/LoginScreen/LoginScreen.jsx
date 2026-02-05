@@ -7,7 +7,7 @@ import ChatBot from "../../components/ChatBot/ChatBot.jsx";
 import { TimeProvider } from "../../context/TimeContext.jsx"
 
 
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
 
@@ -93,7 +93,7 @@ const LoginScreen = ({ onLogin, loggedIn, onStartGame, onLogout, onAbout }) => {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://127.0.0.1:5000/api/login", {
+            const res = await fetch(`${backendUrl}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

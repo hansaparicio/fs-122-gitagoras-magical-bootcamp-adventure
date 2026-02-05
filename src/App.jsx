@@ -28,6 +28,8 @@ import { GameOverProvider } from "./context/GameOverContext";
 import UpdatingZone from "./scenes/Updatingzone/UpdatingZone";
 import ChaosOffice from "./scenes/ChaosOffice/ChaosOffice";
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [inGame, setInGame] = useState(false);
@@ -48,7 +50,7 @@ function App() {
             if (!token) return;
 
             try {
-                const res = await fetch("http://127.0.0.1:5000/api/me", {
+                const res = await fetch(`${backendUrl}/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -176,7 +178,7 @@ function App() {
                                     const token = localStorage.getItem("token");
                                     if (!token) return;
 
-                                    const res = await fetch("http://127.0.0.1:5000/api/me", {
+                                    const res = await fetch(`${backendUrl}/me`, {
                                         headers: {
                                             Authorization: `Bearer ${token}`,
                                         },
